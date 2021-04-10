@@ -1,12 +1,21 @@
 import React, {useState} from 'react';
 import {
   Control,
+  FieldValues,
   useController,
   UseControllerProps,
   useForm,
 } from 'react-hook-form';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {Button, Card, TextInput, useTheme} from 'react-native-paper';
+import {
+  Button,
+  Card,
+  HelperText,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
+import {LoginSchema} from './helpers/LoginSchema';
+import {yupResolver} from '@hookform/resolvers/yup';
 
 const LoginScreen = () => {
   const {colors} = useTheme();
@@ -27,7 +36,7 @@ const LoginScreen = () => {
 
   interface customPasswordProps {
     name: string;
-    control: Control;
+    control: Control<FieldValues>;
     customStyle: ViewStyle;
     passwordSecure: boolean;
     toggleSecure: () => void;
@@ -60,7 +69,15 @@ const LoginScreen = () => {
     );
   };
 
-  const {control} = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm({
+    resolver: yupResolver(LoginSchema),
+  });
+
+  console.log(errors);
 
   const onLogin = () => {};
 
@@ -73,6 +90,9 @@ const LoginScreen = () => {
         />
         <Card.Content>
           <CustomTextInput name="Email" control={control} />
+          <HelperText type="error" visible={!!errors.Email}>
+            {errors.Email?.message}
+          </HelperText>
           <CustomPasswordInput
             name="Password"
             control={control}
@@ -80,10 +100,13 @@ const LoginScreen = () => {
             passwordSecure={secure}
             toggleSecure={() => setSecure(!secure)}
           />
+          <HelperText type="error" visible={!!errors.Password}>
+            {errors.Password?.message}
+          </HelperText>
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={() => onLogin()}
+              onPress={handleSubmit(onLogin)}
               style={styles.loginButton}
               color="blue">
               Log In
