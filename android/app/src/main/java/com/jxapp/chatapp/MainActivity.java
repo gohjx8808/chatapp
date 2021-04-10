@@ -1,4 +1,4 @@
-package com.chatapp;
+package com.jxapp.chatapp;
 
 import com.facebook.react.ReactActivity;
 
