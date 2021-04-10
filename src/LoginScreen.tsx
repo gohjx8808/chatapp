@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
-import {useController, UseControllerProps, useForm} from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
+import {
+  Control,
+  useController,
+  UseControllerProps,
+  useForm,
+} from 'react-hook-form';
+import {StyleSheet, View, ViewStyle} from 'react-native';
 import {Button, Card, TextInput, useTheme} from 'react-native-paper';
 
 const LoginScreen = () => {
@@ -20,7 +25,21 @@ const LoginScreen = () => {
     );
   };
 
-  const CustomPasswordInput = ({name, control}: UseControllerProps) => {
+  interface customPasswordProps {
+    name: string;
+    control: Control;
+    customStyle: ViewStyle;
+    passwordSecure: boolean;
+    toggleSecure: () => void;
+  }
+
+  const CustomPasswordInput = ({
+    name,
+    control,
+    customStyle,
+    passwordSecure,
+    toggleSecure,
+  }: customPasswordProps) => {
     const {field} = useController({name, control, defaultValue: ''});
     return (
       <TextInput
@@ -29,12 +48,12 @@ const LoginScreen = () => {
         value={field.value}
         onChangeText={field.onChange}
         theme={{colors: {primary: colors.primary}}}
-        style={styles.topSpace}
-        secureTextEntry={secure}
+        style={customStyle}
+        secureTextEntry={passwordSecure}
         right={
           <TextInput.Icon
-            name={secure ? 'eye-off' : 'eye'}
-            onPress={() => setSecure(!secure)}
+            name={passwordSecure ? 'eye-off' : 'eye'}
+            onPress={toggleSecure}
           />
         }
       />
@@ -53,8 +72,14 @@ const LoginScreen = () => {
           titleStyle={styles.loginTitle}
         />
         <Card.Content>
-          <CustomTextInput name="email" control={control} />
-          <CustomPasswordInput name="Password" control={control} />
+          <CustomTextInput name="Email" control={control} />
+          <CustomPasswordInput
+            name="Password"
+            control={control}
+            customStyle={styles.topSpace}
+            passwordSecure={secure}
+            toggleSecure={() => setSecure(!secure)}
+          />
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
