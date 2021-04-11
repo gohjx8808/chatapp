@@ -1,5 +1,4 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {NavigationHelpersContext, useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Image, StyleSheet, View} from 'react-native';
@@ -9,9 +8,8 @@ import ControlledTextInput from '../../../ControlledTextInput';
 import Assets from '../../../helpers/Assets';
 import {LoginSchema} from '../../../helpers/LoginSchema';
 
-const LoginScreen = () => {
+const RegistrationScreen = () => {
   const [secure, setSecure] = useState(true);
-  const navigation = useNavigation();
 
   const {
     control,
@@ -29,10 +27,7 @@ const LoginScreen = () => {
     <View style={styles.backgroundView}>
       <Card style={styles.loginCard}>
         <Image source={Assets.corgiSquare} style={styles.corgiImage} />
-        <Card.Title
-          title="Welcome to ChatApp!"
-          titleStyle={styles.loginTitle}
-        />
+        <Card.Title title="Registration" titleStyle={styles.loginTitle} />
         <Card.Content>
           <ControlledTextInput name={'Email'} control={control} />
           <HelperText type="error" visible={!!errors.Email}>
@@ -54,14 +49,7 @@ const LoginScreen = () => {
               onPress={handleSubmit(onLogin)}
               style={styles.loginButton}
               color="blue">
-              Log In
-            </Button>
-            <Button
-              mode="outlined"
-              onPress={() => navigation.navigate('register')}
-              style={[styles.loginButton, styles.registerBtn]}
-              color="blue">
-              Register
+              Submit
             </Button>
           </View>
         </Card.Content>
@@ -70,7 +58,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default RegistrationScreen;
 
 const styles = StyleSheet.create({
   backgroundView: {
