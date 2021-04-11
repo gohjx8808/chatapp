@@ -1,52 +1,65 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Button, Card, HelperText} from 'react-native-paper';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
-import Assets from '../../../helpers/Assets';
-import {LoginSchema} from '../../../helpers/LoginSchema';
+import {RegisterSchema} from '../../../helpers/ValidationSchema';
 
 const RegistrationScreen = () => {
   const [secure, setSecure] = useState(true);
+  const [confirmPassSecure, setConfirmPassSecure] = useState(true);
 
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm({
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(RegisterSchema),
   });
 
-  const onLogin = (data: login.onLoginPayload) => {
+  const onRegister = (data: registration.submitRegisterPayload) => {
     console.log(data);
   };
+
+  console.log(errors);
 
   return (
     <View style={styles.backgroundView}>
       <Card style={styles.loginCard}>
-        <Image source={Assets.corgiSquare} style={styles.corgiImage} />
         <Card.Title title="Registration" titleStyle={styles.loginTitle} />
         <Card.Content>
-          <ControlledTextInput name={'Email'} control={control} />
-          <HelperText type="error" visible={!!errors.Email}>
-            {errors.Email?.message}
+          <ControlledTextInput name={'email'} control={control} label="Email" />
+          <HelperText type="error" visible={!!errors.email}>
+            {errors.email?.message}
           </HelperText>
           <ControlledPasswordInput
-            name="Password"
+            name="password"
             control={control}
             passwordSecure={secure}
             customStyle={null}
             toggleSecure={() => setSecure(!secure)}
+            label="Password"
           />
-          <HelperText type="error" visible={!!errors.Password}>
-            {errors.Password?.message}
+          <HelperText type="error" visible={!!errors.password}>
+            {errors.password?.message}
+          </HelperText>
+          <ControlledPasswordInput
+            name="confirmPassword"
+            control={control}
+            passwordSecure={confirmPassSecure}
+            customStyle={null}
+            toggleSecure={() => setConfirmPassSecure(!confirmPassSecure)}
+            label="Confirm Password"
+          />
+          <HelperText type="error" visible={!!errors.confirmPassword}>
+            {errors.confirmPassword?.message}
           </HelperText>
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={handleSubmit(onLogin)}
+              onPress={handleSubmit(onRegister)}
               style={styles.loginButton}
               color="blue">
               Submit
