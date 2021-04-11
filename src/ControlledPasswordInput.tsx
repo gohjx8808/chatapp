@@ -6,7 +6,7 @@ import {ViewStyle} from 'react-native';
 interface ControlledPasswordInputOwnProps {
   name: string;
   control: Control;
-  customStyle: ViewStyle;
+  customStyle: ViewStyle | null;
   passwordSecure: boolean;
   toggleSecure: () => void;
 }

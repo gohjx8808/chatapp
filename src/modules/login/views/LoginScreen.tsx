@@ -1,10 +1,11 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {Button, Card, HelperText} from 'react-native-paper';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
+import Assets from '../../../helpers/Assets';
 import {LoginSchema} from '../../../helpers/LoginSchema';
 
 const LoginScreen = () => {
@@ -25,6 +26,7 @@ const LoginScreen = () => {
   return (
     <View style={styles.backgroundView}>
       <Card style={styles.loginCard}>
+        <Image source={Assets.corgiSquare} style={styles.corgiImage} />
         <Card.Title
           title="Welcome to ChatApp!"
           titleStyle={styles.loginTitle}
@@ -38,7 +40,7 @@ const LoginScreen = () => {
             name="Password"
             control={control}
             passwordSecure={secure}
-            customStyle={styles.topSpace}
+            customStyle={null}
             toggleSecure={() => setSecure(!secure)}
           />
           <HelperText type="error" visible={!!errors.Password}>
@@ -51,6 +53,13 @@ const LoginScreen = () => {
               style={styles.loginButton}
               color="blue">
               Log In
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={handleSubmit(onLogin)}
+              style={[styles.loginButton, styles.registerBtn]}
+              color="blue">
+              Register
             </Button>
           </View>
         </Card.Content>
@@ -69,20 +78,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loginCard: {
-    height: '60%',
+    height: '65%',
     width: '80%',
   },
   loginTitle: {
     textAlign: 'center',
-  },
-  topSpace: {
-    marginTop: 20,
+    marginTop: '5%',
+    marginBottom: '5%',
   },
   loginButton: {
-    width: '50%',
+    width: '60%',
     alignSelf: 'center',
   },
   buttonContainer: {
     marginVertical: '10%',
+  },
+  registerBtn: {
+    borderColor: 'blue',
+    marginTop: '5%',
+  },
+  corgiImage: {
+    height: '20%',
+    width: '40%',
+    alignSelf: 'center',
+    marginTop: '10%',
+    borderRadius: 10,
   },
 });
