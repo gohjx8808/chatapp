@@ -1,6 +1,6 @@
 declare namespace login {
   interface onLoginPayload {
-    Email: string;
-    Password: string;
+    email: string;
+    password: string;
   }
 }

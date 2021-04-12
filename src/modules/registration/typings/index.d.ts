@@ -1,6 +1,7 @@
 declare namespace registration {
   interface submitRegisterPayload {
-    Email: string;
-    Password: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
   }
 }

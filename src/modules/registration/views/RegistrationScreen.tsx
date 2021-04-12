@@ -6,6 +6,7 @@ import {Button, Card, HelperText} from 'react-native-paper';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
 import {RegisterSchema} from '../../../helpers/ValidationSchema';
+import auth from '@react-native-firebase/auth';
 
 const RegistrationScreen = () => {
   const [secure, setSecure] = useState(true);
@@ -20,10 +21,21 @@ const RegistrationScreen = () => {
   });
 
   const onRegister = (data: registration.submitRegisterPayload) => {
-    console.log(data);
+    auth()
+      .createUserWithEmailAndPassword(data.email, data.password)
+      .then(() => {
+        console.log('user created');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+        console.error(error);
+      });
   };
-
-  console.log(errors);
 
   return (
     <View style={styles.backgroundView}>
