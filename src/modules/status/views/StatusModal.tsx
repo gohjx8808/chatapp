@@ -1,29 +1,111 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Modal, Portal, Text} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {
+  Button,
+  IconButton,
+  Modal,
+  Portal,
+  Text,
+  Title,
+} from 'react-native-paper';
+import {connect, ConnectedProps} from 'react-redux';
+import {statusActionCreators} from '../src/statusActions';
+import {
+  isApiSuccessSelector,
+  isStatusModalOpenSelector,
+  statusMsgSelector,
+} from '../src/statusSelectors';
 
-const StatusModal = () => {
+const StatusModal = (props: PropsFromRedux) => {
+  const {isStatusModalOpen, toggleStatusModal, isApiSuccess, statusMsg} = props;
+
   return (
     <Portal>
       <Modal
-        visible={true}
-        //   onDismiss={hideModal}
+        visible={isStatusModalOpen}
+        onDismiss={() => toggleStatusModal(false)}
         contentContainerStyle={styles.modalContainer}>
-        <Text>Example Modal. Click outside this area to dismiss.</Text>
+        <View style={styles.viewWidth}>
+          <IconButton
+            icon={
+              isApiSuccess ? 'check-circle-outline' : 'close-circle-outline'
+            }
+            size={60}
+            style={styles.centerIcon}
+            color={isApiSuccess ? 'green' : 'red'}
+          />
+          <Title
+            style={[
+              styles.centerText,
+              isApiSuccess ? styles.successColor : styles.errorColor,
+            ]}>
+            {isApiSuccess ? 'Success!' : 'Oops!'}
+          </Title>
+          <Text style={styles.centerText}>{statusMsg}</Text>
+          <Button
+            mode="contained"
+            color={isApiSuccess ? 'green' : 'red'}
+            style={styles.closeBtn}
+            onPress={() => toggleStatusModal(false)}>
+            Close
+          </Button>
+        </View>
       </Modal>
     </Portal>
   );
 };
 
-export default StatusModal;
+const connector = connect(
+  (state: GlobalState) => ({
+    isStatusModalOpen: isStatusModalOpenSelector(state),
+    isApiSuccess: isApiSuccessSelector(state),
+    statusMsg: statusMsgSelector(state),
+  }),
+  {
+    toggleStatusModal: statusActionCreators.toggleStatusModal,
+  },
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(StatusModal);
 
 const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: 'white',
-    height: '40%',
     width: '90%',
     alignSelf: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    paddingHorizontal: '5%',
+    paddingBottom: '5%',
+  },
+  sameRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  viewWidth: {
+    width: '100%',
+  },
+  centerIcon: {
+    alignSelf: 'center',
+  },
+  endIcon: {
+    alignSelf: 'flex-end',
+  },
+  centerText: {
+    textAlign: 'center',
+  },
+  successColor: {
+    color: 'green',
+  },
+  errorColor: {
+    color: 'red',
+  },
+  closeBtn: {
+    borderRadius: 20,
+    width: '40%',
+    alignSelf: 'center',
   },
 });
