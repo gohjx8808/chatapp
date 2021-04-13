@@ -1,6 +1,8 @@
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
+import {Provider} from 'react-redux';
 import Navigator from './src/Navigator';
+import {store} from './src/store';
 
 declare global {
   namespace ReactNativePaper {
@@ -20,9 +22,11 @@ const theme = {
 
 const App = () => {
   return (
-    <PaperProvider theme={theme}>
-      <Navigator />
-    </PaperProvider>
+    <Provider store={store}>
+      <PaperProvider theme={theme}>
+        <Navigator />
+      </PaperProvider>
+    </Provider>
   );
 };
 
