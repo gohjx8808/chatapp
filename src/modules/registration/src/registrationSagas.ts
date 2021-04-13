@@ -40,7 +40,7 @@ function* submitRegistrationSaga() {
       } else {
         yield put(
           statusActionCreators.updateStatusMsg(
-            'Something wrong happens, please contact administrator',
+            'Something wrong happens, please contact administrator.',
           ),
         );
       }
