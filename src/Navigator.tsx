@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from './modules/login/views/LoginScreen';
 import RegistrationScreen from './modules/registration/views/RegistrationScreen';
+import StatusModal from './modules/status/views/StatusModal';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ const Navigator = () => {
         <Stack.Screen name="login" component={LoginScreen} />
         <Stack.Screen name="register" component={RegistrationScreen} />
       </Stack.Navigator>
+      <StatusModal />
     </NavigationContainer>
   );
 };

@@ -1,4 +1,6 @@
-interface GlobalState {}
+interface GlobalState {
+  status: Status.State;
+}
 
 interface Action<T> {
   type: T;
