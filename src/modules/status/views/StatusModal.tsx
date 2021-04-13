@@ -24,7 +24,10 @@ const StatusModal = (props: PropsFromRedux) => {
       <Modal
         visible={isStatusModalOpen}
         onDismiss={() => toggleStatusModal(false)}
-        contentContainerStyle={styles.modalContainer}>
+        contentContainerStyle={[
+          styles.modalContainer,
+          isApiSuccess ? styles.lightGreenBorder : styles.lightRedBorder,
+        ]}>
         <View style={styles.viewWidth}>
           <IconButton
             icon={
@@ -41,7 +44,7 @@ const StatusModal = (props: PropsFromRedux) => {
             ]}>
             {isApiSuccess ? 'Success!' : 'Oops!'}
           </Title>
-          <Text style={styles.centerText}>{statusMsg}</Text>
+          <Text style={[styles.centerText, styles.msgText]}>{statusMsg}</Text>
           <Button
             mode="contained"
             color={isApiSuccess ? 'green' : 'red'}
@@ -79,6 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: '5%',
     paddingBottom: '5%',
+    borderWidth: 8,
   },
   sameRow: {
     flexDirection: 'row',
@@ -107,5 +111,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '40%',
     alignSelf: 'center',
+  },
+  msgText: {
+    paddingVertical: 20,
+    fontSize: 16,
+  },
+  lightGreenBorder: {
+    borderColor: '#90EE90',
+  },
+  lightRedBorder: {
+    borderColor: '#FFCCCB',
   },
 });

@@ -6,9 +6,11 @@ import {Button, Card, HelperText} from 'react-native-paper';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
 import {RegisterSchema} from '../../../helpers/ValidationSchema';
-import auth from '@react-native-firebase/auth';
+import {connect, ConnectedProps} from 'react-redux';
+import {registrationActionCreators} from '../src/registrationActions';
 
-const RegistrationScreen = () => {
+const RegistrationScreen = (props: PropsFromRedux) => {
+  const {submitRegister} = props;
   const [secure, setSecure] = useState(true);
   const [confirmPassSecure, setConfirmPassSecure] = useState(true);
 
@@ -19,23 +21,6 @@ const RegistrationScreen = () => {
   } = useForm({
     resolver: yupResolver(RegisterSchema),
   });
-
-  const onRegister = (data: registration.submitRegisterPayload) => {
-    auth()
-      .createUserWithEmailAndPassword(data.email, data.password)
-      .then(() => {
-        console.log('user created');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-        console.error(error);
-      });
-  };
 
   return (
     <View style={styles.backgroundView}>
@@ -71,7 +56,7 @@ const RegistrationScreen = () => {
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={handleSubmit(onRegister)}
+              onPress={handleSubmit(submitRegister)}
               style={styles.loginButton}
               color="blue">
               Submit
@@ -83,7 +68,13 @@ const RegistrationScreen = () => {
   );
 };
 
-export default RegistrationScreen;
+const connector = connect(null, {
+  submitRegister: registrationActionCreators.submitRegister,
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(RegistrationScreen);
 
 const styles = StyleSheet.create({
   backgroundView: {

@@ -2,7 +2,7 @@ export class registrationActions {
   public static readonly SUBMIT_REGISTER = 'REGISTRATION/SUBMIT_REGISTER';
 }
 
-declare namespace registrationActionTypes {
+export declare namespace registrationActionTypes {
   type submitRegisterActionType = ActionWithPayload<
     typeof registrationActions.SUBMIT_REGISTER,
     registration.submitRegisterPayload
