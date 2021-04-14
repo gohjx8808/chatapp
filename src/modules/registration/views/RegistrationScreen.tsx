@@ -1,26 +1,87 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
-import {Button, Card, HelperText} from 'react-native-paper';
+import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
+import {Button, Card, HelperText, IconButton, Text} from 'react-native-paper';
+import {connect, ConnectedProps} from 'react-redux';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
 import {RegisterSchema} from '../../../helpers/ValidationSchema';
-import {connect, ConnectedProps} from 'react-redux';
 import {registrationActionCreators} from '../src/registrationActions';
+import {validatingRequirements} from '../src/registrationUtils';
 
 const RegistrationScreen = (props: PropsFromRedux) => {
   const {submitRegister} = props;
   const [secure, setSecure] = useState(true);
   const [confirmPassSecure, setConfirmPassSecure] = useState(true);
+  const [passwordRequirement, setPasswordRequirement] = useState([
+    {
+      requirement: 'At least 1 capital letter',
+      achieved: false,
+      key: 'atLeast1Cap',
+    },
+    {
+      requirement: 'At least 1 lowercase letter',
+      achieved: false,
+      key: 'atLeast1Lower',
+    },
+    {
+      requirement: 'At least 1 number',
+      achieved: false,
+      key: 'atLeast1Num',
+    },
+    {
+      requirement: 'At least 1 special character',
+      achieved: false,
+      key: 'atLeast1Special',
+    },
+    {
+      requirement: 'At least 8 characters long',
+      achieved: false,
+      key: 'atLeast8Length',
+    },
+    {
+      requirement: 'Passwords match',
+      achieved: false,
+      key: 'match',
+    },
+  ]);
 
   const {
     control,
     handleSubmit,
     formState: {errors},
+    watch,
   } = useForm({
     resolver: yupResolver(RegisterSchema),
   });
+
+  const validate = () => {
+    const updatedCheckList = validatingRequirements(
+      watch('password'),
+      passwordRequirement,
+      watch('confirmPassword'),
+    );
+    setPasswordRequirement(updatedCheckList);
+  };
+
+  const renderPasswordRequirement: ListRenderItem<registration.requirementData> = ({
+    item,
+    index,
+  }) => {
+    return (
+      <View style={styles.sameRow} key={index}>
+        <IconButton
+          icon={item.achieved ? 'check' : 'close'}
+          color={item.achieved ? 'green' : 'red'}
+        />
+        <Text
+          style={item.achieved ? styles.verifiedColor : styles.unverifiedColor}>
+          {item.requirement}
+        </Text>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.backgroundView}>
@@ -38,6 +99,7 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             customStyle={null}
             toggleSecure={() => setSecure(!secure)}
             label="Password"
+            validationFunction={validate}
           />
           <HelperText type="error" visible={!!errors.password}>
             {errors.password?.message}
@@ -49,10 +111,15 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             customStyle={null}
             toggleSecure={() => setConfirmPassSecure(!confirmPassSecure)}
             label="Confirm Password"
+            validationFunction={validate}
           />
           <HelperText type="error" visible={!!errors.confirmPassword}>
             {errors.confirmPassword?.message}
           </HelperText>
+          <FlatList
+            data={passwordRequirement}
+            renderItem={renderPasswordRequirement}
+          />
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
@@ -84,7 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loginCard: {
-    height: '65%',
+    height: '70%',
     width: '80%',
   },
   loginTitle: {
@@ -97,7 +164,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   buttonContainer: {
-    marginVertical: '10%',
+    marginTop: '10%',
   },
   registerBtn: {
     borderColor: 'blue',
@@ -109,5 +176,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: '10%',
     borderRadius: 10,
+  },
+  sameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 25,
+  },
+  verifiedColor: {
+    color: 'green',
+  },
+  unverifiedColor: {
+    color: '#606060',
   },
 });

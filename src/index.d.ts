@@ -1,5 +1,6 @@
 interface GlobalState {
   status: Status.State;
+  registration: registration.State;
 }
 
 interface Action<T> {

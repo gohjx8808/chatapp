@@ -24,6 +24,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
           value={value}
           onChangeText={onChange}
           theme={{colors: {primary: colors.primary}}}
+          autoCapitalize="none"
         />
       )}
     />

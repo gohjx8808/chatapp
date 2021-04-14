@@ -10,7 +10,7 @@ export const RegisterSchema = yup.object().shape({
   password: yup
     .string()
     .matches(
-      /^(?=.{8,})(?=.+[!@#$%^&*()\-_=+{};:,<.>])(?=.+\d)(?=.+[a-z])(?=.+[A-Z]).*$/,
+      /^(?=.{8,})(?=.*[!@#$%^&*()\-_=+{};:,<.>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/,
       'Password is not strong enough',
     )
     .required('Password is required'),

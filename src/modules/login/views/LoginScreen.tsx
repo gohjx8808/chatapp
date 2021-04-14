@@ -45,6 +45,7 @@ const LoginScreen = () => {
             customStyle={null}
             toggleSecure={() => setSecure(!secure)}
             label="Password"
+            validationFunction={() => {}}
           />
           <HelperText type="error" visible={!!errors.password}>
             {errors.password?.message}
