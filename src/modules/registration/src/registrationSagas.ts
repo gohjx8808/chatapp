@@ -6,7 +6,7 @@ import {
   registrationActions,
   registrationActionTypes,
 } from './registrationActions';
-import {postSubmitRegister} from './registrationUtils';
+import {postSubmitRegister, postUpdateProfile} from './registrationUtils';
 
 export default function* registrationRuntime() {
   yield fork(submitRegistrationSaga);
@@ -22,6 +22,7 @@ function* submitRegistrationSaga() {
     yield put(registrationActionCreators.toggleRegisterLoading(true));
     try {
       yield call(postSubmitRegister, payload);
+      yield call(postUpdateProfile, payload.displayName);
       yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(true));
       yield put(statusActionCreators.updateStatusMsg('register success!'));

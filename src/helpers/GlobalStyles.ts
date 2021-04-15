@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-export default StyleSheet.create({
+const GlobalStyles = StyleSheet.create({
   whiteBackgroundBtn: {
     borderColor: 'blue',
     width: '60%',
@@ -10,4 +10,9 @@ export default StyleSheet.create({
     width: '60%',
     alignSelf: 'center',
   },
+  inputContainer: {
+    height: 50,
+  },
 });
+
+export default GlobalStyles;

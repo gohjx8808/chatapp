@@ -1,9 +1,13 @@
 import auth from '@react-native-firebase/auth';
 
 export const postSubmitRegister = (
-  data: registration.authPayload,
+  data: registration.submitRegisterPayload,
 ) => {
   return auth().createUserWithEmailAndPassword(data.email, data.password);
+};
+
+export const postUpdateProfile = (displayName: string) => {
+  return auth().currentUser?.updateProfile({displayName: displayName});
 };
 
 export const validatingRequirements = (

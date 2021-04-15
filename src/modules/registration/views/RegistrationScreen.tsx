@@ -89,9 +89,18 @@ const RegistrationScreen = (props: PropsFromRedux) => {
 
   return (
     <View style={styles.backgroundView}>
-      <Card style={styles.loginCard}>
+      <Card style={styles.registerCard}>
         <Card.Title title="Registration" titleStyle={styles.loginTitle} />
         <Card.Content>
+          <ControlledTextInput
+            name={'displayName'}
+            control={control}
+            label="Display Name"
+            error={errors.displayName}
+          />
+          <HelperText type="error" visible={!!errors.email}>
+            {errors.email?.message}
+          </HelperText>
           <ControlledTextInput
             name={'email'}
             control={control}
@@ -175,8 +184,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loginCard: {
-    height: '75%',
+  registerCard: {
+    height: '80%',
     width: '80%',
   },
   loginTitle: {
@@ -185,7 +194,7 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
   },
   buttonContainer: {
-    marginTop: '10%',
+    marginTop: '5%',
   },
   btnSpace: {
     marginTop: '5%',
