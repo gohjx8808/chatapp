@@ -39,7 +39,7 @@ const LoginScreen = () => {
             name={'email'}
             control={control}
             label="Email"
-            error={false}
+            error={errors.email}
           />
           <HelperText type="error" visible={!!errors.email}>
             {errors.email?.message}
@@ -52,7 +52,7 @@ const LoginScreen = () => {
             toggleSecure={() => setSecure(!secure)}
             label="Password"
             validationFunction={() => {}}
-            error={false}
+            error={errors.password}
           />
           <HelperText type="error" visible={!!errors.password}>
             {errors.password?.message}
