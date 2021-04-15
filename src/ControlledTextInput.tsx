@@ -6,10 +6,11 @@ interface ControlledTextInputOwnProps {
   name: string;
   control: Control;
   label: string;
+  error: boolean;
 }
 
 const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = props => {
-  const {name, control, label} = props;
+  const {name, control, label, error} = props;
   const {colors} = useTheme();
 
   return (
@@ -25,6 +26,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
           onChangeText={onChange}
           theme={{colors: {primary: colors.primary}}}
           autoCapitalize="none"
+          error={error}
         />
       )}
     />

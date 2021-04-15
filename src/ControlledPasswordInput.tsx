@@ -11,6 +11,7 @@ interface ControlledPasswordInputOwnProps {
   toggleSecure: () => void;
   label: string;
   validationFunction: () => void;
+  error: boolean;
 }
 
 const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps> = props => {
@@ -22,6 +23,7 @@ const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps
     toggleSecure,
     label,
     validationFunction,
+    error,
   } = props;
   const {colors} = useTheme();
 
@@ -48,6 +50,7 @@ const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps
               onPress={toggleSecure}
             />
           }
+          error={error}
         />
       )}
     />

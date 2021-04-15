@@ -7,6 +7,7 @@ import {Button, Card, HelperText} from 'react-native-paper';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
 import Assets from '../../../helpers/Assets';
+import GlobalStyles from '../../../helpers/GlobalStyles';
 import {LoginSchema} from '../../../helpers/ValidationSchema';
 
 const LoginScreen = () => {
@@ -34,7 +35,12 @@ const LoginScreen = () => {
           titleStyle={styles.loginTitle}
         />
         <Card.Content>
-          <ControlledTextInput name={'email'} control={control} label="Email" />
+          <ControlledTextInput
+            name={'email'}
+            control={control}
+            label="Email"
+            error={false}
+          />
           <HelperText type="error" visible={!!errors.email}>
             {errors.email?.message}
           </HelperText>
@@ -46,6 +52,7 @@ const LoginScreen = () => {
             toggleSecure={() => setSecure(!secure)}
             label="Password"
             validationFunction={() => {}}
+            error={false}
           />
           <HelperText type="error" visible={!!errors.password}>
             {errors.password?.message}
@@ -54,14 +61,14 @@ const LoginScreen = () => {
             <Button
               mode="contained"
               onPress={handleSubmit(onLogin)}
-              style={styles.loginButton}
+              style={GlobalStyles.blueBackgroundBtn}
               color="blue">
               Log In
             </Button>
             <Button
               mode="outlined"
               onPress={() => navigation.navigate('register')}
-              style={[styles.loginButton, styles.registerBtn]}
+              style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
               color="blue">
               Register
             </Button>
@@ -90,15 +97,10 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     marginBottom: '5%',
   },
-  loginButton: {
-    width: '60%',
-    alignSelf: 'center',
-  },
   buttonContainer: {
     marginVertical: '10%',
   },
-  registerBtn: {
-    borderColor: 'blue',
+  btnSpace: {
     marginTop: '5%',
   },
   corgiImage: {

@@ -5,12 +5,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from './modules/login/views/LoginScreen';
 import RegistrationScreen from './modules/registration/views/RegistrationScreen';
 import StatusModal from './modules/status/views/StatusModal';
+import {navigationRef} from './rootNavigation';
 
 const Stack = createStackNavigator();
 
 const Navigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
         initialRouteName="login"
         screenOptions={{headerShown: false}}>

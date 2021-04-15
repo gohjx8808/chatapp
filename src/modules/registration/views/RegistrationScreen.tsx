@@ -1,4 +1,5 @@
 import {yupResolver} from '@hookform/resolvers/yup';
+import {useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
@@ -6,14 +7,17 @@ import {Button, Card, HelperText, IconButton, Text} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
+import GlobalStyles from '../../../helpers/GlobalStyles';
 import {RegisterSchema} from '../../../helpers/ValidationSchema';
 import {registrationActionCreators} from '../src/registrationActions';
+import {isRegisterLoadingSelector} from '../src/registrationSelectors';
 import {validatingRequirements} from '../src/registrationUtils';
 
 const RegistrationScreen = (props: PropsFromRedux) => {
-  const {submitRegister} = props;
+  const {submitRegister, isRegisterLoading} = props;
   const [secure, setSecure] = useState(true);
   const [confirmPassSecure, setConfirmPassSecure] = useState(true);
+  const navigation = useNavigation();
   const [passwordRequirement, setPasswordRequirement] = useState([
     {
       requirement: 'At least 1 capital letter',
@@ -88,7 +92,12 @@ const RegistrationScreen = (props: PropsFromRedux) => {
       <Card style={styles.loginCard}>
         <Card.Title title="Registration" titleStyle={styles.loginTitle} />
         <Card.Content>
-          <ControlledTextInput name={'email'} control={control} label="Email" />
+          <ControlledTextInput
+            name={'email'}
+            control={control}
+            label="Email"
+            error={errors.email}
+          />
           <HelperText type="error" visible={!!errors.email}>
             {errors.email?.message}
           </HelperText>
@@ -100,6 +109,7 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             toggleSecure={() => setSecure(!secure)}
             label="Password"
             validationFunction={validate}
+            error={errors.password}
           />
           <HelperText type="error" visible={!!errors.password}>
             {errors.password?.message}
@@ -112,6 +122,7 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             toggleSecure={() => setConfirmPassSecure(!confirmPassSecure)}
             label="Confirm Password"
             validationFunction={validate}
+            error={errors.confirmPassword}
           />
           <HelperText type="error" visible={!!errors.confirmPassword}>
             {errors.confirmPassword?.message}
@@ -124,9 +135,18 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             <Button
               mode="contained"
               onPress={handleSubmit(submitRegister)}
-              style={styles.loginButton}
-              color="blue">
+              style={GlobalStyles.blueBackgroundBtn}
+              color="blue"
+              loading={isRegisterLoading}
+              disabled={isRegisterLoading}>
               Submit
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={() => navigation.goBack()}
+              style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
+              disabled={isRegisterLoading}>
+              Back
             </Button>
           </View>
         </Card.Content>
@@ -135,9 +155,14 @@ const RegistrationScreen = (props: PropsFromRedux) => {
   );
 };
 
-const connector = connect(null, {
-  submitRegister: registrationActionCreators.submitRegister,
-});
+const connector = connect(
+  (state: GlobalState) => ({
+    isRegisterLoading: isRegisterLoadingSelector(state),
+  }),
+  {
+    submitRegister: registrationActionCreators.submitRegister,
+  },
+);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -151,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loginCard: {
-    height: '70%',
+    height: '75%',
     width: '80%',
   },
   loginTitle: {
@@ -159,15 +184,10 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     marginBottom: '5%',
   },
-  loginButton: {
-    width: '60%',
-    alignSelf: 'center',
-  },
   buttonContainer: {
     marginTop: '10%',
   },
-  registerBtn: {
-    borderColor: 'blue',
+  btnSpace: {
     marginTop: '5%',
   },
   corgiImage: {

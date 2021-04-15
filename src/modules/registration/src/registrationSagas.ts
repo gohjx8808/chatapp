@@ -1,6 +1,8 @@
 import {call, fork, put, take} from '@redux-saga/core/effects';
+import {navigate} from '../../../rootNavigation';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
+  registrationActionCreators,
   registrationActions,
   registrationActionTypes,
 } from './registrationActions';
@@ -17,13 +19,16 @@ function* submitRegistrationSaga() {
     }: registrationActionTypes.submitRegisterActionType = yield take(
       registrationActions.SUBMIT_REGISTER,
     );
+    yield put(registrationActionCreators.toggleRegisterLoading(true));
     try {
       yield call(submitRegister, payload);
-      console.log('user created');
+      yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(true));
       yield put(statusActionCreators.updateStatusMsg('register success!'));
       yield put(statusActionCreators.toggleStatusModal(true));
+      navigate('login');
     } catch (error) {
+      yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(false));
       if (error.code === 'auth/email-already-in-use') {
         yield put(

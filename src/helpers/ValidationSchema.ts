@@ -9,11 +9,11 @@ export const RegisterSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Email is required'),
   password: yup
     .string()
+    .required('Password is required')
     .matches(
       /^(?=.{8,})(?=.*[!@#$%^&*()\-_=+{};:,<.>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/,
       'Password is not strong enough',
-    )
-    .required('Password is required'),
+    ),
   confirmPassword: yup
     .string()
     .required('Confirm Password is required')
