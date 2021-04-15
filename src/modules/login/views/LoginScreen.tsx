@@ -11,12 +11,13 @@ import Assets from '../../../helpers/Assets';
 import GlobalStyles from '../../../helpers/GlobalStyles';
 import {LoginSchema} from '../../../helpers/ValidationSchema';
 import {loginActionCreators} from '../src/loginActions';
+import {isLoginLoadingSelector} from '../src/loginSelectors';
 
 const LoginScreen = (props: propsFromRedux) => {
   const [secure, setSecure] = useState(true);
   const navigation = useNavigation();
 
-  const {submitLogin} = props;
+  const {submitLogin, isLoginLoading} = props;
 
   const {
     control,
@@ -62,14 +63,17 @@ const LoginScreen = (props: propsFromRedux) => {
               mode="contained"
               onPress={handleSubmit(submitLogin)}
               style={GlobalStyles.blueBackgroundBtn}
-              color="blue">
+              color="blue"
+              loading={isLoginLoading}
+              disabled={isLoginLoading}>
               Log In
             </Button>
             <Button
               mode="outlined"
               onPress={() => navigation.navigate('register')}
               style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
-              color="blue">
+              color="blue"
+              disabled={isLoginLoading}>
               Register
             </Button>
           </View>
@@ -79,9 +83,14 @@ const LoginScreen = (props: propsFromRedux) => {
   );
 };
 
-const connector = connect(null, {
-  submitLogin: loginActionCreators.submitLogin,
-});
+const connector = connect(
+  (state: GlobalState) => ({
+    isLoginLoading: isLoginLoadingSelector(state),
+  }),
+  {
+    submitLogin: loginActionCreators.submitLogin,
+  },
+);
 
 type propsFromRedux = ConnectedProps<typeof connector>;
 
