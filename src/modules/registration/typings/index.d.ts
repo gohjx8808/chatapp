@@ -2,7 +2,7 @@ declare namespace registration {
   interface State {
     isRegisterLoading: boolean;
   }
-  interface submitRegisterPayload {
+  interface authPayload {
     email: string;
     password: string;
   }

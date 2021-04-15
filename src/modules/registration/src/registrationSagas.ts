@@ -6,7 +6,7 @@ import {
   registrationActions,
   registrationActionTypes,
 } from './registrationActions';
-import {submitRegister} from './registrationUtils';
+import {postSubmitRegister} from './registrationUtils';
 
 export default function* registrationRuntime() {
   yield fork(submitRegistrationSaga);
@@ -21,7 +21,7 @@ function* submitRegistrationSaga() {
     );
     yield put(registrationActionCreators.toggleRegisterLoading(true));
     try {
-      yield call(submitRegister, payload);
+      yield call(postSubmitRegister, payload);
       yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(true));
       yield put(statusActionCreators.updateStatusMsg('register success!'));
@@ -36,11 +36,9 @@ function* submitRegistrationSaga() {
             'That email address is already in use!',
           ),
         );
-      } else if (error.code === 'auth/invalid-email') {
+      } else if (error.code === 'auth/operation-not-allowed') {
         yield put(
-          statusActionCreators.updateStatusMsg(
-            'That email address is invalid!',
-          ),
+          statusActionCreators.updateStatusMsg('Your account is inactive!'),
         );
       } else {
         yield put(

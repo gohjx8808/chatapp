@@ -7,7 +7,7 @@ export class registrationActions {
 export declare namespace registrationActionTypes {
   type submitRegisterActionType = ActionWithPayload<
     typeof registrationActions.SUBMIT_REGISTER,
-    registration.submitRegisterPayload
+    registration.authPayload
   >;
   type toggleRegisterLoadingActionType = ActionWithPayload<
     typeof registrationActions.TOGGLE_REGISTER_LOADING,
@@ -17,7 +17,7 @@ export declare namespace registrationActionTypes {
 
 export class registrationActionCreators {
   public static submitRegister = (
-    payload: registration.submitRegisterPayload,
+    payload: registration.authPayload,
   ): registrationActionTypes.submitRegisterActionType => ({
     type: registrationActions.SUBMIT_REGISTER,
     payload,

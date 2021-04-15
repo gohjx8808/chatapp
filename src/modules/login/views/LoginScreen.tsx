@@ -4,15 +4,19 @@ import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Image, StyleSheet, View} from 'react-native';
 import {Button, Card, HelperText} from 'react-native-paper';
+import {connect, ConnectedProps} from 'react-redux';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
 import Assets from '../../../helpers/Assets';
 import GlobalStyles from '../../../helpers/GlobalStyles';
 import {LoginSchema} from '../../../helpers/ValidationSchema';
+import {loginActionCreators} from '../src/loginActions';
 
-const LoginScreen = () => {
+const LoginScreen = (props: propsFromRedux) => {
   const [secure, setSecure] = useState(true);
   const navigation = useNavigation();
+
+  const {submitLogin} = props;
 
   const {
     control,
@@ -21,10 +25,6 @@ const LoginScreen = () => {
   } = useForm({
     resolver: yupResolver(LoginSchema),
   });
-
-  const onLogin = (data: login.onLoginPayload) => {
-    console.log(data);
-  };
 
   return (
     <View style={styles.backgroundView}>
@@ -60,7 +60,7 @@ const LoginScreen = () => {
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={handleSubmit(onLogin)}
+              onPress={handleSubmit(submitLogin)}
               style={GlobalStyles.blueBackgroundBtn}
               color="blue">
               Log In
@@ -79,7 +79,13 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+const connector = connect(null, {
+  submitLogin: loginActionCreators.submitLogin,
+});
+
+type propsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(LoginScreen);
 
 const styles = StyleSheet.create({
   backgroundView: {
