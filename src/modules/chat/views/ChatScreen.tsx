@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
-import Config from 'react-native-config';
 import {Dialogflow_V2} from 'react-native-dialogflow';
 import {
   Bubble,
@@ -39,8 +38,6 @@ const ChatScreen = () => {
     },
   ]);
 
-  console.log(Config);
-
   useEffect(() => {
     Dialogflow_V2.setConfiguration(
       dialogFlowClientEmail,
@@ -54,7 +51,7 @@ const ChatScreen = () => {
     setMessages(previousMessages =>
       GiftedChat.append(previousMessages, newMessages),
     );
-    const message = messages[0].text;
+    const message = newMessages[0].text;
     Dialogflow_V2.requestQuery(
       message,
       response => handleDialogflowResponse(response),
