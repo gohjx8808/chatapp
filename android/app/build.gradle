@@ -1,5 +1,12 @@
+project.ext.envConfigFiles = [
+  release: ".env.production",
+  debug: ".env",
+  developmentrelease: ".env",
+]
+
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
 
@@ -137,6 +144,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue "string", "build_config_package", "com.jxapp.chatapp"
+        manifestPlaceholders = [label: 'ChatApp']
     }
     splits {
         abi {
@@ -157,6 +166,12 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release']
+        }
+        developmentrelease {
+            initWith debug
+            applicationIdSuffix ".development"
+            manifestPlaceholders = [label: 'ChatApp Dev']
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
