@@ -12,10 +12,12 @@ import {
   Time,
   TimeProps,
 } from 'react-native-gifted-chat';
+import {Appbar} from 'react-native-paper';
 import Assets from '../../../helpers/Assets';
 
 const ChatScreen = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const botName = 'FAQ Bot';
 
   useEffect(() => {
     setMessages([
@@ -26,7 +28,7 @@ const ChatScreen = () => {
         createdAt: new Date(),
         user: {
           _id: 2,
-          name: 'FAQ Bot',
+          name: botName,
           avatar: 'https://placeimg.com/140/140/any',
         },
       },
@@ -58,7 +60,7 @@ const ChatScreen = () => {
           left: {color: 'black'},
         }}
         wrapperStyle={{
-          right: {backgroundColor: '#D7ECD9'}, //green
+          right: {backgroundColor: '#98FB98'}, //green
           left: {
             backgroundColor: 'white',
           },
@@ -91,6 +93,10 @@ const ChatScreen = () => {
 
   return (
     <ImageBackground source={Assets.chatBg} style={styles.chatBg}>
+      <Appbar.Header>
+        <Appbar.Action icon="dots-vertical" />
+        <Appbar.Content title={botName} />
+      </Appbar.Header>
       <GiftedChat
         messages={messages}
         onSend={message => onSend(message)}
