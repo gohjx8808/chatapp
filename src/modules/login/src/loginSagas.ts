@@ -1,11 +1,11 @@
 import {call, fork, put, take} from '@redux-saga/core/effects';
+import {postSubmitLogin} from '../../../helpers/firebaseUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
   loginActionCreators,
   loginActions,
   loginActionTypes,
 } from './loginActions';
-import {postSubmitLogin} from './loginUtils';
 
 export default function* loginRuntime() {
   yield fork(submitLoginSaga);

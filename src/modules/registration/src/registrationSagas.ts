@@ -1,4 +1,8 @@
 import {call, fork, put, take} from '@redux-saga/core/effects';
+import {
+  postSubmitRegister,
+  postUpdateProfile,
+} from '../../../helpers/firebaseUtils';
 import {navigate} from '../../../rootNavigation';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
@@ -6,7 +10,6 @@ import {
   registrationActions,
   registrationActionTypes,
 } from './registrationActions';
-import {postSubmitRegister, postUpdateProfile} from './registrationUtils';
 
 export default function* registrationRuntime() {
   yield fork(submitRegistrationSaga);

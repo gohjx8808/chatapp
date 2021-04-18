@@ -7,9 +7,9 @@ import {Button, Card, HelperText} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import ControlledPasswordInput from '../../../ControlledPasswordInput';
 import ControlledTextInput from '../../../ControlledTextInput';
-import Assets from '../../../helpers/Assets';
-import GlobalStyles from '../../../helpers/GlobalStyles';
-import {LoginSchema} from '../../../helpers/ValidationSchema';
+import Assets from '../../../helpers/assets';
+import GlobalStyles from '../../../helpers/globalStyles';
+import {LoginSchema} from '../../../helpers/validationSchema';
 import {loginActionCreators} from '../src/loginActions';
 import {isLoginLoadingSelector} from '../src/loginSelectors';
 

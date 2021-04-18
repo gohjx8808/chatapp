@@ -14,12 +14,12 @@ import {
   TimeProps,
 } from 'react-native-gifted-chat';
 import {Appbar} from 'react-native-paper';
-import Assets from '../../../helpers/Assets';
+import Assets from '../../../helpers/assets';
 import {
   dialogFlowClientEmail,
   dialogFlowPrivateKey,
   dialogFlowProjectID,
-} from '../../../helpers/Constants';
+} from '../../../helpers/constants';
 
 const ChatScreen = () => {
   const botUser = {
@@ -54,12 +54,12 @@ const ChatScreen = () => {
     const message = newMessages[0].text;
     Dialogflow_V2.requestQuery(
       message,
-      response => handleDialogflowResponse(response),
+      response => handleDialogflowResponse(response as chat.dialogFlowResponse),
       error => console.log(error),
     );
   };
 
-  const handleDialogflowResponse = response => {
+  const handleDialogflowResponse = (response: chat.dialogFlowResponse) => {
     const textResponse =
       response.queryResult.fulfillmentMessages[0].text.text[0];
     const msg = {
