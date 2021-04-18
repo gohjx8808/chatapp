@@ -308,9 +308,9 @@
 			buildPhases = (
 				D5F2FE7C262B031D004B3D1B /* [CP] Check Pods Manifest.lock */,
 				D5F2FE7D262B031D004B3D1B /* Start Packager */,
-				D5F2FE7E262B031D004B3D1B /* Sources */,
 				D5F2FE81262B031D004B3D1B /* Frameworks */,
 				D5F2FE83262B031D004B3D1B /* Resources */,
+				D5F2FE7E262B031D004B3D1B /* Sources */,
 				D5F2FE97262B031D004B3D1B /* Bundle React Native code and images */,
 				D5F2FE98262B031D004B3D1B /* [CP] Embed Pods Frameworks */,
 				D5F2FE99262B031D004B3D1B /* [CP-User] [RNFB] Core Configuration */,

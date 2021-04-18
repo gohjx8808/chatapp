@@ -20,6 +20,7 @@ import {
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
+import database from '@react-native-firebase/database';
 
 const ChatScreen = () => {
   const botUser = {
@@ -28,15 +29,7 @@ const ChatScreen = () => {
     avatar: 'https://placeimg.com/140/140/any',
   };
 
-  const [messages, setMessages] = useState<IMessage[]>([
-    {
-      _id: 1,
-      text:
-        'Hi! I am the FAQ bot 🤖 from Jscrambler.\n\nHow may I help you with today?',
-      createdAt: new Date(),
-      user: botUser,
-    },
-  ]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
 
   useEffect(() => {
     Dialogflow_V2.setConfiguration(
@@ -47,11 +40,24 @@ const ChatScreen = () => {
     );
   }, []);
 
+  useEffect(() => {
+    database()
+      .ref(`/chat/${botUser.name}`)
+      .limitToLast(20)
+      .on('child_added', snapshot => {
+        const snapshotValue = snapshot.val();
+        if (snapshotValue !== null) {
+          setMessages(previousMessages =>
+            GiftedChat.append(previousMessages, [snapshotValue]),
+          );
+        }
+      });
+  }, [botUser.name]);
+
   const onSend = (newMessages: IMessage[]) => {
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, newMessages),
-    );
-    const message = newMessages[0].text;
+    const parsedMsg = {...newMessages[0], _id: messages.length + 1};
+    database().ref(`/chat/${botUser.name}`).push(parsedMsg);
+    const message = parsedMsg.text;
     Dialogflow_V2.requestQuery(
       message,
       response => handleDialogflowResponse(response as chat.dialogFlowResponse),
@@ -63,12 +69,12 @@ const ChatScreen = () => {
     const textResponse =
       response.queryResult.fulfillmentMessages[0].text.text[0];
     const msg = {
-      _id: messages.length + 1,
+      _id: messages.length + 2,
       text: textResponse,
       createdAt: new Date(),
       user: botUser,
     };
-    setMessages(previousMessages => GiftedChat.append(previousMessages, [msg]));
+    database().ref(`/chat/${botUser.name}`).push(msg);
   };
 
   const renderCustomDay = (props: DayProps<IMessage>) => {
