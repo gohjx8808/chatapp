@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import database from '@react-native-firebase/database';
+import React, {useEffect} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 import {Dialogflow_V2} from 'react-native-dialogflow';
 import {
@@ -14,22 +15,23 @@ import {
   TimeProps,
 } from 'react-native-gifted-chat';
 import {Appbar} from 'react-native-paper';
+import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
 import {
   dialogFlowClientEmail,
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
-import database from '@react-native-firebase/database';
+import {chatActionCreators} from '../src/chatActions';
+import {messagesSelector} from '../src/chatSelectors';
 
-const ChatScreen = () => {
+const ChatScreen = (props: PropsFromRedux) => {
+  const {storeMessages, messages} = props;
   const botUser = {
     _id: 2,
     name: 'FAQ Bot',
     avatar: 'https://placeimg.com/140/140/any',
   };
-
-  const [messages, setMessages] = useState<IMessage[]>([]);
 
   useEffect(() => {
     Dialogflow_V2.setConfiguration(
@@ -47,15 +49,13 @@ const ChatScreen = () => {
       .on('child_added', snapshot => {
         const snapshotValue = snapshot.val();
         if (snapshotValue !== null) {
-          setMessages(previousMessages =>
-            GiftedChat.append(previousMessages, [snapshotValue]),
-          );
+          storeMessages(snapshotValue);
         }
       });
-  }, [botUser.name]);
+  }, [botUser.name, storeMessages]);
 
   const onSend = (newMessages: IMessage[]) => {
-    const parsedMsg = {...newMessages[0], _id: messages.length + 1};
+    const parsedMsg = newMessages[0];
     database().ref(`/chat/${botUser.name}`).push(parsedMsg);
     const message = parsedMsg.text;
     Dialogflow_V2.requestQuery(
@@ -69,7 +69,7 @@ const ChatScreen = () => {
     const textResponse =
       response.queryResult.fulfillmentMessages[0].text.text[0];
     const msg = {
-      _id: messages.length + 2,
+      _id: messages.length + 1,
       text: textResponse,
       createdAt: new Date(),
       user: botUser,
@@ -77,20 +77,20 @@ const ChatScreen = () => {
     database().ref(`/chat/${botUser.name}`).push(msg);
   };
 
-  const renderCustomDay = (props: DayProps<IMessage>) => {
+  const renderCustomDay = (dayProps: DayProps<IMessage>) => {
     return (
       <Day
-        {...props}
+        {...dayProps}
         wrapperStyle={styles.dateWrapper}
         textStyle={styles.dateText}
       />
     );
   };
 
-  const renderCustomBubble = (props: BubbleProps<IMessage>) => {
+  const renderCustomBubble = (bubbleProps: BubbleProps<IMessage>) => {
     return (
       <Bubble
-        {...props}
+        {...bubbleProps}
         textStyle={{
           right: {color: 'black'},
           left: {color: 'black'},
@@ -105,10 +105,10 @@ const ChatScreen = () => {
     );
   };
 
-  const renderCustomTime = (props: TimeProps<IMessage>) => {
+  const renderCustomTime = (timeProps: TimeProps<IMessage>) => {
     return (
       <Time
-        {...props}
+        {...timeProps}
         timeTextStyle={{
           right: {
             color: '#9E9E9E',
@@ -121,9 +121,12 @@ const ChatScreen = () => {
     );
   };
 
-  const renderCustomInputToolbar = (props: InputToolbarProps) => {
+  const renderCustomInputToolbar = (toolbarProps: InputToolbarProps) => {
     return (
-      <InputToolbar {...props} containerStyle={styles.textInputContainer} />
+      <InputToolbar
+        {...toolbarProps}
+        containerStyle={styles.textInputContainer}
+      />
     );
   };
 
@@ -150,7 +153,18 @@ const ChatScreen = () => {
   );
 };
 
-export default ChatScreen;
+const connector = connect(
+  (state: GlobalState) => ({
+    messages: messagesSelector(state),
+  }),
+  {
+    storeMessages: chatActionCreators.storeMessages,
+  },
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ChatScreen);
 
 const styles = StyleSheet.create({
   chatBg: {
