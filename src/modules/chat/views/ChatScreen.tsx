@@ -22,11 +22,12 @@ import {
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
+import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators} from '../src/chatActions';
 import {messagesSelector} from '../src/chatSelectors';
 
 const ChatScreen = (props: PropsFromRedux) => {
-  const {storeMessages, messages} = props;
+  const {storeMessages, messages, userDetails} = props;
   const botUser = {
     _id: 2,
     name: 'FAQ Bot',
@@ -140,8 +141,9 @@ const ChatScreen = (props: PropsFromRedux) => {
         messages={messages}
         onSend={message => onSend(message)}
         user={{
-          _id: 1,
-          name: 'yaaaa',
+          _id: !userDetails.uid ? '' : userDetails.uid,
+          name: !userDetails.display_name ? '' : userDetails.display_name,
+          avatar: !userDetails.photoURL ? '' : userDetails.photoURL,
         }}
         renderDay={renderCustomDay}
         renderBubble={renderCustomBubble}
@@ -156,6 +158,7 @@ const ChatScreen = (props: PropsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     messages: messagesSelector(state),
+    userDetails: userDetailsSelector(state),
   }),
   {
     storeMessages: chatActionCreators.storeMessages,
