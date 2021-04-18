@@ -16,6 +16,7 @@ import {
 } from 'react-native-gifted-chat';
 import {Appbar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
+import assets from '../../../helpers/assets';
 import Assets from '../../../helpers/assets';
 import {
   dialogFlowClientEmail,
@@ -31,8 +32,7 @@ const ChatScreen = (props: PropsFromRedux) => {
   const botUser = {
     _id: 2,
     name: 'FAQ Bot',
-    avatar:
-      'https://firebasestorage.googleapis.com/v0/b/chatapp-33a05.appspot.com/o/chat-bot.jpg?alt=media&token=69e81ef7-2755-4808-9442-cd7dc994d07f',
+    avatar: assets.chatBot,
   };
 
   useEffect(() => {
