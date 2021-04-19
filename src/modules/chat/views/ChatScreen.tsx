@@ -1,6 +1,6 @@
 import database from '@react-native-firebase/database';
 import React, {useEffect} from 'react';
-import {ImageBackground, StyleSheet} from 'react-native';
+import {ImageBackground, StyleSheet, View} from 'react-native';
 import {Dialogflow_V2} from 'react-native-dialogflow';
 import {
   Bubble,
@@ -14,7 +14,7 @@ import {
   Time,
   TimeProps,
 } from 'react-native-gifted-chat';
-import {Appbar} from 'react-native-paper';
+import {Appbar, Avatar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
 import Assets from '../../../helpers/assets';
@@ -35,6 +35,8 @@ const ChatScreen = (props: PropsFromRedux) => {
     avatar: assets.chatBot,
   };
 
+  const databaseRef = `/chat/${botUser.name}/${userDetails.uid}`;
+
   useEffect(() => {
     Dialogflow_V2.setConfiguration(
       dialogFlowClientEmail,
@@ -46,7 +48,7 @@ const ChatScreen = (props: PropsFromRedux) => {
 
   useEffect(() => {
     database()
-      .ref(`/chat/${botUser.name}`)
+      .ref(databaseRef)
       .limitToLast(20)
       .on('child_added', snapshot => {
         const snapshotValue = snapshot.val();
@@ -54,11 +56,11 @@ const ChatScreen = (props: PropsFromRedux) => {
           storeMessages(snapshotValue);
         }
       });
-  }, [botUser.name, storeMessages]);
+  }, [databaseRef, storeMessages]);
 
   const onSend = (newMessages: IMessage[]) => {
     const parsedMsg = newMessages[0];
-    database().ref(`/chat/${botUser.name}`).push(parsedMsg);
+    database().ref(databaseRef).push(parsedMsg);
     const message = parsedMsg.text;
     Dialogflow_V2.requestQuery(
       message,
@@ -76,7 +78,7 @@ const ChatScreen = (props: PropsFromRedux) => {
       createdAt: new Date(),
       user: botUser,
     };
-    database().ref(`/chat/${botUser.name}`).push(msg);
+    database().ref(databaseRef).push(msg);
   };
 
   const renderCustomDay = (dayProps: DayProps<IMessage>) => {
@@ -135,8 +137,9 @@ const ChatScreen = (props: PropsFromRedux) => {
   return (
     <ImageBackground source={Assets.chatBg} style={styles.chatBg}>
       <Appbar.Header>
-        <Appbar.Action icon="dots-vertical" />
+        <Appbar.Action icon="menu" />
         <Appbar.Content title={botUser.name} />
+        <Avatar.Image size={36} source={{uri: botUser.avatar}} />
       </Appbar.Header>
       <GiftedChat
         messages={messages}
@@ -144,13 +147,16 @@ const ChatScreen = (props: PropsFromRedux) => {
         user={{
           _id: !userDetails.uid ? '' : userDetails.uid,
           name: !userDetails.display_name ? '' : userDetails.display_name,
-          avatar: !userDetails.photoURL ? '' : userDetails.photoURL,
+          avatar: !userDetails.photoURL
+            ? assets.defaultUser
+            : userDetails.photoURL,
         }}
         renderDay={renderCustomDay}
         renderBubble={renderCustomBubble}
         renderTime={renderCustomTime}
         renderInputToolbar={renderCustomInputToolbar}
         placeholder="Type a message"
+        renderAvatar={() => <View />}
       />
     </ImageBackground>
   );
