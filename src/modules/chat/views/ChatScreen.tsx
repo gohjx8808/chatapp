@@ -35,7 +35,7 @@ const ChatScreen = (props: PropsFromRedux) => {
     avatar: assets.chatBot,
   };
 
-  const databaseRef = `/chat/${botUser.name}/${userDetails.uid}`;
+  const databaseRef = `/chat/${userDetails.uid}/I2XN9zp8svZHZymeTFGJ8IuQrqr2`;
 
   useEffect(() => {
     Dialogflow_V2.setConfiguration(

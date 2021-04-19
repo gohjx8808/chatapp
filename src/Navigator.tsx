@@ -7,6 +7,7 @@ import RegistrationScreen from './modules/registration/views/RegistrationScreen'
 import StatusModal from './modules/status/views/StatusModal';
 import {navigationRef} from './rootNavigation';
 import ChatScreen from './modules/chat/views/ChatScreen';
+import ChatListScreen from './modules/chat/views/ChatListScreen';
 
 const Stack = createStackNavigator();
 
@@ -14,11 +15,12 @@ const Navigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName="login"
+        initialRouteName="chatList"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="login" component={LoginScreen} />
         <Stack.Screen name="register" component={RegistrationScreen} />
         <Stack.Screen name="chat" component={ChatScreen} />
+        <Stack.Screen name="chatList" component={ChatListScreen} />
       </Stack.Navigator>
       <StatusModal />
     </NavigationContainer>
