@@ -13,4 +13,10 @@ declare namespace registration {
     achieved: boolean;
     key: string;
   }
+
+  interface registerResponse {
+    user: {
+      uid: string;
+    };
+  }
 }

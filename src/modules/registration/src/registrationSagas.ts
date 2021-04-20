@@ -10,6 +10,7 @@ import {
   registrationActions,
   registrationActionTypes,
 } from './registrationActions';
+import database from '@react-native-firebase/database';
 
 export default function* registrationRuntime() {
   yield fork(submitRegistrationSaga);
@@ -24,7 +25,15 @@ function* submitRegistrationSaga() {
     );
     yield put(registrationActionCreators.toggleRegisterLoading(true));
     try {
-      yield call(postSubmitRegister, payload);
+      const registerResponse: registration.registerResponse = yield call(
+        postSubmitRegister,
+        payload,
+      );
+      const userData = {
+        name: payload.displayName,
+        email: payload.email,
+      };
+      database().ref(`users/${registerResponse.user.uid}`).set(userData);
       yield call(postUpdateProfile, payload.displayName);
       yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(true));
