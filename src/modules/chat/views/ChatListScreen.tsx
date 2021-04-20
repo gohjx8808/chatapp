@@ -1,26 +1,16 @@
-import database from '@react-native-firebase/database';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Appbar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
-import {userDetailsSelector} from '../../login/src/loginSelectors';
+import {chatActionCreators} from '../src/chatActions';
+import {frenListSelector} from '../src/chatSelectors';
 
 const ChatListScreen = (props: PropsFromRedux) => {
-  const {userDetails} = props;
-  const [frenList, setFrenList] = useState<string[]>([
-    'FAQ Bot',
-    'I2XN9zp8svZHZymeTFGJ8IuQrqr2',
-  ]);
+  const {frenList, loadSelectedFren, getFrenList} = props;
 
-  const databaseRef = `/chat/${userDetails.uid}`;
-  // useEffect(() => {
-  //   database()
-  //     .ref(databaseRef)
-  //     .on('child_added', snapshot => {
-  //       const snapshotValue: string = snapshot.key!;
-  //       setFrenList(prevFren => [...prevFren, snapshotValue]);
-  //     });
-  // }, [databaseRef]);
+  useEffect(() => {
+    getFrenList();
+  }, [getFrenList]);
 
   return (
     <ScrollView>
@@ -29,15 +19,28 @@ const ChatListScreen = (props: PropsFromRedux) => {
         <Appbar.Action icon="dots-vertical" />
       </Appbar.Header>
       {frenList.map((fren, index) => {
-        return <List.Item title={fren} style={styles.chatList} key={index} />;
+        return (
+          <List.Item
+            title={fren.name}
+            style={styles.chatList}
+            key={index}
+            onPress={() => loadSelectedFren(fren.uid)}
+          />
+        );
       })}
     </ScrollView>
   );
 };
 
-const connector = connect((state: GlobalState) => ({
-  userDetails: userDetailsSelector(state),
-}));
+const connector = connect(
+  (state: GlobalState) => ({
+    frenList: frenListSelector(state),
+  }),
+  {
+    getFrenList: chatActionCreators.getFrenList,
+    loadSelectedFren: chatActionCreators.loadSelectedFren,
+  },
+);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

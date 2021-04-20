@@ -1,6 +1,8 @@
 declare namespace chat {
   interface State {
     messages: IMessage[];
+    frenList: frenData[];
+    selectedFren: string;
   }
 
   interface IMessage {
@@ -22,5 +24,19 @@ declare namespace chat {
 
   interface fulfillmentMessageText {
     text: {text: string[]};
+  }
+
+  interface frenData {
+    uid: string;
+    name: string;
+  }
+
+  interface userSnapshotData {
+    email: string;
+    name: string;
+  }
+
+  interface chatSnapshotData {
+    key: string;
   }
 }

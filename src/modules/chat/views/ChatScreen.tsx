@@ -30,12 +30,12 @@ import {messagesSelector} from '../src/chatSelectors';
 const ChatScreen = (props: PropsFromRedux) => {
   const {storeMessages, messages, userDetails} = props;
   const botUser = {
-    _id: 2,
-    name: 'FAQ Bot',
+    _id: 'LpLLsgUQCpbaDeBoqrgpepgHjlA2',
+    name: 'tester2',
     avatar: assets.chatBot,
   };
 
-  const databaseRef = `/chat/${userDetails.uid}/I2XN9zp8svZHZymeTFGJ8IuQrqr2`;
+  const databaseRef = `/chat/${userDetails.uid}/${botUser._id}`;
 
   useEffect(() => {
     Dialogflow_V2.setConfiguration(
