@@ -29,11 +29,13 @@ declare namespace chat {
   interface frenData {
     uid: string;
     name: string;
+    photoURL: string;
   }
 
   interface userSnapshotData {
     email: string;
     name: string;
+    photoURL: string;
   }
 
   interface chatSnapshotData {

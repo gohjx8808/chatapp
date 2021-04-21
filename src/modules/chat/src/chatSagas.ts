@@ -15,21 +15,17 @@ function getChatList(userID: string) {
       .ref(chatDatabaseRef)
       .on('child_added', chatSnapshot => {
         const receiverUserID = chatSnapshot.key;
-        if (receiverUserID !== 'FAQ Bot') {
-          const userDatabaseRef = `/users/${receiverUserID}`;
-          database()
-            .ref(userDatabaseRef)
-            .once('value', (userSnapshot: any) => {
-              const frenData = {
-                uid: receiverUserID,
-                name: userSnapshot.val().name,
-              };
-              emitter(frenData);
-            });
-        } else {
-          const frenData = {uid: receiverUserID, name: receiverUserID};
-          emitter(frenData);
-        }
+        const userDatabaseRef = `/users/${receiverUserID}`;
+        database()
+          .ref(userDatabaseRef)
+          .once('value', (userSnapshot: any) => {
+            const frenData = {
+              uid: receiverUserID,
+              name: userSnapshot.val().name,
+              photoURL: userSnapshot.val().photoURL,
+            };
+            emitter(frenData);
+          });
       });
     return () => {
       console.log('unsubscribe');

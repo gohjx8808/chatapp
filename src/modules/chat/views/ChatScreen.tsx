@@ -30,7 +30,7 @@ import {messagesSelector} from '../src/chatSelectors';
 const ChatScreen = (props: PropsFromRedux) => {
   const {storeMessages, messages, userDetails} = props;
   const botUser = {
-    _id: 'LpLLsgUQCpbaDeBoqrgpepgHjlA2',
+    _id: 'FAQ Bot',
     name: 'tester2',
     avatar: assets.chatBot,
   };

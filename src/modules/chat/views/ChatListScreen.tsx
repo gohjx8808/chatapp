@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Appbar, List} from 'react-native-paper';
+import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
+import assets from '../../../helpers/assets';
 import {chatActionCreators} from '../src/chatActions';
 import {frenListSelector} from '../src/chatSelectors';
 
@@ -25,6 +26,16 @@ const ChatListScreen = (props: PropsFromRedux) => {
             style={styles.chatList}
             key={index}
             onPress={() => loadSelectedFren(fren.uid)}
+            left={iconProps => (
+              <Avatar.Image
+                {...iconProps}
+                source={{
+                  uri:
+                    fren.photoURL === '' ? assets.defaultUser : fren.photoURL,
+                }}
+                size={36}
+              />
+            )}
           />
         );
       })}
