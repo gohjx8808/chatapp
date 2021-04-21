@@ -1,5 +1,5 @@
 import database from '@react-native-firebase/database';
-import {Channel, eventChannel} from '@redux-saga/core';
+import {EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, select, take} from '@redux-saga/core/effects';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators, chatActions} from './chatActions';
@@ -8,56 +8,45 @@ export default function* chatRuntime() {
   yield fork(getFrenListSaga);
 }
 
-function getChatList(chatDatabaseRef: string) {
+function getChatList(userID: string) {
+  const chatDatabaseRef = `/chat/${userID}`;
   return eventChannel(emitter => {
     database()
       .ref(chatDatabaseRef)
-      .on('child_added', chatSnapshot => emitter(chatSnapshot.key));
-    return () => {};
-  });
-}
-
-function getUserInfo(chatUserID: string) {
-  const userDatabaseRef = `/chat/${chatUserID}`;
-  return eventChannel(emitter => {
-    database()
-      .ref(userDatabaseRef)
-      .on('value', (userSnapshot: any) => {
-        const frenData = {uid: chatUserID, name: userSnapshot.name};
-        emitter(frenData);
+      .on('child_added', chatSnapshot => {
+        const receiverUserID = chatSnapshot.key;
+        if (receiverUserID !== 'FAQ Bot') {
+          const userDatabaseRef = `/users/${receiverUserID}`;
+          database()
+            .ref(userDatabaseRef)
+            .once('value', (userSnapshot: any) => {
+              const frenData = {
+                uid: receiverUserID,
+                name: userSnapshot.val().name,
+              };
+              emitter(frenData);
+            });
+        } else {
+          const frenData = {uid: receiverUserID, name: receiverUserID};
+          emitter(frenData);
+        }
       });
-    return () => {};
+    return () => {
+      console.log('unsubscribe');
+    };
   });
 }
 
 function* getFrenListSaga() {
+  yield take(chatActions.GET_FREN_LIST);
+  const currentUser: login.userData = yield select(userDetailsSelector);
+  const userID = currentUser.uid!;
+  const chatSnapshotResponse: EventChannel<string> = yield call(
+    getChatList,
+    userID,
+  );
   while (true) {
-    yield take(chatActions.GET_FREN_LIST);
-    const currentUser: login.userData = yield select(userDetailsSelector);
-    const chatDatabaseRef = `/chat/${currentUser.uid}`;
-    const chatSnapshotResponse: Channel<string> = yield call(
-      getChatList,
-      chatDatabaseRef,
-    );
-    const chatUserID: string = yield take(chatSnapshotResponse);
-    console.log(chatUserID);
-    if (chatUserID !== 'FAQ Bot') {
-      const userSnapshotResponse: Channel<string> = yield call(
-        getUserInfo,
-        chatUserID,
-      );
-      const userInfo: chat.frenData = yield take(userSnapshotResponse);
-      console.log(userInfo);
-      yield put(
-        chatActionCreators.loadFrenList({
-          uid: userInfo.uid,
-          name: userInfo.name,
-        }),
-      );
-    } else {
-      yield put(
-        chatActionCreators.loadFrenList({uid: 'FAQ Bot', name: 'FAQ Bot'}),
-      );
-    }
+    const fren: chat.frenData = yield take(chatSnapshotResponse);
+    yield put(chatActionCreators.loadFrenList(fren));
   }
 }
