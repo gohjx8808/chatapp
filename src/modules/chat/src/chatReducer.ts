@@ -17,7 +17,7 @@ const messages = (
 ): chat.IMessage[] => {
   switch (action.type) {
     case chatActions.STORE_MESSAGES:
-      return [action.payload, ...state];
+      return action.payload;
     default:
       return state;
   }

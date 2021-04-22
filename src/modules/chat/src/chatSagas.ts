@@ -1,13 +1,6 @@
 import database from '@react-native-firebase/database';
-import {channel, END, EventChannel, eventChannel} from '@redux-saga/core';
-import {
-  call,
-  cancelled,
-  fork,
-  put,
-  select,
-  take,
-} from '@redux-saga/core/effects';
+import {END, EventChannel, eventChannel} from '@redux-saga/core';
+import {call, fork, put, select, take} from '@redux-saga/core/effects';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators, chatActions} from './chatActions';
 import {selectedFrenSelector} from './chatSelectors';
@@ -88,8 +81,13 @@ function* storeChatMessagesListener() {
     getChatMessages,
     databaseRef,
   );
-  while (true) {
-    const response: chat.IMessage = yield take(getChatMessagesAction);
-    yield put(chatActionCreators.storeMessages(response));
+  const msgList = [] as chat.IMessage[];
+  try {
+    while (true) {
+      const response: chat.IMessage = yield take(getChatMessagesAction);
+      msgList.unshift(response);
+    }
+  } finally {
+    yield put(chatActionCreators.storeMessages(msgList));
   }
 }

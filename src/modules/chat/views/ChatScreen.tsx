@@ -46,22 +46,10 @@ const ChatScreen = (props: PropsFromRedux) => {
     );
   }, []);
 
-  // useEffect(() => {
-  //   // database()
-  //   //   .ref(databaseRef)
-  //   //   .limitToLast(20)
-  //   //   .on('child_added', snapshot => {
-  //   //     const snapshotValue = snapshot.val();
-  //   //     if (snapshotValue !== null) {
-  //   //       storeMessages(snapshotValue);
-  //   //     }
-  //   //   });
-  //   getChatMessages();
-  // }, [getChatMessages]);
-
   const onSend = (newMessages: IMessage[]) => {
     const parsedMsg = newMessages[0];
     database().ref(databaseRef).push(parsedMsg);
+    getChatMessages();
     const message = parsedMsg.text;
     Dialogflow_V2.requestQuery(
       message,
@@ -80,6 +68,7 @@ const ChatScreen = (props: PropsFromRedux) => {
       user: botUser,
     };
     database().ref(databaseRef).push(msg);
+    getChatMessages();
   };
 
   const renderCustomDay = (dayProps: DayProps<IMessage>) => {

@@ -9,7 +9,7 @@ export class chatActions {
 export declare namespace chatActionTypes {
   type storeMessagesActionType = ActionWithPayload<
     typeof chatActions.STORE_MESSAGES,
-    chat.IMessage
+    chat.IMessage[]
   >;
   type getFrenListActionType = Action<typeof chatActions.GET_FREN_LIST>;
   type loadFrenListActionType = ActionWithPayload<
@@ -25,7 +25,7 @@ export declare namespace chatActionTypes {
 
 export class chatActionCreators {
   public static storeMessages = (
-    payload: chat.IMessage,
+    payload: chat.IMessage[],
   ): chatActionTypes.storeMessagesActionType => ({
     type: chatActions.STORE_MESSAGES,
     payload,
