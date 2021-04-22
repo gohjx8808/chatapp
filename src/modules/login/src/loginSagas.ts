@@ -29,7 +29,7 @@ function* submitLoginSaga() {
         photoURL: currentUserData?.photoURL,
       };
       yield put(loginActionCreators.storeUserDetails(userDetail));
-      navigate('chatList');
+      navigate('chatNav');
     } catch (error) {
       yield put(statusActionCreators.updateStatusMsg('Invalid credentials!'));
       yield put(statusActionCreators.toggleApiStatus(false));

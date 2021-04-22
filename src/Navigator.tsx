@@ -11,6 +11,19 @@ import ChatListScreen from './modules/chat/views/ChatListScreen';
 
 const Stack = createStackNavigator();
 
+const ChatStack = createStackNavigator();
+
+const chatNavigator = () => {
+  return (
+    <ChatStack.Navigator
+      initialRouteName="chatList"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="chatList" component={ChatListScreen} />
+      <Stack.Screen name="chat" component={ChatScreen} />
+    </ChatStack.Navigator>
+  );
+};
+
 const Navigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
@@ -19,8 +32,7 @@ const Navigator = () => {
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="login" component={LoginScreen} />
         <Stack.Screen name="register" component={RegistrationScreen} />
-        <Stack.Screen name="chat" component={ChatScreen} />
-        <Stack.Screen name="chatList" component={ChatListScreen} />
+        <Stack.Screen name="chatNav" component={chatNavigator} />
       </Stack.Navigator>
       <StatusModal />
     </NavigationContainer>
