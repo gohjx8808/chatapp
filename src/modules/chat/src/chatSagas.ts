@@ -1,6 +1,13 @@
 import database from '@react-native-firebase/database';
-import {EventChannel, eventChannel} from '@redux-saga/core';
-import {call, fork, put, select, take} from '@redux-saga/core/effects';
+import {channel, END, EventChannel, eventChannel} from '@redux-saga/core';
+import {
+  call,
+  cancelled,
+  fork,
+  put,
+  select,
+  take,
+} from '@redux-saga/core/effects';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators, chatActions} from './chatActions';
 import {selectedFrenSelector} from './chatSelectors';
@@ -54,12 +61,13 @@ function getChatMessages(databaseRef: string) {
     database()
       .ref(databaseRef)
       .limitToLast(20)
-      .on('child_added', snapshot => {
-        const snapshotValue = snapshot.val();
-        if (snapshotValue !== null) {
-          // storeMessages(snapshotValue);
+      .on('value', snapshots => {
+        snapshots.forEach(snapshot => {
+          const snapshotValue = snapshot.val();
           emitter(snapshotValue);
-        }
+          return undefined;
+        });
+        emitter(END);
       });
     return () => {};
   });
@@ -68,7 +76,6 @@ function getChatMessages(databaseRef: string) {
 function* storeChatMessagesSaga() {
   while (true) {
     yield take(chatActions.GET_CHAT_MESSAGES);
-    console.log('abc');
     yield call(storeChatMessagesListener);
   }
 }
@@ -83,7 +90,6 @@ function* storeChatMessagesListener() {
   );
   while (true) {
     const response: chat.IMessage = yield take(getChatMessagesAction);
-    console.log(response);
     yield put(chatActionCreators.storeMessages(response));
   }
 }
