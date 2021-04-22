@@ -4,7 +4,11 @@ import {chatActions, chatActionTypes} from './chatActions';
 const INITIAL_STATE: chat.State = {
   messages: [],
   frenList: [],
-  selectedFren: '',
+  selectedFren: {
+    uid: '',
+    name: '',
+    photoURL: '',
+  },
 };
 
 const messages = (
@@ -34,7 +38,7 @@ const frenList = (
 const selectedFren = (
   state = INITIAL_STATE.selectedFren,
   action: chatActionTypes.loadSelectedFrenActionType,
-): string => {
+): chat.frenData => {
   switch (action.type) {
     case chatActions.LOAD_SELECTED_FREN:
       return action.payload;

@@ -3,11 +3,12 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
+import {navigate} from '../../../rootNavigation';
 import {chatActionCreators} from '../src/chatActions';
 import {frenListSelector} from '../src/chatSelectors';
 
 const ChatListScreen = (props: PropsFromRedux) => {
-  const {frenList, loadSelectedFren, getFrenList} = props;
+  const {frenList, loadSelectedFren, getFrenList, getChatMessages} = props;
 
   useEffect(() => {
     getFrenList();
@@ -25,7 +26,11 @@ const ChatListScreen = (props: PropsFromRedux) => {
             title={fren.name}
             style={styles.chatList}
             key={index}
-            onPress={() => loadSelectedFren(fren.uid)}
+            onPress={() => {
+              loadSelectedFren(fren);
+              getChatMessages();
+              navigate('chat');
+            }}
             left={iconProps => (
               <Avatar.Image
                 {...iconProps}
@@ -50,6 +55,7 @@ const connector = connect(
   {
     getFrenList: chatActionCreators.getFrenList,
     loadSelectedFren: chatActionCreators.loadSelectedFren,
+    getChatMessages: chatActionCreators.getChatMessages,
   },
 );
 

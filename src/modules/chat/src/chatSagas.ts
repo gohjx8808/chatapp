@@ -3,9 +3,11 @@ import {EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, select, take} from '@redux-saga/core/effects';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators, chatActions} from './chatActions';
+import {selectedFrenSelector} from './chatSelectors';
 
 export default function* chatRuntime() {
   yield fork(getFrenListSaga);
+  yield fork(storeChatMessagesSaga);
 }
 
 function getChatList(userID: string) {
@@ -44,5 +46,44 @@ function* getFrenListSaga() {
   while (true) {
     const fren: chat.frenData = yield take(chatSnapshotResponse);
     yield put(chatActionCreators.loadFrenList(fren));
+  }
+}
+
+function getChatMessages(databaseRef: string) {
+  return eventChannel(emitter => {
+    database()
+      .ref(databaseRef)
+      .limitToLast(20)
+      .on('child_added', snapshot => {
+        const snapshotValue = snapshot.val();
+        if (snapshotValue !== null) {
+          // storeMessages(snapshotValue);
+          emitter(snapshotValue);
+        }
+      });
+    return () => {};
+  });
+}
+
+function* storeChatMessagesSaga() {
+  while (true) {
+    yield take(chatActions.GET_CHAT_MESSAGES);
+    console.log('abc');
+    yield call(storeChatMessagesListener);
+  }
+}
+
+function* storeChatMessagesListener() {
+  const selectedFren: chat.frenData = yield select(selectedFrenSelector);
+  const currentUser: login.userData = yield select(userDetailsSelector);
+  const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
+  const getChatMessagesAction: EventChannel<chat.IMessage> = yield call(
+    getChatMessages,
+    databaseRef,
+  );
+  while (true) {
+    const response: chat.IMessage = yield take(getChatMessagesAction);
+    console.log(response);
+    yield put(chatActionCreators.storeMessages(response));
   }
 }

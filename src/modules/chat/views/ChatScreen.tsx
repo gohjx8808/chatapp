@@ -25,17 +25,17 @@ import {
 } from '../../../helpers/constants';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators} from '../src/chatActions';
-import {messagesSelector} from '../src/chatSelectors';
+import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';
 
 const ChatScreen = (props: PropsFromRedux) => {
-  const {storeMessages, messages, userDetails} = props;
+  const {messages, userDetails, getChatMessages, selectedFren} = props;
   const botUser = {
     _id: 'FAQ Bot',
     name: 'tester2',
     avatar: assets.chatBot,
   };
 
-  const databaseRef = `/chat/${userDetails.uid}/${botUser._id}`;
+  const databaseRef = `/chat/${userDetails.uid}/${selectedFren.uid}`;
 
   useEffect(() => {
     Dialogflow_V2.setConfiguration(
@@ -46,17 +46,18 @@ const ChatScreen = (props: PropsFromRedux) => {
     );
   }, []);
 
-  useEffect(() => {
-    database()
-      .ref(databaseRef)
-      .limitToLast(20)
-      .on('child_added', snapshot => {
-        const snapshotValue = snapshot.val();
-        if (snapshotValue !== null) {
-          storeMessages(snapshotValue);
-        }
-      });
-  }, [databaseRef, storeMessages]);
+  // useEffect(() => {
+  //   // database()
+  //   //   .ref(databaseRef)
+  //   //   .limitToLast(20)
+  //   //   .on('child_added', snapshot => {
+  //   //     const snapshotValue = snapshot.val();
+  //   //     if (snapshotValue !== null) {
+  //   //       storeMessages(snapshotValue);
+  //   //     }
+  //   //   });
+  //   getChatMessages();
+  // }, [getChatMessages]);
 
   const onSend = (newMessages: IMessage[]) => {
     const parsedMsg = newMessages[0];
@@ -166,9 +167,10 @@ const connector = connect(
   (state: GlobalState) => ({
     messages: messagesSelector(state),
     userDetails: userDetailsSelector(state),
+    selectedFren: selectedFrenSelector(state),
   }),
   {
-    storeMessages: chatActionCreators.storeMessages,
+    getChatMessages: chatActionCreators.getChatMessages,
   },
 );
 

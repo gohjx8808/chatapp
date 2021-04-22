@@ -3,6 +3,7 @@ export class chatActions {
   public static readonly GET_FREN_LIST = 'CHAT/GET_FREN_LIST';
   public static readonly LOAD_FREN_LIST = 'CHAT/LOAD_FREN_LIST';
   public static readonly LOAD_SELECTED_FREN = 'CHAT/LOAD_SELECTED_FREN';
+  public static readonly GET_CHAT_MESSAGES = 'CHAT/GET_CHAT_MESSAGES';
 }
 
 export declare namespace chatActionTypes {
@@ -17,8 +18,9 @@ export declare namespace chatActionTypes {
   >;
   type loadSelectedFrenActionType = ActionWithPayload<
     typeof chatActions.LOAD_SELECTED_FREN,
-    string
+    chat.frenData
   >;
+  type getChatMessagesActionType = Action<typeof chatActions.GET_CHAT_MESSAGES>;
 }
 
 export class chatActionCreators {
@@ -38,9 +40,12 @@ export class chatActionCreators {
     payload,
   });
   public static loadSelectedFren = (
-    payload: string,
+    payload: chat.frenData,
   ): chatActionTypes.loadSelectedFrenActionType => ({
     type: chatActions.LOAD_SELECTED_FREN,
     payload,
+  });
+  public static getChatMessages = (): chatActionTypes.getChatMessagesActionType => ({
+    type: chatActions.GET_CHAT_MESSAGES,
   });
 }
