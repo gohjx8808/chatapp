@@ -6,3 +6,7 @@ export const navigationRef: React.RefObject<NavigationContainerRef> = React.crea
 export const navigate = (name: string) => {
   navigationRef.current?.navigate(name);
 };
+
+export const goBack = () => {
+  navigationRef.current?.goBack();
+};

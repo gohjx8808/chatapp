@@ -23,6 +23,7 @@ import {
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
+import {goBack} from '../../../rootNavigation';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators} from '../src/chatActions';
 import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';
@@ -127,9 +128,16 @@ const ChatScreen = (props: PropsFromRedux) => {
   return (
     <ImageBackground source={Assets.chatBg} style={styles.chatBg}>
       <Appbar.Header>
-        <Appbar.Action icon="menu" />
-        <Appbar.Content title={botUser.name} />
-        <Avatar.Image size={36} source={{uri: botUser.avatar}} />
+        <Appbar.Action icon="arrow-left" onPress={() => goBack()} />
+        <Appbar.Content title={selectedFren.name} />
+        <Avatar.Image
+          size={36}
+          source={{
+            uri: !selectedFren.photoURL
+              ? assets.defaultUser
+              : selectedFren.photoURL,
+          }}
+        />
       </Appbar.Header>
       <GiftedChat
         messages={messages}
