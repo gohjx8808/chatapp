@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {Control, Controller} from 'react-hook-form';
 import {TextInput, useTheme} from 'react-native-paper';
-import GlobalStyles from './helpers/globalStyles';
+import GlobalStyles from '../helpers/globalStyles';
 
 interface ControlledTextInputOwnProps {
   name: string;

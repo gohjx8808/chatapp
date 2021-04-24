@@ -2,7 +2,7 @@ import {Control, Controller} from 'react-hook-form';
 import React, {FunctionComponent} from 'react';
 import {TextInput, useTheme} from 'react-native-paper';
 import {ViewStyle} from 'react-native';
-import GlobalStyles from './helpers/globalStyles';
+import GlobalStyles from '../helpers/globalStyles';
 
 interface ControlledPasswordInputOwnProps {
   name: string;
