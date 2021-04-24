@@ -30,7 +30,7 @@ function* submitLoginSaga() {
         photoURL: currentUserData?.photoURL,
       };
       yield put(loginActionCreators.storeUserDetails(userDetail));
-      navigate(routeNames.CHAT_NAV);
+      navigate(routeNames.DASHBOARD_NAV);
     } catch (error) {
       yield put(statusActionCreators.updateStatusMsg('Invalid credentials!'));
       yield put(statusActionCreators.toggleApiStatus(false));

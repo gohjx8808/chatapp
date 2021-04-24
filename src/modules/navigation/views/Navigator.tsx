@@ -9,24 +9,37 @@ import RegistrationScreen from '../../registration/views/RegistrationScreen';
 import StatusModal from '../../status/views/StatusModal';
 import {navigationRef} from '../src/navigationUtils';
 import routeNames from '../src/routeNames';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import CustomDrawer from './CustomDrawer';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const DashboardNavigator = () => {
+  return (
+    <Drawer.Navigator
+      initialRouteName={routeNames.CHAT_NAV}
+      drawerContent={CustomDrawer}>
+      <Stack.Screen name={routeNames.CHAT_NAV} component={chatNavigator} />
+      <Drawer.Screen name={routeNames.MY_PROFILE} component={MyProfileScreen} />
+    </Drawer.Navigator>
+  );
+};
 
 const Navigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName={routeNames.CHAT_NAV}
+        initialRouteName={routeNames.LOGIN}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name={routeNames.LOGIN} component={LoginScreen} />
         <Stack.Screen
           name={routeNames.REGISTER}
           component={RegistrationScreen}
         />
-        <Stack.Screen name={routeNames.CHAT_NAV} component={chatNavigator} />
         <Stack.Screen
-          name={routeNames.MY_PROFILE}
-          component={MyProfileScreen}
+          name={routeNames.DASHBOARD_NAV}
+          component={DashboardNavigator}
         />
       </Stack.Navigator>
       <StatusModal />

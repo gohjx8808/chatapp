@@ -3,7 +3,7 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
-import {navigate} from '../../navigation/src/navigationUtils';
+import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
 import {frenListSelector} from '../src/chatSelectors';
@@ -18,8 +18,9 @@ const ChatListScreen = (props: PropsFromRedux) => {
   return (
     <ScrollView>
       <Appbar.Header>
+        <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
         <Appbar.Content title="ChatApp" />
-        <Appbar.Action icon="dots-vertical" />
+        <Appbar.Action icon="plus-circle-outline" />
       </Appbar.Header>
       {frenList.map((fren, index) => {
         return (

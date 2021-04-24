@@ -49,7 +49,6 @@ const LoginScreen = (props: propsFromRedux) => {
             name="password"
             control={control}
             passwordSecure={secure}
-            customStyle={null}
             toggleSecure={() => setSecure(!secure)}
             label="Password"
             validationFunction={() => {}}
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loginCard: {
-    height: '65%',
+    height: '60%',
     width: '80%',
   },
   loginTitle: {

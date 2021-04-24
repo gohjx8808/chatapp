@@ -1,7 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {Control, Controller} from 'react-hook-form';
 import {TextInput, useTheme} from 'react-native-paper';
-import GlobalStyles from '../helpers/globalStyles';
 
 interface ControlledTextInputOwnProps {
   name: string;
@@ -28,7 +27,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
           theme={{colors: {primary: colors.primary}}}
           autoCapitalize="none"
           error={error}
-          style={GlobalStyles.inputContainer}
+          dense
         />
       )}
     />

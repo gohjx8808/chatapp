@@ -10,9 +10,6 @@ const GlobalStyles = StyleSheet.create({
     width: '60%',
     alignSelf: 'center',
   },
-  inputContainer: {
-    height: 50,
-  },
 });
 
 export default GlobalStyles;

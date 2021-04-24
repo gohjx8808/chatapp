@@ -5,10 +5,10 @@ import {useForm} from 'react-hook-form';
 import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
 import {Button, Card, HelperText, IconButton, Text} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
-import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
-import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {RegisterSchema} from '../../../helpers/validationSchema';
+import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
+import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {registrationActionCreators} from '../src/registrationActions';
 import {isRegisterLoadingSelector} from '../src/registrationSelectors';
 import {validatingRequirements} from '../src/registrationUtils';
@@ -114,7 +114,6 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             name="password"
             control={control}
             passwordSecure={secure}
-            customStyle={null}
             toggleSecure={() => setSecure(!secure)}
             label="Password"
             validationFunction={validate}
@@ -127,7 +126,6 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             name="confirmPassword"
             control={control}
             passwordSecure={confirmPassSecure}
-            customStyle={null}
             toggleSecure={() => setConfirmPassSecure(!confirmPassSecure)}
             label="Confirm Password"
             validationFunction={validate}
@@ -185,7 +183,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   registerCard: {
-    height: '80%',
+    height: '75%',
     width: '80%',
   },
   loginTitle: {
