@@ -22,11 +22,13 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         label="Messages"
         onPress={() => navigate(routeNames.CHAT_NAV)}
         active={activeRouteName === routeNames.CHAT_NAV}
+        icon="chat"
       />
       <Drawer.Item
         label="My Profile"
-        onPress={() => navigate(routeNames.CHAT_NAV)}
+        onPress={() => navigate(routeNames.MY_PROFILE)}
         active={activeRouteName === routeNames.MY_PROFILE}
+        icon="account-circle"
       />
     </DrawerContentScrollView>
   );

@@ -19,7 +19,7 @@ const ChatListScreen = (props: PropsFromRedux) => {
     <ScrollView>
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
-        <Appbar.Content title="ChatApp" />
+        <Appbar.Content title="Messages" />
         <Appbar.Action icon="plus-circle-outline" />
       </Appbar.Header>
       {frenList.map((fren, index) => {
