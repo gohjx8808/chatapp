@@ -1,7 +1,7 @@
 import React from 'react';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {Provider} from 'react-redux';
-import Navigator from './src/Navigator';
+import Navigator from './src/modules/navigation/views/Navigator';
 import {store} from './src/store';
 
 declare global {

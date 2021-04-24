@@ -23,7 +23,7 @@ import {
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
-import {goBack} from '../../../rootNavigation';
+import {goBack} from '../../navigation/src/navigationUtils';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators} from '../src/chatActions';
 import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';

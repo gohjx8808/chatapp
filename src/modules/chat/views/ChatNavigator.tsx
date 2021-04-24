@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
 import 'react-native-gesture-handler';
+import chatRouteNames from '../src/chatRouteNames';
 import ChatListScreen from './ChatListScreen';
 import ChatScreen from './ChatScreen';
 
@@ -9,10 +10,13 @@ const ChatStack = createStackNavigator();
 export const chatNavigator = () => {
   return (
     <ChatStack.Navigator
-      initialRouteName="chatList"
+      initialRouteName={chatRouteNames.CHAT_LIST}
       screenOptions={{headerShown: false}}>
-      <ChatStack.Screen name="chatList" component={ChatListScreen} />
-      <ChatStack.Screen name="chat" component={ChatScreen} />
+      <ChatStack.Screen
+        name={chatRouteNames.CHAT_LIST}
+        component={ChatListScreen}
+      />
+      <ChatStack.Screen name={chatRouteNames.CHAT} component={ChatScreen} />
     </ChatStack.Navigator>
   );
 };

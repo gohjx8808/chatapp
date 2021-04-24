@@ -3,7 +3,7 @@ import {
   postSubmitRegister,
   postUpdateProfile,
 } from '../../../helpers/firebaseUtils';
-import {navigate} from '../../../rootNavigation';
+import {navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
   registrationActionCreators,
@@ -11,6 +11,7 @@ import {
   registrationActionTypes,
 } from './registrationActions';
 import database from '@react-native-firebase/database';
+import routeNames from '../../navigation/src/routeNames';
 
 export default function* registrationRuntime() {
   yield fork(submitRegistrationSaga);
@@ -40,7 +41,7 @@ function* submitRegistrationSaga() {
       yield put(statusActionCreators.toggleApiStatus(true));
       yield put(statusActionCreators.updateStatusMsg('register success!'));
       yield put(statusActionCreators.toggleStatusModal(true));
-      navigate('login');
+      navigate(routeNames.LOGIN);
     } catch (error) {
       yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(false));

@@ -1,5 +1,4 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Image, StyleSheet, View} from 'react-native';
@@ -10,12 +9,13 @@ import ControlledTextInput from '../../../ControlledTextInput';
 import Assets from '../../../helpers/assets';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {LoginSchema} from '../../../helpers/validationSchema';
+import {navigate} from '../../navigation/src/navigationUtils';
+import routeNames from '../../navigation/src/routeNames';
 import {loginActionCreators} from '../src/loginActions';
 import {isLoginLoadingSelector} from '../src/loginSelectors';
 
 const LoginScreen = (props: propsFromRedux) => {
   const [secure, setSecure] = useState(true);
-  const navigation = useNavigation();
 
   const {submitLogin, isLoginLoading} = props;
 
@@ -70,7 +70,7 @@ const LoginScreen = (props: propsFromRedux) => {
             </Button>
             <Button
               mode="outlined"
-              onPress={() => navigation.navigate('register')}
+              onPress={() => navigate(routeNames.REGISTER)}
               style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
               color="blue"
               disabled={isLoginLoading}>
