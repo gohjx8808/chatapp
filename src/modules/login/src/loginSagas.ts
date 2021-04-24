@@ -9,6 +9,7 @@ import {
 } from './loginActions';
 import auth from '@react-native-firebase/auth';
 import routeNames from '../../navigation/src/routeNames';
+import assets from '../../../helpers/assets';
 
 export default function* loginRuntime() {
   yield fork(submitLoginSaga);
@@ -26,8 +27,11 @@ function* submitLoginSaga() {
       const currentUserData = auth().currentUser;
       const userDetail = {
         uid: currentUserData?.uid,
-        display_name: currentUserData?.displayName,
-        photoURL: currentUserData?.photoURL,
+        display_name: currentUserData?.displayName!,
+        photoURL:
+          currentUserData?.photoURL === null
+            ? assets.defaultUser
+            : currentUserData!.photoURL,
       };
       yield put(loginActionCreators.storeUserDetails(userDetail));
       navigate(routeNames.DASHBOARD_NAV);

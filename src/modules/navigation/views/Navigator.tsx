@@ -20,7 +20,7 @@ const DashboardNavigator = () => {
     <Drawer.Navigator
       initialRouteName={routeNames.CHAT_NAV}
       drawerContent={CustomDrawer}>
-      <Stack.Screen name={routeNames.CHAT_NAV} component={chatNavigator} />
+      <Drawer.Screen name={routeNames.CHAT_NAV} component={chatNavigator} />
       <Drawer.Screen name={routeNames.MY_PROFILE} component={MyProfileScreen} />
     </Drawer.Navigator>
   );

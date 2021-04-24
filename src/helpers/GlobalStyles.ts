@@ -10,6 +10,10 @@ const GlobalStyles = StyleSheet.create({
     width: '60%',
     alignSelf: 'center',
   },
+  centerEverything: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default GlobalStyles;
