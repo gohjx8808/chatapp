@@ -4,15 +4,16 @@ const GlobalStyles = StyleSheet.create({
   whiteBackgroundBtn: {
     borderColor: 'blue',
     width: '60%',
-    alignSelf: 'center',
   },
   blueBackgroundBtn: {
     width: '60%',
-    alignSelf: 'center',
   },
   centerEverything: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  inputsWidth: {
+    width: '95%',
   },
 });
 

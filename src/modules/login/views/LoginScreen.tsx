@@ -35,7 +35,7 @@ const LoginScreen = (props: propsFromRedux) => {
           title="Welcome to ChatApp!"
           titleStyle={styles.loginTitle}
         />
-        <Card.Content>
+        <Card.Content style={GlobalStyles.centerEverything}>
           <ControlledTextInput
             name={'email'}
             control={control}
@@ -113,6 +113,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginVertical: '10%',
+    width: '100%',
+    alignItems: 'center',
   },
   btnSpace: {
     marginTop: '5%',

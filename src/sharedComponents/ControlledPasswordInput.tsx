@@ -1,12 +1,11 @@
 import React, {FunctionComponent} from 'react';
 import {Control, Controller} from 'react-hook-form';
-import {ViewStyle} from 'react-native';
 import {TextInput, useTheme} from 'react-native-paper';
+import GlobalStyles from '../helpers/globalStyles';
 
 interface ControlledPasswordInputOwnProps {
   name: string;
   control: Control;
-  customStyle?: ViewStyle;
   passwordSecure: boolean;
   toggleSecure: () => void;
   label: string;
@@ -18,7 +17,6 @@ const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps
   const {
     name,
     control,
-    customStyle,
     passwordSecure,
     toggleSecure,
     label,
@@ -42,7 +40,7 @@ const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps
             validationFunction();
           }}
           theme={{colors: {primary: colors.primary}}}
-          style={customStyle}
+          style={GlobalStyles.inputsWidth}
           secureTextEntry={passwordSecure}
           right={
             <TextInput.Icon

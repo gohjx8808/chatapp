@@ -91,7 +91,7 @@ const RegistrationScreen = (props: PropsFromRedux) => {
     <View style={styles.backgroundView}>
       <Card style={styles.registerCard}>
         <Card.Title title="Registration" titleStyle={styles.loginTitle} />
-        <Card.Content>
+        <Card.Content style={GlobalStyles.centerEverything}>
           <ControlledTextInput
             name={'displayName'}
             control={control}
@@ -193,6 +193,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: '5%',
+    width: '100%',
+    alignItems: 'center',
   },
   btnSpace: {
     marginTop: '5%',
