@@ -1,6 +1,6 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import {ScrollView, StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {Appbar, Avatar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -27,13 +27,15 @@ const MyProfileScreen = (props: PropsFromRedux) => {
           source={{uri: userDetails.photoURL}}
           style={styles.iconTopSpace}
         />
-        <ControlledTextInput
-          control={control}
-          name="name"
-          label="Display Name"
-          error={errors.name}
-          defaultValue={userDetails.display_name}
-        />
+        <View style={styles.form}>
+          <ControlledTextInput
+            control={control}
+            name="name"
+            label="Display Name"
+            error={errors.name}
+            defaultValue={userDetails.display_name}
+          />
+        </View>
       </ScrollView>
     </>
   );
@@ -50,5 +52,8 @@ export default connector(MyProfileScreen);
 const styles = StyleSheet.create({
   iconTopSpace: {
     marginTop: '8%',
+  },
+  form: {
+    paddingHorizontal: '5%',
   },
 });

@@ -26,8 +26,8 @@ function* submitLoginSaga() {
       yield put(loginActionCreators.toggleLoginLoading(false));
       const currentUserData = auth().currentUser;
       const userDetail = {
-        uid: currentUserData?.uid,
-        display_name: currentUserData?.displayName!,
+        uid: currentUserData!.uid,
+        display_name: currentUserData!.displayName!,
         photoURL:
           currentUserData?.photoURL === null
             ? assets.defaultUser

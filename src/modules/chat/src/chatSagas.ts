@@ -1,6 +1,7 @@
 import database from '@react-native-firebase/database';
 import {END, EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, select, take} from '@redux-saga/core/effects';
+import assets from '../../../helpers/assets';
 import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators, chatActions} from './chatActions';
 import {selectedFrenSelector} from './chatSelectors';
@@ -24,7 +25,10 @@ function getChatList(userID: string) {
             const frenData = {
               uid: receiverUserID,
               name: userSnapshot.val().name,
-              photoURL: userSnapshot.val().photoURL,
+              photoURL:
+                userSnapshot.val().photoURL === null
+                  ? assets.defaultUser
+                  : userSnapshot.val().photoURL,
             };
             emitter(frenData);
           });

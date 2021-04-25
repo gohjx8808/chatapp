@@ -133,9 +133,7 @@ const ChatScreen = (props: PropsFromRedux) => {
         <Avatar.Image
           size={36}
           source={{
-            uri: !selectedFren.photoURL
-              ? assets.defaultUser
-              : selectedFren.photoURL,
+            uri: selectedFren.photoURL,
           }}
         />
       </Appbar.Header>
@@ -143,11 +141,9 @@ const ChatScreen = (props: PropsFromRedux) => {
         messages={messages}
         onSend={message => onSend(message)}
         user={{
-          _id: !userDetails.uid ? '' : userDetails.uid,
-          name: !userDetails.display_name ? '' : userDetails.display_name,
-          avatar: !userDetails.photoURL
-            ? assets.defaultUser
-            : userDetails.photoURL,
+          _id: userDetails.uid,
+          name: userDetails.display_name,
+          avatar: userDetails.photoURL,
         }}
         renderDay={renderCustomDay}
         renderBubble={renderCustomBubble}

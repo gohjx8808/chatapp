@@ -9,8 +9,8 @@ declare namespace login {
   }
 
   interface userData {
-    uid?: string;
-    display_name?: string;
-    photoURL?: string;
+    uid: string;
+    display_name: string;
+    photoURL: string;
   }
 }

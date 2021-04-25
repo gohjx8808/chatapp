@@ -3,7 +3,7 @@ import {loginActions, loginActionTypes} from './loginActions';
 
 const INITIAL_STATE: login.State = {
   isLoginLoading: false,
-  userDetails: {uid: undefined, display_name: undefined, photoURL: undefined},
+  userDetails: {uid: '', display_name: '', photoURL: ''},
 };
 
 const isLoginLoading = (
