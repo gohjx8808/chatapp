@@ -7,7 +7,7 @@ export const isLoginLoadingSelector = createSelector(
   login => login.isLoginLoading,
 );
 
-export const userDetailsSelector = createSelector(
+export const currentUserSelector = createSelector(
   loginSelector,
-  login => login.userDetails,
+  login => login.currentUser,
 );

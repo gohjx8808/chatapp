@@ -1,16 +1,17 @@
 declare namespace login {
   interface State {
     isLoginLoading: boolean;
-    userDetails: userData;
+    currentUser: currentUserData;
   }
   interface onLoginPayload {
     email: string;
     password: string;
   }
 
-  interface userData {
+  interface currentUserData {
     uid: string;
-    display_name: string;
+    email: string;
+    name: string;
     photoURL: string;
   }
 }

@@ -12,7 +12,6 @@ import routeNames from '../src/routeNames';
 const CustomDrawer = (props: DrawerContentComponentProps) => {
   let activeIndex = props.state.index;
   let activeRouteName = props.state.routes[activeIndex].name;
-  console.log(activeRouteName);
 
   return (
     <DrawerContentScrollView {...props}>

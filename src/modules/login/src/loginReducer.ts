@@ -3,7 +3,7 @@ import {loginActions, loginActionTypes} from './loginActions';
 
 const INITIAL_STATE: login.State = {
   isLoginLoading: false,
-  userDetails: {uid: '', display_name: '', photoURL: ''},
+  currentUser: {uid: '', name: '', email: '', photoURL: ''},
 };
 
 const isLoginLoading = (
@@ -18,10 +18,10 @@ const isLoginLoading = (
   }
 };
 
-const userDetails = (
-  state = INITIAL_STATE.userDetails,
+const currentUser = (
+  state = INITIAL_STATE.currentUser,
   action: loginActionTypes.storeUserDetailsActionType,
-): login.userData => {
+): login.currentUserData => {
   switch (action.type) {
     case loginActions.STORE_USER_DETAILS:
       return action.payload;
@@ -30,4 +30,4 @@ const userDetails = (
   }
 };
 
-export default combineReducers<login.State>({isLoginLoading, userDetails});
+export default combineReducers<login.State>({isLoginLoading, currentUser});

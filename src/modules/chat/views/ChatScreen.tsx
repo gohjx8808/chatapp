@@ -17,26 +17,25 @@ import {
 import {Appbar, Avatar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
-import Assets from '../../../helpers/assets';
 import {
   dialogFlowClientEmail,
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
+import {currentUserSelector} from '../../login/src/loginSelectors';
 import {goBack} from '../../navigation/src/navigationUtils';
-import {userDetailsSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators} from '../src/chatActions';
 import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';
 
 const ChatScreen = (props: PropsFromRedux) => {
-  const {messages, userDetails, getChatMessages, selectedFren} = props;
+  const {messages, currentUser, getChatMessages, selectedFren} = props;
   const botUser = {
     _id: 'FAQ Bot',
     name: 'tester2',
     avatar: assets.chatBot,
   };
 
-  const databaseRef = `/chat/${userDetails.uid}/${selectedFren.uid}`;
+  const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
 
   useEffect(() => {
     Dialogflow_V2.setConfiguration(
@@ -126,7 +125,7 @@ const ChatScreen = (props: PropsFromRedux) => {
   };
 
   return (
-    <ImageBackground source={Assets.chatBg} style={styles.chatBg}>
+    <ImageBackground source={assets.chatBg} style={styles.chatBg}>
       <Appbar.Header>
         <Appbar.Action icon="arrow-left" onPress={() => goBack()} />
         <Appbar.Content title={selectedFren.name} />
@@ -141,9 +140,9 @@ const ChatScreen = (props: PropsFromRedux) => {
         messages={messages}
         onSend={message => onSend(message)}
         user={{
-          _id: userDetails.uid,
-          name: userDetails.display_name,
-          avatar: userDetails.photoURL,
+          _id: currentUser.uid,
+          name: currentUser.name,
+          avatar: currentUser.photoURL,
         }}
         renderDay={renderCustomDay}
         renderBubble={renderCustomBubble}
@@ -159,7 +158,7 @@ const ChatScreen = (props: PropsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     messages: messagesSelector(state),
-    userDetails: userDetailsSelector(state),
+    currentUser: currentUserSelector(state),
     selectedFren: selectedFrenSelector(state),
   }),
   {

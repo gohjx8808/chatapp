@@ -2,6 +2,8 @@ export class loginActions {
   public static readonly SUBMIT_LOGIN = 'LOGIN/SUBMIT_LOGIN';
   public static readonly TOGGLE_LOGIN_LOADING = 'LOGIN/TOGGLE_LOGIN_LOADING';
   public static readonly STORE_USER_DETAILS = 'LOGIN/STORE_USER_DETAILS';
+  public static readonly DONE_STORING_CURRENT_USER_DATA =
+    'LOGIN/DONE_STORING_CURRENT_USER_DATA';
 }
 
 export declare namespace loginActionTypes {
@@ -15,7 +17,10 @@ export declare namespace loginActionTypes {
   >;
   type storeUserDetailsActionType = ActionWithPayload<
     typeof loginActions.STORE_USER_DETAILS,
-    login.userData
+    login.currentUserData
+  >;
+  type doneStoringCurrentUserDataActionType = Action<
+    typeof loginActions.DONE_STORING_CURRENT_USER_DATA
   >;
 }
 
@@ -33,9 +38,12 @@ export class loginActionCreators {
     payload,
   });
   public static storeUserDetails = (
-    payload: login.userData,
+    payload: login.currentUserData,
   ): loginActionTypes.storeUserDetailsActionType => ({
     type: loginActions.STORE_USER_DETAILS,
     payload,
+  });
+  public static doneStoringCurrentUserData = (): loginActionTypes.doneStoringCurrentUserDataActionType => ({
+    type: loginActions.DONE_STORING_CURRENT_USER_DATA,
   });
 }

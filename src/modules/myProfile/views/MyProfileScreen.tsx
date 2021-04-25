@@ -1,15 +1,15 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {Appbar, Avatar} from 'react-native-paper';
+import {Appbar, Avatar, HelperText} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
-import {userDetailsSelector} from '../../login/src/loginSelectors';
+import {currentUserSelector} from '../../login/src/loginSelectors';
 import {toggleDrawer} from '../../navigation/src/navigationUtils';
 
 const MyProfileScreen = (props: PropsFromRedux) => {
-  const {userDetails} = props;
+  const {currentUser} = props;
 
   const {
     control,
@@ -24,7 +24,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
       </Appbar.Header>
       <ScrollView contentContainerStyle={GlobalStyles.centerEverything}>
         <Avatar.Image
-          source={{uri: userDetails.photoURL}}
+          source={{uri: currentUser.photoURL}}
           style={styles.iconTopSpace}
         />
         <View style={styles.form}>
@@ -33,14 +33,18 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             name="name"
             label="Display Name"
             error={errors.name}
-            defaultValue={userDetails.display_name}
+            defaultValue={currentUser.name}
           />
+          <HelperText type="error" visible={!!errors.email}>
+            {errors.email?.message}
+          </HelperText>
           <ControlledTextInput
             control={control}
             name="email"
             label="Email"
             error={errors.email}
-            defaultValue={userDetails.display_name}
+            defaultValue={currentUser.email}
+            disabled
           />
         </View>
       </ScrollView>
@@ -49,7 +53,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
 };
 
 const connector = connect((state: GlobalState) => ({
-  userDetails: userDetailsSelector(state),
+  currentUser: currentUserSelector(state),
 }));
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -61,6 +65,7 @@ const styles = StyleSheet.create({
     marginTop: '8%',
   },
   form: {
-    paddingHorizontal: '5%',
+    width: '90%',
+    marginTop: '5%',
   },
 });

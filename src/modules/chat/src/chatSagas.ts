@@ -2,7 +2,7 @@ import database from '@react-native-firebase/database';
 import {END, EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, select, take} from '@redux-saga/core/effects';
 import assets from '../../../helpers/assets';
-import {userDetailsSelector} from '../../login/src/loginSelectors';
+import {currentUserSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators, chatActions} from './chatActions';
 import {selectedFrenSelector} from './chatSelectors';
 
@@ -16,33 +16,34 @@ function getChatList(userID: string) {
   return eventChannel(emitter => {
     database()
       .ref(chatDatabaseRef)
-      .on('child_added', chatSnapshot => {
-        const receiverUserID = chatSnapshot.key;
-        const userDatabaseRef = `/users/${receiverUserID}`;
-        database()
-          .ref(userDatabaseRef)
-          .once('value', (userSnapshot: any) => {
-            const frenData = {
-              uid: receiverUserID,
-              name: userSnapshot.val().name,
-              photoURL:
-                userSnapshot.val().photoURL === null
-                  ? assets.defaultUser
-                  : userSnapshot.val().photoURL,
-            };
-            emitter(frenData);
-          });
+      .on('value', chatSnapshots => {
+        chatSnapshots.forEach(chatSnapshot => {
+          const receiverID = chatSnapshot.key;
+          const userDatabaseRef = `/users/${receiverID}`;
+          database()
+            .ref(userDatabaseRef)
+            .once('value', (userSnapshot: any) => {
+              const frenData = {
+                uid: receiverID,
+                name: userSnapshot.val().name,
+                photoURL:
+                  userSnapshot.val().photoURL === ''
+                    ? assets.defaultUser
+                    : userSnapshot.val().photoURL,
+              };
+              emitter(frenData);
+            });
+          return undefined;
+        });
       });
-    return () => {
-      console.log('unsubscribe');
-    };
+    return () => {};
   });
 }
 
 function* getFrenListSaga() {
   yield take(chatActions.GET_FREN_LIST);
-  const currentUser: login.userData = yield select(userDetailsSelector);
-  const userID = currentUser.uid!;
+  const currentUser: login.currentUserData = yield select(currentUserSelector);
+  const userID = currentUser.uid;
   const chatSnapshotResponse: EventChannel<string> = yield call(
     getChatList,
     userID,
@@ -79,7 +80,7 @@ function* storeChatMessagesSaga() {
 
 function* storeChatMessagesListener() {
   const selectedFren: chat.frenData = yield select(selectedFrenSelector);
-  const currentUser: login.userData = yield select(userDetailsSelector);
+  const currentUser: login.currentUserData = yield select(currentUserSelector);
   const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
   const getChatMessagesAction: EventChannel<chat.IMessage> = yield call(
     getChatMessages,
