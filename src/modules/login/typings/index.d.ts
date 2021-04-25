@@ -13,5 +13,7 @@ declare namespace login {
     email: string;
     name: string;
     photoURL: string;
+    dob: string;
+    gender: string;
   }
 }

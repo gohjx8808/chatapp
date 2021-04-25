@@ -18,7 +18,7 @@ const Drawer = createDrawerNavigator();
 const DashboardNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName={routeNames.CHAT_NAV}
+      initialRouteName={routeNames.MY_PROFILE}
       drawerContent={CustomDrawer}>
       <Drawer.Screen name={routeNames.CHAT_NAV} component={chatNavigator} />
       <Drawer.Screen name={routeNames.MY_PROFILE} component={MyProfileScreen} />
@@ -30,7 +30,7 @@ const Navigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName={routeNames.LOGIN}
+        initialRouteName={routeNames.DASHBOARD_NAV}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name={routeNames.LOGIN} component={LoginScreen} />
         <Stack.Screen

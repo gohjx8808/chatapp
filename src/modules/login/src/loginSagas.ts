@@ -47,6 +47,8 @@ function* getCurrentUserDataSaga() {
         currentUserData?.photoURL === ''
           ? assets.defaultUser
           : currentUserData!.photoURL,
+      dob: currentUserData.dob,
+      gender: currentUserData.gender,
     };
     yield put(loginActionCreators.storeUserDetails(currentUserDetail));
     yield put(loginActionCreators.doneStoringCurrentUserData());
