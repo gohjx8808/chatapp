@@ -9,10 +9,11 @@ interface ControlledTextInputOwnProps {
   label: string;
   error: boolean;
   defaultValue?: string;
+  disabled?: boolean;
 }
 
 const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = props => {
-  const {name, control, label, error, defaultValue} = props;
+  const {name, control, label, error, defaultValue, disabled} = props;
   const {colors} = useTheme();
 
   return (
@@ -31,6 +32,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
           error={error}
           style={GlobalStyles.inputsWidth}
           dense
+          disabled={disabled}
         />
       )}
     />

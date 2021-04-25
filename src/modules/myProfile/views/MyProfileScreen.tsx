@@ -35,6 +35,13 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             error={errors.name}
             defaultValue={userDetails.display_name}
           />
+          <ControlledTextInput
+            control={control}
+            name="email"
+            label="Email"
+            error={errors.email}
+            defaultValue={userDetails.display_name}
+          />
         </View>
       </ScrollView>
     </>
