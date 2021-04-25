@@ -2,13 +2,13 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Image, StyleSheet, View} from 'react-native';
-import {Button, Card, HelperText} from 'react-native-paper';
+import {Button, Card} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
-import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
-import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import Assets from '../../../helpers/assets';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {LoginSchema} from '../../../helpers/validationSchema';
+import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
+import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
 import {loginActionCreators} from '../src/loginActions';
@@ -42,9 +42,6 @@ const LoginScreen = (props: propsFromRedux) => {
             label="Email"
             error={errors.email}
           />
-          <HelperText type="error" visible={!!errors.email}>
-            {errors.email?.message}
-          </HelperText>
           <ControlledPasswordInput
             name="password"
             control={control}
@@ -54,9 +51,6 @@ const LoginScreen = (props: propsFromRedux) => {
             validationFunction={() => {}}
             error={errors.password}
           />
-          <HelperText type="error" visible={!!errors.password}>
-            {errors.password?.message}
-          </HelperText>
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"

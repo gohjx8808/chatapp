@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
-import {Button, Card, HelperText, IconButton, Text} from 'react-native-paper';
+import {Button, Card, IconButton, Text} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {RegisterSchema} from '../../../helpers/validationSchema';
@@ -98,18 +98,12 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             label="Display Name"
             error={errors.displayName}
           />
-          <HelperText type="error" visible={!!errors.email}>
-            {errors.email?.message}
-          </HelperText>
           <ControlledTextInput
             name={'email'}
             control={control}
             label="Email"
             error={errors.email}
           />
-          <HelperText type="error" visible={!!errors.email}>
-            {errors.email?.message}
-          </HelperText>
           <ControlledPasswordInput
             name="password"
             control={control}
@@ -119,9 +113,6 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             validationFunction={validate}
             error={errors.password}
           />
-          <HelperText type="error" visible={!!errors.password}>
-            {errors.password?.message}
-          </HelperText>
           <ControlledPasswordInput
             name="confirmPassword"
             control={control}
@@ -131,9 +122,6 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             validationFunction={validate}
             error={errors.confirmPassword}
           />
-          <HelperText type="error" visible={!!errors.confirmPassword}>
-            {errors.confirmPassword?.message}
-          </HelperText>
           <FlatList
             data={passwordRequirement}
             renderItem={renderPasswordRequirement}

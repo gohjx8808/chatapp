@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
-import {Control, Controller} from 'react-hook-form';
-import {TextInput, useTheme} from 'react-native-paper';
+import {Control, Controller, FieldErrors} from 'react-hook-form';
+import {HelperText, TextInput, useTheme} from 'react-native-paper';
 import GlobalStyles from '../helpers/globalStyles';
 
 interface ControlledPasswordInputOwnProps {
@@ -10,7 +10,7 @@ interface ControlledPasswordInputOwnProps {
   toggleSecure: () => void;
   label: string;
   validationFunction: () => void;
-  error: boolean;
+  error: FieldErrors;
 }
 
 const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps> = props => {
@@ -26,33 +26,38 @@ const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps
   const {colors} = useTheme();
 
   return (
-    <Controller
-      name={name}
-      control={control}
-      defaultValue=""
-      render={({field: {onChange, value}}) => (
-        <TextInput
-          mode="outlined"
-          label={label}
-          value={value}
-          onChangeText={text => {
-            onChange(text);
-            validationFunction();
-          }}
-          theme={{colors: {primary: colors.primary}}}
-          style={GlobalStyles.inputsWidth}
-          secureTextEntry={passwordSecure}
-          right={
-            <TextInput.Icon
-              name={passwordSecure ? 'eye-off' : 'eye'}
-              onPress={toggleSecure}
-            />
-          }
-          error={error}
-          dense
-        />
-      )}
-    />
+    <>
+      <Controller
+        name={name}
+        control={control}
+        defaultValue=""
+        render={({field: {onChange, value}}) => (
+          <TextInput
+            mode="outlined"
+            label={label}
+            value={value}
+            onChangeText={text => {
+              onChange(text);
+              validationFunction();
+            }}
+            theme={{colors: {primary: colors.primary}}}
+            style={GlobalStyles.inputsWidth}
+            secureTextEntry={passwordSecure}
+            right={
+              <TextInput.Icon
+                name={passwordSecure ? 'eye-off' : 'eye'}
+                onPress={toggleSecure}
+              />
+            }
+            error={!!error}
+            dense
+          />
+        )}
+      />
+      <HelperText type="error" visible={!!error}>
+        {error?.message}
+      </HelperText>
+    </>
   );
 };
 

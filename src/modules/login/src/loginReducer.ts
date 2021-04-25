@@ -3,7 +3,14 @@ import {loginActions, loginActionTypes} from './loginActions';
 
 const INITIAL_STATE: login.State = {
   isLoginLoading: false,
-  currentUser: {uid: '', name: '', email: '', photoURL: ''},
+  currentUser: {
+    uid: '',
+    name: '',
+    email: '',
+    photoURL: '',
+    gender: '',
+    dob: '',
+  },
 };
 
 const isLoginLoading = (
