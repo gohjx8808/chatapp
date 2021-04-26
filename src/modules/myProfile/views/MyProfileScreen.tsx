@@ -4,6 +4,7 @@ import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {Appbar, Avatar, HelperText} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
+import ControlledDatepicker from '../../../sharedComponents/ControlledDatepicker';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {currentUserSelector} from '../../login/src/loginSelectors';
@@ -48,10 +49,10 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             defaultValue={currentUser.email}
             disabled
           />
-          <ControlledTextInput
+          <ControlledDatepicker
             control={control}
             name="dob"
-            label="Date of birth"
+            placeholder="Date of birth"
             error={errors.dob}
             defaultValue={currentUser.dob}
           />
