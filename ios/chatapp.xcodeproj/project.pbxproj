@@ -105,7 +105,7 @@
 		CAC76D99446BD76A870642C0 /* Pods-App-chatapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-chatapp.debug.xcconfig"; path = "Target Support Files/Pods-App-chatapp/Pods-App-chatapp.debug.xcconfig"; sourceTree = "<group>"; };
 		D305B593B7E4572D896D84EF /* libPods-chatapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-chatapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D571BE7F263665CB009D2ED2 /* chatapp.staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatapp.staging.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D571BE80263665CC009D2ED2 /* chatapp-staging.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "chatapp-staging.plist"; path = "/Users/jingxuangoh/Documents/chatapp/ios/chatapp-staging.plist"; sourceTree = "<absolute>"; };
+		D571BE80263665CC009D2ED2 /* chatapp-staging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "chatapp-staging-Info.plist"; path = "/Users/jingxuangoh/Documents/chatapp/ios/chatapp-staging-Info.plist"; sourceTree = "<absolute>"; };
 		D572F15C262E65BE0062FE37 /* libPods-chatapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-chatapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D592B6EE262AFFEB008DB8AF /* libreact-native-config.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-config.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5FFCEDC2622F7F700AAA8E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				AA4D3C820D782764F106477E /* Pods */,
 				EC3B11C772B54DA78D31FF85 /* Resources */,
-				D571BE80263665CC009D2ED2 /* chatapp-staging.plist */,
+				D571BE80263665CC009D2ED2 /* chatapp-staging-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -920,7 +920,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "chatapp-staging.plist";
+				INFOPLIST_FILE = "chatapp-staging-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -947,7 +947,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = "chatapp-staging.plist";
+				INFOPLIST_FILE = "chatapp-staging-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
