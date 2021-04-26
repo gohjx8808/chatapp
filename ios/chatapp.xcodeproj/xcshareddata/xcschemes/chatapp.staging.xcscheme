@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1240"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
-      parallelizeBuildables = "NO"
+      parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
       <PreActions>
          <ExecutionAction
@@ -11,6 +11,15 @@
             <ActionContent
                title = "Run Script"
                scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;echo &quot;.env&quot; &gt; /tmp/envfile&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "D571BE5C263665CB009D2ED2"
+                     BuildableName = "chatapp.staging.app"
+                     BlueprintName = "chatapp.staging"
+                     ReferencedContainer = "container:chatapp.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
             </ActionContent>
          </ExecutionAction>
       </PreActions>
@@ -23,7 +32,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D572F3DC262E6C3C0062FE37"
+               BlueprintIdentifier = "D571BE5C263665CB009D2ED2"
                BuildableName = "chatapp.staging.app"
                BlueprintName = "chatapp.staging"
                ReferencedContainer = "container:chatapp.xcodeproj">
@@ -53,7 +62,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D572F3DC262E6C3C0062FE37"
+            BlueprintIdentifier = "D571BE5C263665CB009D2ED2"
             BuildableName = "chatapp.staging.app"
             BlueprintName = "chatapp.staging"
             ReferencedContainer = "container:chatapp.xcodeproj">
@@ -70,7 +79,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D572F3DC262E6C3C0062FE37"
+            BlueprintIdentifier = "D571BE5C263665CB009D2ED2"
             BuildableName = "chatapp.staging.app"
             BlueprintName = "chatapp.staging"
             ReferencedContainer = "container:chatapp.xcodeproj">
