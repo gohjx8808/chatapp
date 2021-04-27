@@ -1,9 +1,10 @@
 import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 import React, {FunctionComponent, useState} from 'react';
-import {Control, Controller, FieldErrors} from 'react-hook-form';
+import {Control, FieldErrors, useController} from 'react-hook-form';
 import {Platform, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {HelperText, Text, useTheme} from 'react-native-paper';
+import {Button, HelperText, Text} from 'react-native-paper';
 import GlobalStyles from '../helpers/globalStyles';
 
 interface ControlledDatepickerOwnProps {
@@ -16,43 +17,46 @@ interface ControlledDatepickerOwnProps {
 
 const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = props => {
   const {name, control, placeholder, error, defaultValue} = props;
-  const {colors} = useTheme();
   const [datepickerDisplay, setDatepickerDisplay] = useState(false);
+  const {
+    field: {value, onChange},
+  } = useController({
+    name,
+    control,
+    defaultValue: defaultValue,
+  });
 
   return (
     <View style={styles.placeholderTouchableContainer}>
-      <Controller
-        name={name}
-        control={control}
-        defaultValue={defaultValue}
-        render={({field: {onChange, value}}) => (
-          <>
-            <TouchableOpacity
-              style={[
-                GlobalStyles.centerEverything,
-                styles.placeholderTouchableContainer,
-              ]}
-              onPress={() => setDatepickerDisplay(true)}>
-              <View style={styles.placeholderContainer}>
-                <Text style={styles.placeholderText}>
-                  {!value ? placeholder : value}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {datepickerDisplay && (
-              <DateTimePicker
-                value={!value ? new Date() : value}
-                mode="date"
-                display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
-                onChange={onChange}
-              />
-            )}
-            <HelperText type="error" visible={!!error}>
-              {error?.message}
-            </HelperText>
-          </>
-        )}
-      />
+      <TouchableOpacity
+        style={[
+          GlobalStyles.centerEverything,
+          styles.placeholderTouchableContainer,
+        ]}
+        onPress={() => setDatepickerDisplay(true)}>
+        <View style={styles.placeholderContainer}>
+          <Text style={styles.placeholderText}>
+            {!value ? placeholder : moment(value).format('LL')}
+          </Text>
+        </View>
+      </TouchableOpacity>
+      {datepickerDisplay && (
+        <>
+          <DateTimePicker
+            value={!value ? new Date() : value}
+            mode="date"
+            display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
+            onChange={(event: any, selectedDate?: Date) => {
+              onChange(selectedDate);
+              setDatepickerDisplay(false);
+            }}
+          />
+          <Button>confirm</Button>
+        </>
+      )}
+      <HelperText type="error" visible={!!error}>
+        {error?.message}
+      </HelperText>
     </View>
   );
 };
