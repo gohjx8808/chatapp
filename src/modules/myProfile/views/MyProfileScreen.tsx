@@ -82,10 +82,10 @@ export default connector(MyProfileScreen);
 
 const styles = StyleSheet.create({
   iconTopSpace: {
-    marginTop: '8%',
+    marginTop: '10%',
   },
   form: {
     width: '90%',
-    marginTop: '5%',
+    marginTop: '10%',
   },
 });
