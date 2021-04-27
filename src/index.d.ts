@@ -3,6 +3,7 @@ interface GlobalState {
   registration: registration.State;
   login: login.State;
   chat: chat.State;
+  permissions: permissions.State;
 }
 
 interface Action<T> {
