@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
@@ -55,6 +56,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             placeholder="Date of birth"
             error={errors.dob}
             defaultValue={currentUser.dob}
+            maximumDate={new Date(moment().subtract(18, 'years').toString())}
           />
           <ControlledSelect
             control={control}

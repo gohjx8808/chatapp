@@ -13,10 +13,11 @@ interface ControlledDatepickerOwnProps {
   placeholder: string;
   error: FieldErrors;
   defaultValue?: string;
+  maximumDate: Date;
 }
 
 const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = props => {
-  const {name, control, placeholder, error, defaultValue} = props;
+  const {name, control, placeholder, error, defaultValue, maximumDate} = props;
   const [datepickerDisplay, setDatepickerDisplay] = useState(false);
   const {
     field: {value, onChange},
@@ -49,7 +50,7 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
             onChange={(event: any, selectedDate?: Date) => {
               onChange(selectedDate);
             }}
-            maximumDate={new Date(moment().subtract(18, 'years').toString())}
+            maximumDate={maximumDate}
           />
           <Button onPress={() => setDatepickerDisplay(false)}>confirm</Button>
         </>
