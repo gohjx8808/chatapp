@@ -2,7 +2,7 @@ declare namespace permission {
   interface State {
     permissionStatus: PermissionStatus;
     permissionType: string;
-    isPermissionModalOpen: boolean;
+    isPermissionErrorModalOpen: boolean;
   }
 
   type PermissionStatus =

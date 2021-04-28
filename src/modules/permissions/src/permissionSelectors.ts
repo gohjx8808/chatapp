@@ -12,7 +12,7 @@ export const permissionStatusSelector = createSelector(
   permission => permission.permissionStatus,
 );
 
-export const isPermissionModalOpenSelector = createSelector(
+export const isPermissionErrorModalOpenSelector = createSelector(
   permissionSelector,
-  permission => permission.isPermissionModalOpen,
+  permission => permission.isPermissionErrorModalOpen,
 );

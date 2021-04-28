@@ -7,8 +7,8 @@ export class permissionActions {
     'PERMISSION/UPDATE_PERMISSION_TYPE';
   public static readonly UPDATE_PERMISSION_STATUS =
     'PERMISSION/UPDATE_PERMISSION_STATUS';
-  public static readonly TOGGLE_PERMISSION_MODAL =
-    'PERMISSION/TOGGLE_PERMISSION_MODAL';
+  public static readonly TOGGLE_PERMISSION_ERROR_MODAL =
+    'PERMISSION/TOGGLE_PERMISSION_ERROR_MODAL';
 }
 
 export declare namespace permissionActionTypes {
@@ -26,8 +26,8 @@ export declare namespace permissionActionTypes {
     typeof permissionActions.UPDATE_PERMISSION_STATUS,
     permission.PermissionStatus
   >;
-  type togglePermissionModalActionType = ActionWithPayload<
-    typeof permissionActions.TOGGLE_PERMISSION_MODAL,
+  type togglePermissionErrorModalActionType = ActionWithPayload<
+    typeof permissionActions.TOGGLE_PERMISSION_ERROR_MODAL,
     boolean
   >;
 }
@@ -51,10 +51,10 @@ export class permissionActionCreators {
     type: permissionActions.UPDATE_PERMISSION_STATUS,
     payload,
   });
-  public static togglePermissionModal = (
+  public static togglePermissionErrorModal = (
     payload: boolean,
-  ): permissionActionTypes.togglePermissionModalActionType => ({
-    type: permissionActions.TOGGLE_PERMISSION_MODAL,
+  ): permissionActionTypes.togglePermissionErrorModalActionType => ({
+    type: permissionActions.TOGGLE_PERMISSION_ERROR_MODAL,
     payload,
   });
 }

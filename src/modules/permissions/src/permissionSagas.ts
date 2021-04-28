@@ -30,7 +30,7 @@ function* checkCameraPermissionSaga() {
       case RESULTS.LIMITED:
       case RESULTS.BLOCKED:
         yield put(permissionActionCreators.updatePermissionStatus(response));
-        yield put(permissionActionCreators.togglePermissionModal(true));
+        yield put(permissionActionCreators.togglePermissionErrorModal(true));
         break;
     }
   }
@@ -49,7 +49,7 @@ function* requestCameraPermissionSaga() {
     case RESULTS.LIMITED:
     case RESULTS.BLOCKED:
       yield put(permissionActionCreators.updatePermissionStatus(response));
-      yield put(permissionActionCreators.togglePermissionModal(true));
+      yield put(permissionActionCreators.togglePermissionErrorModal(true));
       break;
   }
 }
@@ -71,7 +71,7 @@ function* checkPhotoLibraryPermissionSaga() {
       case RESULTS.LIMITED:
       case RESULTS.BLOCKED:
         yield put(permissionActionCreators.updatePermissionStatus(response));
-        yield put(permissionActionCreators.togglePermissionModal(true));
+        yield put(permissionActionCreators.togglePermissionErrorModal(true));
         break;
     }
   }
@@ -90,7 +90,7 @@ function* requestPhotoLibraryPermissionSaga() {
     case RESULTS.LIMITED:
     case RESULTS.BLOCKED:
       yield put(permissionActionCreators.updatePermissionStatus(response));
-      yield put(permissionActionCreators.togglePermissionModal(true));
+      yield put(permissionActionCreators.togglePermissionErrorModal(true));
       break;
   }
 }

@@ -4,7 +4,7 @@ import {permissionActions, permissionActionTypes} from './permissionActions';
 const INITIAL_STATE: permission.State = {
   permissionStatus: 'denied',
   permissionType: '',
-  isPermissionModalOpen: false,
+  isPermissionErrorModalOpen: false,
 };
 
 const permissionStatus = (
@@ -31,12 +31,12 @@ const permissionType = (
   }
 };
 
-const isPermissionModalOpen = (
-  state = INITIAL_STATE.isPermissionModalOpen,
-  action: permissionActionTypes.togglePermissionModalActionType,
+const isPermissionErrorModalOpen = (
+  state = INITIAL_STATE.isPermissionErrorModalOpen,
+  action: permissionActionTypes.togglePermissionErrorModalActionType,
 ): boolean => {
   switch (action.type) {
-    case permissionActions.TOGGLE_PERMISSION_MODAL:
+    case permissionActions.TOGGLE_PERMISSION_ERROR_MODAL:
       return action.payload;
     default:
       return state;
@@ -46,5 +46,5 @@ const isPermissionModalOpen = (
 export default combineReducers<permission.State>({
   permissionStatus,
   permissionType,
-  isPermissionModalOpen,
+  isPermissionErrorModalOpen,
 });

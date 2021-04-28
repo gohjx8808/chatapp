@@ -4,24 +4,24 @@ import {Button, Modal, Portal, Text, Title} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import {permissionActionCreators} from '../src/permissionActions';
 import {
-  isPermissionModalOpenSelector,
+  isPermissionErrorModalOpenSelector,
   permissionStatusSelector,
   permissionTypeSelector,
 } from '../src/permissionSelectors';
 
-const PermissionModal = (props: PropsFromRedux) => {
+const PermissionErrorModal = (props: PropsFromRedux) => {
   const {
     permissionStatus,
     permissionType,
-    isPermissionModalOpen,
-    togglePermissionModal,
+    isPermissionErrorModalOpen,
+    togglePermissionErrorModal,
   } = props;
 
   return (
     <Portal>
       <Modal
-        visible={isPermissionModalOpen}
-        onDismiss={() => togglePermissionModal(false)}
+        visible={isPermissionErrorModalOpen}
+        onDismiss={() => togglePermissionErrorModal(false)}
         contentContainerStyle={styles.modalContainer}>
         <View style={styles.viewWidth}>
           <Title style={styles.centerText}>Permission Required</Title>
@@ -36,7 +36,7 @@ const PermissionModal = (props: PropsFromRedux) => {
           <Button
             mode="contained"
             style={styles.closeBtn}
-            onPress={() => togglePermissionModal(false)}>
+            onPress={() => togglePermissionErrorModal(false)}>
             Close
           </Button>
         </View>
@@ -49,16 +49,17 @@ const connector = connect(
   (state: GlobalState) => ({
     permissionType: permissionTypeSelector(state),
     permissionStatus: permissionStatusSelector(state),
-    isPermissionModalOpen: isPermissionModalOpenSelector(state),
+    isPermissionErrorModalOpen: isPermissionErrorModalOpenSelector(state),
   }),
   {
-    togglePermissionModal: permissionActionCreators.togglePermissionModal,
+    togglePermissionErrorModal:
+      permissionActionCreators.togglePermissionErrorModal,
   },
 );
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(PermissionModal);
+export default connector(PermissionErrorModal);
 
 const styles = StyleSheet.create({
   modalContainer: {
