@@ -1,3 +1,5 @@
 declare namespace myProfile {
-  interface State {}
+  interface State {
+    isImagePickerDialogOpen: boolean;
+  }
 }

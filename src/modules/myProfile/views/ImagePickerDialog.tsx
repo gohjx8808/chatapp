@@ -1,20 +1,44 @@
 import React from 'react';
-import {Button, Dialog, Paragraph, Portal} from 'react-native-paper';
+import {Dialog, List, Portal} from 'react-native-paper';
+import {connect, ConnectedProps} from 'react-redux';
+import {myProfileActionCreators} from '../src/myProfileActions';
+import {isImagePickerDialogOpenSelector} from '../src/myProfileSelectors';
 
-const ImagePickerDialog = () => {
+const ImagePickerDialog = (props: PropsFromRedux) => {
+  const {isImagePickerDialogOpen, toggleImagePickerDialog} = props;
+
+  const hideDialog = () => {
+    toggleImagePickerDialog(false);
+  };
+
   return (
     <Portal>
-      <Dialog visible={visible} onDismiss={hideDialog}>
-        <Dialog.Title>Alert</Dialog.Title>
+      <Dialog visible={isImagePickerDialogOpen} onDismiss={hideDialog}>
+        <Dialog.Title>Image Picker Options</Dialog.Title>
         <Dialog.Content>
-          <Paragraph>This is simple dialog</Paragraph>
+          <List.Item
+            title="Photo Library"
+            onPress={() => console.log('photo')}
+            left={iconProp => <List.Icon {...iconProp} icon="image" />}
+          />
+          <List.Item
+            title="Camera"
+            onPress={() => console.log('camera')}
+            left={iconProp => <List.Icon {...iconProp} icon="camera" />}
+          />
         </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={hideDialog}>Done</Button>
-        </Dialog.Actions>
       </Dialog>
     </Portal>
   );
 };
 
-export default ImagePickerDialog;
+const connector = connect(
+  (state: GlobalState) => ({
+    isImagePickerDialogOpen: isImagePickerDialogOpenSelector(state),
+  }),
+  {toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog},
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(ImagePickerDialog);

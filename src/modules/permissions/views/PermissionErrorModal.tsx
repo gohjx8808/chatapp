@@ -41,7 +41,7 @@ const PermissionErrorModal = (props: PropsFromRedux) => {
               togglePermissionErrorModal(false);
               openSettings();
             }}>
-            Close
+            Open Settings
           </Button>
         </View>
       </Modal>

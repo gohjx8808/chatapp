@@ -10,9 +10,11 @@ import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {toggleDrawer} from '../../navigation/src/navigationUtils';
+import {myProfileActionCreators} from '../src/myProfileActions';
+import ImagePickerDialog from './ImagePickerDialog';
 
 const MyProfileScreen = (props: PropsFromRedux) => {
-  const {currentUser} = props;
+  const {currentUser, toggleImagePickerDialog} = props;
 
   const {
     control,
@@ -26,7 +28,9 @@ const MyProfileScreen = (props: PropsFromRedux) => {
         <Appbar.Content title="My Profile" />
       </Appbar.Header>
       <ScrollView contentContainerStyle={GlobalStyles.centerEverything}>
-        <TouchableOpacity style={GlobalStyles.centerEverything}>
+        <TouchableOpacity
+          style={GlobalStyles.centerEverything}
+          onPress={() => toggleImagePickerDialog(true)}>
           <Avatar.Image
             source={{uri: currentUser.photoURL}}
             style={styles.iconTopSpace}
@@ -67,14 +71,20 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             options={['Male', 'Female']}
           />
         </View>
+        <ImagePickerDialog />
       </ScrollView>
     </>
   );
 };
 
-const connector = connect((state: GlobalState) => ({
-  currentUser: currentUserSelector(state),
-}));
+const connector = connect(
+  (state: GlobalState) => ({
+    currentUser: currentUserSelector(state),
+  }),
+  {
+    toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
+  },
+);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
