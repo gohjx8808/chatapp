@@ -1,6 +1,7 @@
-import {call, fork, put, take} from '@redux-saga/core/effects';
+import {call, fork, put, select, take} from '@redux-saga/core/effects';
 import {RESULTS} from 'react-native-permissions';
 import {permissionActionCreators, permissionActions} from './permissionActions';
+import {permissionStatusSelector} from './permissionSelectors';
 import {
   checkCameraPermission,
   checkPhotoLibraryPermission,
@@ -9,88 +10,82 @@ import {
 } from './permissionUtils';
 
 export default function* permissionRuntime() {
-  yield fork(checkCameraPermissionSaga);
-  yield fork(checkPhotoLibraryPermissionSaga);
+  yield fork(startCameraPermissionRuntime);
+  yield fork(startPhotoLibraryPermissionRuntime);
 }
 
-function* checkCameraPermissionSaga() {
+function* startCameraPermissionRuntime() {
   while (true) {
     yield take(permissionActions.REQUEST_CAMERA_PERMISSION);
-    yield put(permissionActionCreators.updatePermissionType('Camera'));
-    const response: permission.PermissionStatus = yield call(
-      checkCameraPermission,
+    yield call(checkCameraPermissionSaga);
+    const cameraStatus: permission.PermissionStatus = yield select(
+      permissionStatusSelector,
     );
-    switch (response) {
+    switch (cameraStatus) {
       case RESULTS.GRANTED:
-        // trigger docs picker
-        break;
       case RESULTS.DENIED:
-        yield call(requestCameraPermissionSaga);
         break;
-      case RESULTS.LIMITED:
       case RESULTS.BLOCKED:
-        yield put(permissionActionCreators.updatePermissionStatus(response));
+      case RESULTS.LIMITED:
         yield put(permissionActionCreators.togglePermissionErrorModal(true));
         break;
     }
   }
 }
 
-function* requestCameraPermissionSaga() {
-  const response: permission.PermissionStatus = yield call(
-    requestCameraPermission,
+function* checkCameraPermissionSaga() {
+  yield put(permissionActionCreators.updatePermissionType('Camera'));
+  const checkStatus: permission.PermissionStatus = yield call(
+    checkCameraPermission,
   );
-  switch (response) {
+  yield put(permissionActionCreators.updatePermissionStatus(checkStatus));
+  switch (checkStatus) {
     case RESULTS.GRANTED:
-      // trigger docs picker
-      break;
-    case RESULTS.DENIED:
-      break;
     case RESULTS.LIMITED:
     case RESULTS.BLOCKED:
-      yield put(permissionActionCreators.updatePermissionStatus(response));
-      yield put(permissionActionCreators.togglePermissionErrorModal(true));
       break;
+    case RESULTS.DENIED:
+      const requestStatus: permission.PermissionStatus = yield call(
+        requestCameraPermission,
+      );
+      yield put(permissionActionCreators.updatePermissionStatus(requestStatus));
+      break;
+  }
+}
+
+function* startPhotoLibraryPermissionRuntime() {
+  while (true) {
+    yield take(permissionActions.REQUEST_PHOTO_LIBRARY_PERMISSION);
+    yield call(checkPhotoLibraryPermissionSaga);
+    const photoLibraryStatus: permission.PermissionStatus = yield select(
+      permissionStatusSelector,
+    );
+    switch (photoLibraryStatus) {
+      case RESULTS.GRANTED:
+      case RESULTS.DENIED:
+        break;
+      case RESULTS.BLOCKED:
+      case RESULTS.LIMITED:
+        yield put(permissionActionCreators.togglePermissionErrorModal(true));
+    }
   }
 }
 
 function* checkPhotoLibraryPermissionSaga() {
-  while (true) {
-    yield take(permissionActions.REQUEST_PHOTO_LIBRARY_PERMISSION);
-    yield put(permissionActionCreators.updatePermissionType('Photo Library'));
-    const response: permission.PermissionStatus = yield call(
-      checkPhotoLibraryPermission,
-    );
-    switch (response) {
-      case RESULTS.GRANTED:
-        // trigger docs picker
-        break;
-      case RESULTS.DENIED:
-        yield call(requestPhotoLibraryPermissionSaga);
-        break;
-      case RESULTS.LIMITED:
-      case RESULTS.BLOCKED:
-        yield put(permissionActionCreators.updatePermissionStatus(response));
-        yield put(permissionActionCreators.togglePermissionErrorModal(true));
-        break;
-    }
-  }
-}
-
-function* requestPhotoLibraryPermissionSaga() {
+  yield put(permissionActionCreators.updatePermissionType('Photo Library'));
   const response: permission.PermissionStatus = yield call(
-    requestPhotoLibraryPermission,
+    checkPhotoLibraryPermission,
   );
   switch (response) {
     case RESULTS.GRANTED:
-      // trigger docs picker
-      break;
-    case RESULTS.DENIED:
-      break;
     case RESULTS.LIMITED:
     case RESULTS.BLOCKED:
-      yield put(permissionActionCreators.updatePermissionStatus(response));
-      yield put(permissionActionCreators.togglePermissionErrorModal(true));
+      break;
+    case RESULTS.DENIED:
+      const permission: permission.PermissionStatus = yield call(
+        requestPhotoLibraryPermission,
+      );
+      yield put(permissionActionCreators.updatePermissionStatus(permission));
       break;
   }
 }
