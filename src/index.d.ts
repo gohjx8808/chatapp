@@ -4,6 +4,7 @@ interface GlobalState {
   login: login.State;
   chat: chat.State;
   permission: permission.State;
+  myProfile: myProfile.State;
 }
 
 interface Action<T> {

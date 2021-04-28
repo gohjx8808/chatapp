@@ -1,6 +1,7 @@
 import {all, call} from 'redux-saga/effects';
 import chatRuntime from './modules/chat/src/chatSagas';
 import loginRuntime from './modules/login/src/loginSagas';
+import myProfileRuntime from './modules/myProfile/src/myProfileSagas';
 import permissionRuntime from './modules/permissions/src/permissionSagas';
 import registrationRuntime from './modules/registration/src/registrationSagas';
 
@@ -10,5 +11,6 @@ export default function* rootSaga() {
     call(loginRuntime),
     call(chatRuntime),
     call(permissionRuntime),
+    call(myProfileRuntime),
   ]);
 }
