@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, Modal, Portal, Text, Title} from 'react-native-paper';
+import {openSettings} from 'react-native-permissions';
 import {connect, ConnectedProps} from 'react-redux';
 import {permissionActionCreators} from '../src/permissionActions';
 import {
@@ -36,7 +37,10 @@ const PermissionErrorModal = (props: PropsFromRedux) => {
           <Button
             mode="contained"
             style={styles.closeBtn}
-            onPress={() => togglePermissionErrorModal(false)}>
+            onPress={() => {
+              togglePermissionErrorModal(false);
+              openSettings();
+            }}>
             Close
           </Button>
         </View>

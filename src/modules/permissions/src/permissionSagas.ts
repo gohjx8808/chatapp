@@ -30,6 +30,7 @@ function* startCameraPermissionRuntime() {
         yield put(permissionActionCreators.togglePermissionErrorModal(true));
         break;
     }
+    yield put(permissionActionCreators.cameraPermissionCheckDone());
   }
 }
 
@@ -68,6 +69,7 @@ function* startPhotoLibraryPermissionRuntime() {
       case RESULTS.LIMITED:
         yield put(permissionActionCreators.togglePermissionErrorModal(true));
     }
+    yield put(permissionActionCreators.photoLibraryPermissionCheckDone());
   }
 }
 

@@ -9,6 +9,10 @@ export class permissionActions {
     'PERMISSION/UPDATE_PERMISSION_STATUS';
   public static readonly TOGGLE_PERMISSION_ERROR_MODAL =
     'PERMISSION/TOGGLE_PERMISSION_ERROR_MODAL';
+  public static readonly CAMERA_PERMISSION_CHECK_DONE =
+    'PERMISSION/CAMERA_PERMISSION_CHECK_DONE';
+  public static readonly PHOTO_LIBRARY_PERMISSION_CHECK_DONE =
+    'PERMISSION/PHOTO_LIBRARY_PERMISSION_CHECK_DONE';
 }
 
 export declare namespace permissionActionTypes {
@@ -29,6 +33,12 @@ export declare namespace permissionActionTypes {
   type togglePermissionErrorModalActionType = ActionWithPayload<
     typeof permissionActions.TOGGLE_PERMISSION_ERROR_MODAL,
     boolean
+  >;
+  type cameraPermissionCheckDoneActionType = Action<
+    typeof permissionActions.CAMERA_PERMISSION_CHECK_DONE
+  >;
+  type photoLibraryPermissionCheckDoneActionType = Action<
+    typeof permissionActions.PHOTO_LIBRARY_PERMISSION_CHECK_DONE
   >;
 }
 
@@ -56,5 +66,11 @@ export class permissionActionCreators {
   ): permissionActionTypes.togglePermissionErrorModalActionType => ({
     type: permissionActions.TOGGLE_PERMISSION_ERROR_MODAL,
     payload,
+  });
+  public static cameraPermissionCheckDone = (): permissionActionTypes.cameraPermissionCheckDoneActionType => ({
+    type: permissionActions.CAMERA_PERMISSION_CHECK_DONE,
+  });
+  public static photoLibraryPermissionCheckDone = (): permissionActionTypes.photoLibraryPermissionCheckDoneActionType => ({
+    type: permissionActions.PHOTO_LIBRARY_PERMISSION_CHECK_DONE,
   });
 }
