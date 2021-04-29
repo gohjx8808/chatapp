@@ -2,7 +2,13 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  ListRenderItem,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {Button, Card, IconButton, Text} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -171,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   registerCard: {
-    height: '75%',
+    height: Dimensions.get('screen').height * 0.8,
     width: '80%',
   },
   loginTitle: {

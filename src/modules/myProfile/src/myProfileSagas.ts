@@ -1,3 +1,4 @@
+import {FirebaseStorageTypes} from '@react-native-firebase/storage';
 import {EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
 import {
@@ -8,6 +9,12 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {RESULTS} from 'react-native-permissions';
+import {
+  getUploadedPhotoUrl,
+  postUploadProfilePhoto,
+  postUpdateCurrentUserProfile,
+} from '../../../helpers/firebaseUtils';
+import {currentUserSelector} from '../../login/src/loginSelectors';
 import {
   permissionActionCreators,
   permissionActions,
@@ -44,6 +51,8 @@ function* triggerCameraSaga() {
       const cameraOptions: CameraOptions = {
         mediaType: 'photo',
         cameraType: 'front',
+        maxHeight: 40,
+        maxWidth: 40,
       };
       const launchCameraAction: EventChannel<ImagePickerResponse> = yield call(
         launchCameraActionSaga,
@@ -73,6 +82,8 @@ function* triggerPhotoLibrarySaga() {
     case RESULTS.GRANTED:
       const imageLibraryOptions: ImageLibraryOptions = {
         mediaType: 'photo',
+        maxHeight: 480,
+        maxWidth: 480,
       };
       const launchImageLibraryAction: EventChannel<ImagePickerResponse> = yield call(
         launchImageLibrarySaga,
@@ -82,7 +93,24 @@ function* triggerPhotoLibrarySaga() {
         const response: ImagePickerResponse = yield take(
           launchImageLibraryAction,
         );
-        console.log(response);
+        if (response.uri) {
+          const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
+            postUploadProfilePhoto,
+            response,
+          );
+          const photoUrl: string = yield call(
+            getUploadedPhotoUrl,
+            snapshot.metadata.name,
+          );
+          const currentUser: login.currentUserData = yield select(
+            currentUserSelector,
+          );
+          yield call(
+            postUpdateCurrentUserProfile,
+            {photoURL: photoUrl, photoName: snapshot.metadata.name},
+            `/users/${currentUser.uid}`,
+          );
+        }
       }
   }
 }

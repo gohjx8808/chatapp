@@ -31,7 +31,7 @@ const Navigator = () => {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
-        initialRouteName={routeNames.DASHBOARD_NAV}
+        initialRouteName={routeNames.LOGIN}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name={routeNames.LOGIN} component={LoginScreen} />
         <Stack.Screen
