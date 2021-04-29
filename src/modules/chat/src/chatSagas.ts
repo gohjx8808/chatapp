@@ -5,6 +5,7 @@ import assets from '../../../helpers/assets';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {chatActionCreators, chatActions} from './chatActions';
 import {selectedFrenSelector} from './chatSelectors';
+import storage from '@react-native-firebase/storage';
 
 export default function* chatRuntime() {
   yield fork(getFrenListSaga);
@@ -23,15 +24,26 @@ function getChatList(userID: string) {
           database()
             .ref(userDatabaseRef)
             .once('value', (userSnapshot: any) => {
-              const frenData = {
-                uid: receiverID,
-                name: userSnapshot.val().name,
-                photoURL:
-                  userSnapshot.val().photoURL === ''
-                    ? assets.defaultUser
-                    : userSnapshot.val().photoURL,
-              };
-              emitter(frenData);
+              if (userSnapshot.val().photoName === '') {
+                const frenData = {
+                  uid: receiverID,
+                  name: userSnapshot.val().name,
+                  photoURL: assets.defaultUser,
+                };
+                emitter(frenData);
+              } else {
+                storage()
+                  .ref(`/${userSnapshot.val().photoName}`)
+                  .getDownloadURL()
+                  .then(photoURL => {
+                    const frenData = {
+                      uid: receiverID,
+                      name: userSnapshot.val().name,
+                      photoURL: photoURL,
+                    };
+                    emitter(frenData);
+                  });
+              }
             });
           return undefined;
         });

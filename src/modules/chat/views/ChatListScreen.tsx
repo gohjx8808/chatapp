@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
-import assets from '../../../helpers/assets';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
@@ -37,8 +36,7 @@ const ChatListScreen = (props: PropsFromRedux) => {
               <Avatar.Image
                 {...iconProps}
                 source={{
-                  uri:
-                    fren.photoURL === '' ? assets.defaultUser : fren.photoURL,
+                  uri: fren.photoURL,
                 }}
                 size={36}
               />

@@ -32,12 +32,6 @@ declare namespace chat {
     photoURL: string;
   }
 
-  interface userSnapshotData {
-    email: string;
-    name: string;
-    photoURL: string;
-  }
-
   interface chatSnapshotData {
     key: string;
   }

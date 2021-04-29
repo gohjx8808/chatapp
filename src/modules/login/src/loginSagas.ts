@@ -3,7 +3,10 @@ import database from '@react-native-firebase/database';
 import {EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, take} from '@redux-saga/core/effects';
 import assets from '../../../helpers/assets';
-import {postSubmitLogin} from '../../../helpers/firebaseUtils';
+import {
+  getUploadedPhotoUrl,
+  postSubmitLogin,
+} from '../../../helpers/firebaseUtils';
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
 import {statusActionCreators} from '../../status/src/statusActions';
@@ -36,17 +39,23 @@ function* getCurrentUserDataSaga() {
     currentUserAuthData!.uid,
   );
   while (true) {
-    const currentUserData: login.currentUserData = yield take(
+    const currentUserData: login.getUserDataPayload = yield take(
       getCurrentUserDataAction,
     );
+    let currentUserPhotoURL = '';
+    if (currentUserData?.photoName === '') {
+      currentUserPhotoURL = assets.defaultUser;
+    } else {
+      currentUserPhotoURL = yield call(
+        getUploadedPhotoUrl,
+        currentUserData!.photoName,
+      );
+    }
     const currentUserDetail = {
       uid: currentUserAuthData!.uid,
       name: currentUserData.name,
       email: currentUserData.email,
-      photoURL:
-        currentUserData?.photoURL === ''
-          ? assets.defaultUser
-          : currentUserData!.photoURL,
+      photoURL: currentUserPhotoURL,
       dob: currentUserData.dob,
       gender: currentUserData.gender,
     };

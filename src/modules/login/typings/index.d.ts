@@ -16,4 +16,13 @@ declare namespace login {
     dob: string;
     gender: string;
   }
+
+  interface getUserDataPayload {
+    uid: string;
+    email: string;
+    name: string;
+    photoName: string;
+    dob: string;
+    gender: string;
+  }
 }

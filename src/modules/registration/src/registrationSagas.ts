@@ -33,7 +33,7 @@ function* submitRegistrationSaga() {
       const userData = {
         name: payload.displayName,
         email: payload.email,
-        photoURL: '',
+        photoName: '',
       };
       database().ref(`users/${registerResponse.user.uid}`).set(userData);
       yield call(postUpdateProfile, payload.displayName);

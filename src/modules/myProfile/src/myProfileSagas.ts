@@ -10,9 +10,8 @@ import {
 } from 'react-native-image-picker';
 import {RESULTS} from 'react-native-permissions';
 import {
-  getUploadedPhotoUrl,
-  postUploadProfilePhoto,
   postUpdateCurrentUserProfile,
+  postUploadProfilePhoto,
 } from '../../../helpers/firebaseUtils';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {
@@ -98,16 +97,12 @@ function* triggerPhotoLibrarySaga() {
             postUploadProfilePhoto,
             response,
           );
-          const photoUrl: string = yield call(
-            getUploadedPhotoUrl,
-            snapshot.metadata.name,
-          );
           const currentUser: login.currentUserData = yield select(
             currentUserSelector,
           );
           yield call(
             postUpdateCurrentUserProfile,
-            {photoURL: photoUrl, photoName: snapshot.metadata.name},
+            {photoName: snapshot.metadata.name},
             `/users/${currentUser.uid}`,
           );
         }
