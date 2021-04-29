@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   },
   viewWidth: {
     width: '100%',
+    marginTop: '5%',
   },
   centerIcon: {
     alignSelf: 'center',
@@ -96,7 +97,9 @@ const styles = StyleSheet.create({
   },
   closeBtn: {
     borderRadius: 20,
-    width: '40%',
+    width: '60%',
+    marginTop: '10%',
+    marginBottom: '5%',
     alignSelf: 'center',
   },
   msgText: {
@@ -105,6 +108,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   underlinedItalicText: {
     textDecorationLine: 'underline',

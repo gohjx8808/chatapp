@@ -75,10 +75,11 @@ function* startPhotoLibraryPermissionRuntime() {
 
 function* checkPhotoLibraryPermissionSaga() {
   yield put(permissionActionCreators.updatePermissionType('Photo Library'));
-  const response: permission.PermissionStatus = yield call(
+  const checkStatus: permission.PermissionStatus = yield call(
     checkPhotoLibraryPermission,
   );
-  switch (response) {
+  yield put(permissionActionCreators.updatePermissionStatus(checkStatus));
+  switch (checkStatus) {
     case RESULTS.GRANTED:
     case RESULTS.LIMITED:
     case RESULTS.BLOCKED:

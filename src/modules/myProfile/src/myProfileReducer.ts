@@ -7,7 +7,7 @@ const INITIAL_STATE: myProfile.State = {
 
 const isImagePickerDialogOpen = (
   state = INITIAL_STATE.isImagePickerDialogOpen,
-  action: myProfileActionTypes.toggleImagePickerDialog,
+  action: myProfileActionTypes.toggleImagePickerDialogActionType,
 ): boolean => {
   switch (action.type) {
     case myProfileActions.TOGGLE_IMAGE_PICKER_DIALOG:
