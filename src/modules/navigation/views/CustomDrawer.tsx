@@ -3,7 +3,7 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import React from 'react';
-import {Image, StyleSheet} from 'react-native';
+import {Image, Platform, StyleSheet, View} from 'react-native';
 import {Drawer, Title} from 'react-native-paper';
 import assets from '../../../helpers/assets';
 import {navigate} from '../src/navigationUtils';
@@ -14,22 +14,24 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
   let activeRouteName = props.state.routes[activeIndex].name;
 
   return (
-    <DrawerContentScrollView {...props}>
+    <View style={styles.wholeFlex}>
       <Image source={assets.corgiSquare} style={styles.corgiImage} />
       <Title style={styles.logoTitle}>ChatApp</Title>
-      <Drawer.Item
-        label="Messages"
-        onPress={() => navigate(routeNames.CHAT_NAV)}
-        active={activeRouteName === routeNames.CHAT_NAV}
-        icon="chat"
-      />
-      <Drawer.Item
-        label="My Profile"
-        onPress={() => navigate(routeNames.MY_PROFILE)}
-        active={activeRouteName === routeNames.MY_PROFILE}
-        icon="account-circle"
-      />
-    </DrawerContentScrollView>
+      <DrawerContentScrollView {...props} style={styles.drawerItemReadjustment}>
+        <Drawer.Item
+          label="Messages"
+          onPress={() => navigate(routeNames.CHAT_NAV)}
+          active={activeRouteName === routeNames.CHAT_NAV}
+          icon="chat"
+        />
+        <Drawer.Item
+          label="My Profile"
+          onPress={() => navigate(routeNames.MY_PROFILE)}
+          active={activeRouteName === routeNames.MY_PROFILE}
+          icon="account-circle"
+        />
+      </DrawerContentScrollView>
+    </View>
   );
 };
 
@@ -37,13 +39,20 @@ export default CustomDrawer;
 
 const styles = StyleSheet.create({
   corgiImage: {
-    height: '80%',
-    width: '40%',
+    height: Platform.OS === 'android' ? '20%' : '15%',
+    width: Platform.OS === 'android' ? '60%' : '45%',
     alignSelf: 'center',
     marginVertical: '2%',
     borderRadius: 10,
   },
   logoTitle: {
     alignSelf: 'center',
+  },
+  wholeFlex: {
+    flex: 1,
+    marginTop: Platform.OS === 'android' ? '5%' : '15%',
+  },
+  drawerItemReadjustment: {
+    marginTop: Platform.OS === 'android' ? 0 : '-15%',
   },
 });
