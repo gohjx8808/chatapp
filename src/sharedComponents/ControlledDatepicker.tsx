@@ -14,10 +14,19 @@ interface ControlledDatepickerOwnProps {
   error: FieldErrors;
   defaultValue?: string;
   maximumDate: Date;
+  label: string;
 }
 
 const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = props => {
-  const {name, control, placeholder, error, defaultValue, maximumDate} = props;
+  const {
+    name,
+    control,
+    placeholder,
+    error,
+    defaultValue,
+    maximumDate,
+    label,
+  } = props;
   const [datepickerDisplay, setDatepickerDisplay] = useState(false);
   const {
     field: {value, onChange},
@@ -28,21 +37,33 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
   });
 
   return (
-    <View style={styles.placeholderTouchableContainer}>
+    <View style={GlobalStyles.customInputTouchableContainer}>
       <TouchableOpacity
         style={[
           GlobalStyles.centerEverything,
-          styles.placeholderTouchableContainer,
+          GlobalStyles.customInputTouchableContainer,
         ]}
         onPress={() => setDatepickerDisplay(true)}>
-        <View style={styles.placeholderContainer}>
-          <Text style={styles.placeholderText}>
+        <View
+          style={[
+            GlobalStyles.customPlaceholderContainer,
+            error
+              ? GlobalStyles.customErrorBorder
+              : GlobalStyles.customNormalBorder,
+          ]}>
+          <Text
+            style={
+              error
+                ? GlobalStyles.customErrorPlaceholderText
+                : GlobalStyles.customNormalPlaceholderText
+            }>
             {!value ? placeholder : value}
           </Text>
         </View>
       </TouchableOpacity>
       {datepickerDisplay && (
         <>
+          {Platform.OS === 'ios' && <Text style={styles.label}>{label}</Text>}
           <DateTimePicker
             value={!value ? new Date() : new Date(value)}
             mode="date"
@@ -64,7 +85,10 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
           )}
         </>
       )}
-      <HelperText type="error" visible={!!error}>
+      <HelperText
+        type="error"
+        visible={!!error}
+        style={GlobalStyles.centerText}>
         {error?.message}
       </HelperText>
     </View>
@@ -74,19 +98,6 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
 export default ControlledDatepicker;
 
 const styles = StyleSheet.create({
-  placeholderTouchableContainer: {width: '100%', flex: 1},
-  placeholderContainer: {
-    borderColor: 'black',
-    borderWidth: 0.5,
-    width: '95%',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 4,
-  },
-  placeholderText: {
-    fontSize: 16,
-    color: '#616161',
-  },
   modalContainer: {
     backgroundColor: 'white',
     padding: 20,
@@ -99,6 +110,12 @@ const styles = StyleSheet.create({
   },
   selected: {
     fontWeight: 'bold',
+    color: '#0f4c81',
+  },
+  label: {
+    alignSelf: 'center',
+    fontSize: 14,
+    marginTop: '5%',
     color: '#0f4c81',
   },
 });

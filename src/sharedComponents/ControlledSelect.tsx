@@ -28,7 +28,7 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
   const [modalDisplay, setModalDisplay] = useState(false);
 
   return (
-    <View style={styles.placeholderTouchableContainer}>
+    <View style={GlobalStyles.customInputTouchableContainer}>
       <Controller
         name={name}
         control={control}
@@ -38,16 +38,30 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
             <TouchableOpacity
               style={[
                 GlobalStyles.centerEverything,
-                styles.placeholderTouchableContainer,
+                GlobalStyles.customInputTouchableContainer,
               ]}
               onPress={() => setModalDisplay(true)}>
-              <View style={styles.placeholderContainer}>
-                <Text style={styles.placeholderText}>
+              <View
+                style={[
+                  GlobalStyles.customPlaceholderContainer,
+                  error
+                    ? GlobalStyles.customErrorBorder
+                    : GlobalStyles.customNormalBorder,
+                ]}>
+                <Text
+                  style={
+                    error
+                      ? GlobalStyles.customErrorPlaceholderText
+                      : GlobalStyles.customNormalPlaceholderText
+                  }>
                   {!value ? placeholder : value}
                 </Text>
               </View>
             </TouchableOpacity>
-            <HelperText type="error" visible={!!error}>
+            <HelperText
+              type="error"
+              visible={!!error}
+              style={GlobalStyles.centerText}>
               {error?.message}
             </HelperText>
             <Portal>
@@ -93,19 +107,6 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
 export default ControlledSelect;
 
 const styles = StyleSheet.create({
-  placeholderTouchableContainer: {width: '100%', flex: 1},
-  placeholderContainer: {
-    borderColor: 'black',
-    borderWidth: 0.5,
-    width: '95%',
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    borderRadius: 4,
-  },
-  placeholderText: {
-    fontSize: 16,
-    color: '#616161',
-  },
   modalContainer: {
     backgroundColor: 'white',
     padding: 20,

@@ -22,6 +22,7 @@ export const RegisterSchema = yup.object().shape({
 });
 
 export const UpdateProfileSchema = yup.object().shape({
+  uid: yup.string().required('UID is required'),
   email: yup.string().email('Invalid email').required('Email is required'),
   name: yup.string().required('Name is required'),
   dob: yup.string().required('Date of birth is required'),

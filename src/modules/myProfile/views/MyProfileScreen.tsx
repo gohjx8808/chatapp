@@ -32,7 +32,6 @@ const MyProfileScreen = (props: PropsFromRedux) => {
   const onSubmit = (data: myProfile.updateProfilePayload) => {
     const postData = {
       name: data.name,
-      email: data.email,
       dob: data.dob,
       gender: data.gender,
     };
@@ -59,6 +58,14 @@ const MyProfileScreen = (props: PropsFromRedux) => {
         <View style={[GlobalStyles.centerEverything, styles.form]}>
           <ControlledTextInput
             control={control}
+            name="uid"
+            label="UID"
+            error={errors.uid}
+            defaultValue={currentUser.uid}
+            disabled
+          />
+          <ControlledTextInput
+            control={control}
             name="name"
             label="Display Name"
             error={errors.name}
@@ -79,6 +86,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             error={errors.dob}
             defaultValue={currentUser.dob}
             maximumDate={new Date(moment().subtract(18, 'years').toString())}
+            label="DATE OF BIRTH"
           />
           <ControlledSelect
             control={control}
@@ -91,7 +99,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
           <Button
             mode="contained"
             onPress={handleSubmit(onSubmit)}
-            style={GlobalStyles.blueBackgroundBtn}
+            style={[GlobalStyles.blueBackgroundBtn, styles.btnSpace]}
             color="blue"
             loading={isProfileLoading}
             disabled={isProfileLoading}>
@@ -125,5 +133,9 @@ const styles = StyleSheet.create({
   form: {
     width: '90%',
     marginTop: '10%',
+    paddingBottom: '15%',
+  },
+  btnSpace: {
+    marginTop: '8%',
   },
 });

@@ -13,7 +13,6 @@ declare namespace myProfile {
 
   interface updateProfilePayload {
     name: string;
-    email: string;
     dob: string;
     gender: string;
   }
