@@ -49,10 +49,13 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
             display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
             onChange={(event: any, selectedDate?: Date) => {
               onChange(selectedDate);
+              Platform.OS === 'android' && setDatepickerDisplay(false);
             }}
             maximumDate={maximumDate}
           />
-          <Button onPress={() => setDatepickerDisplay(false)}>confirm</Button>
+          {Platform.OS === 'ios' && (
+            <Button onPress={() => setDatepickerDisplay(false)}>confirm</Button>
+          )}
         </>
       )}
       <HelperText type="error" visible={!!error}>
