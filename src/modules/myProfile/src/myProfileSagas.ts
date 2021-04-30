@@ -10,6 +10,8 @@ import {
 } from 'react-native-image-picker';
 import {RESULTS} from 'react-native-permissions';
 import {
+  defaultAvatar,
+  postDeletePrevUploadedPhoto,
   postUpdateCurrentUserProfile,
   postUploadProfilePhoto,
 } from '../../../helpers/firebaseUtils';
@@ -105,6 +107,12 @@ function* triggerPhotoLibrarySaga() {
             {photoName: snapshot.metadata.name},
             `/users/${currentUser.uid}`,
           );
+          if (
+            currentUser.photoName !== defaultAvatar.defaultUser &&
+            currentUser.photoName !== defaultAvatar.chatBot
+          ) {
+            yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
+          }
         }
       }
   }

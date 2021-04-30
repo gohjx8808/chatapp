@@ -56,6 +56,7 @@ function* getCurrentUserDataSaga() {
       name: currentUserData.name,
       email: currentUserData.email,
       photoURL: currentUserPhotoURL,
+      photoName: currentUserData.photoName,
       dob: currentUserData.dob,
       gender: currentUserData.gender,
     };

@@ -35,3 +35,8 @@ export const postUpdateCurrentUserProfile = (
 export const postDeletePrevUploadedPhoto = (prevPhotoName: string) => {
   storage().ref(`/${prevPhotoName}`).delete();
 };
+
+export const defaultAvatar = {
+  chatBot: 'chat-bot.jpg',
+  defaultUser: 'default-user.png',
+};
