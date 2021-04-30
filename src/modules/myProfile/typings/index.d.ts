@@ -1,6 +1,7 @@
 declare namespace myProfile {
   interface State {
     isImagePickerDialogOpen: boolean;
+    isProfileLoading: boolean;
   }
 
   interface imagePickerResponse {
@@ -8,5 +9,12 @@ declare namespace myProfile {
     base64: string;
     fileName: string;
     type: string;
+  }
+
+  interface updateProfilePayload {
+    name: string;
+    email: string;
+    dob: string;
+    gender: string;
   }
 }

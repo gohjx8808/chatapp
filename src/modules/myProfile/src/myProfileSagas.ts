@@ -21,10 +21,16 @@ import {
   permissionActions,
 } from '../../permissions/src/permissionActions';
 import {permissionStatusSelector} from '../../permissions/src/permissionSelectors';
-import {myProfileActions} from './myProfileActions';
+import {statusActionCreators} from '../../status/src/statusActions';
+import {
+  myProfileActionCreators,
+  myProfileActions,
+  myProfileActionTypes,
+} from './myProfileActions';
 
 export default function* myProfileRuntime() {
   yield fork(selectProfilePhotoSaga);
+  yield fork(updateProfileSaga);
 }
 
 function* selectProfilePhotoSaga() {
@@ -105,7 +111,7 @@ function* triggerPhotoLibrarySaga() {
           yield call(
             postUpdateCurrentUserProfile,
             {photoName: snapshot.metadata.name},
-            `/users/${currentUser.uid}`,
+            currentUser.uid,
           );
           if (
             currentUser.photoName !== defaultAvatar.defaultUser &&
@@ -123,4 +129,39 @@ function launchImageLibrarySaga(options: ImageLibraryOptions) {
     launchImageLibrary(options, response => emmitter(response));
     return () => {};
   });
+}
+
+function* updateProfileSaga() {
+  while (true) {
+    const {
+      payload,
+    }: myProfileActionTypes.submitUpdateProfileActionType = yield take(
+      myProfileActions.SUBMIT_UPDATE_PROFILE,
+    );
+    yield put(myProfileActionCreators.toggleProfileLoading(true));
+    yield put(statusActionCreators.updateStatusTitle('Update Profile'));
+    try {
+      const currentUser: login.currentUserData = yield select(
+        currentUserSelector,
+      );
+      yield call(postUpdateCurrentUserProfile, payload, currentUser.uid);
+      yield put(
+        statusActionCreators.updateStatusMsg(
+          'Your profile had successfully updated!',
+        ),
+      );
+      yield put(statusActionCreators.toggleApiStatus(true));
+      yield put(statusActionCreators.toggleStatusModal(true));
+      yield put(myProfileActionCreators.toggleProfileLoading(false));
+    } catch (error) {
+      yield put(
+        statusActionCreators.updateStatusMsg(
+          'Your profile had failed to update!',
+        ),
+      );
+      yield put(statusActionCreators.toggleApiStatus(false));
+      yield put(statusActionCreators.toggleStatusModal(true));
+      yield put(myProfileActionCreators.toggleProfileLoading(false));
+    }
+  }
 }

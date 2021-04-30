@@ -3,6 +3,7 @@ import {myProfileActions, myProfileActionTypes} from './myProfileActions';
 
 const INITIAL_STATE: myProfile.State = {
   isImagePickerDialogOpen: false,
+  isProfileLoading: false,
 };
 
 const isImagePickerDialogOpen = (
@@ -17,4 +18,19 @@ const isImagePickerDialogOpen = (
   }
 };
 
-export default combineReducers({isImagePickerDialogOpen});
+const isProfileLoading = (
+  state = INITIAL_STATE.isProfileLoading,
+  action: myProfileActionTypes.toggleProfileLoadingActionType,
+): boolean => {
+  switch (action.type) {
+    case myProfileActions.TOGGLE_PROFILE_LOADING:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export default combineReducers<myProfile.State>({
+  isImagePickerDialogOpen,
+  isProfileLoading,
+});

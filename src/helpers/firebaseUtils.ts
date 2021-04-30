@@ -25,11 +25,8 @@ export const getUploadedPhotoUrl = (imageName: string) => {
   return storage().ref(`/${imageName}`).getDownloadURL();
 };
 
-export const postUpdateCurrentUserProfile = (
-  data: any,
-  databaseRef: string,
-) => {
-  return database().ref(databaseRef).update(data);
+export const postUpdateCurrentUserProfile = (data: any, uid: string) => {
+  return database().ref(`/users/${uid}`).update(data);
 };
 
 export const postDeletePrevUploadedPhoto = (prevPhotoName: string) => {

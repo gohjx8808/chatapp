@@ -1,25 +1,43 @@
+import {yupResolver} from '@hookform/resolvers/yup';
 import moment from 'moment';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Appbar, Avatar, HelperText} from 'react-native-paper';
+import {Appbar, Avatar, Button, HelperText} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
+import {UpdateProfileSchema} from '../../../helpers/validationSchema';
 import ControlledDatepicker from '../../../sharedComponents/ControlledDatepicker';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {toggleDrawer} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../src/myProfileActions';
-import ImagePickerDialog from './ImagePickerDialog';
+import {isProfileLoadingSelector} from '../src/myProfileSelectors';
 
 const MyProfileScreen = (props: PropsFromRedux) => {
-  const {currentUser, toggleImagePickerDialog} = props;
+  const {
+    currentUser,
+    toggleImagePickerDialog,
+    isProfileLoading,
+    submitUpdateProfile,
+  } = props;
 
   const {
     control,
     formState: {errors},
-  } = useForm();
+    handleSubmit,
+  } = useForm({resolver: yupResolver(UpdateProfileSchema)});
+
+  const onSubmit = (data: myProfile.updateProfilePayload) => {
+    const postData = {
+      name: data.name,
+      email: data.email,
+      dob: data.dob,
+      gender: data.gender,
+    };
+    submitUpdateProfile(postData);
+  };
 
   return (
     <>
@@ -70,8 +88,16 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             defaultValue={currentUser.gender}
             options={['Male', 'Female']}
           />
+          <Button
+            mode="contained"
+            onPress={handleSubmit(onSubmit)}
+            style={GlobalStyles.blueBackgroundBtn}
+            color="blue"
+            loading={isProfileLoading}
+            disabled={isProfileLoading}>
+            Update
+          </Button>
         </View>
-        <ImagePickerDialog />
       </ScrollView>
     </>
   );
@@ -80,9 +106,11 @@ const MyProfileScreen = (props: PropsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     currentUser: currentUserSelector(state),
+    isProfileLoading: isProfileLoadingSelector(state),
   }),
   {
     toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
+    submitUpdateProfile: myProfileActionCreators.submitUpdateProfile,
   },
 );
 

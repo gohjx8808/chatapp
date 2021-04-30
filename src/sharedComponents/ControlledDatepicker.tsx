@@ -37,24 +37,30 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
         onPress={() => setDatepickerDisplay(true)}>
         <View style={styles.placeholderContainer}>
           <Text style={styles.placeholderText}>
-            {!value ? placeholder : moment(value).format('LL')}
+            {!value ? placeholder : value}
           </Text>
         </View>
       </TouchableOpacity>
       {datepickerDisplay && (
         <>
           <DateTimePicker
-            value={!value ? new Date() : value}
+            value={!value ? new Date() : new Date(value)}
             mode="date"
             display={Platform.OS === 'ios' ? 'spinner' : 'calendar'}
             onChange={(event: any, selectedDate?: Date) => {
-              onChange(selectedDate);
+              onChange(moment(selectedDate).format('LL').toString());
               Platform.OS === 'android' && setDatepickerDisplay(false);
             }}
             maximumDate={maximumDate}
           />
           {Platform.OS === 'ios' && (
-            <Button onPress={() => setDatepickerDisplay(false)}>confirm</Button>
+            <Button
+              onPress={() => {
+                setDatepickerDisplay(false);
+                !value && onChange(moment(maximumDate).format('LL').toString());
+              }}>
+              confirm
+            </Button>
           )}
         </>
       )}

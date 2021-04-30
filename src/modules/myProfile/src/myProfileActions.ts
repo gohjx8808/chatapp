@@ -3,6 +3,10 @@ export class myProfileActions {
     'MY_PROFILE/TOGGLE_IMAGE_PICKER_DIALOG';
   public static readonly OPEN_CAMERA = 'MY_PROFILE/OPEN_CAMERA';
   public static readonly OPEN_PHOTO_LIBRARY = 'MY_PROFILE/OPEN_PHOTO_LIBRARY';
+  public static readonly TOGGLE_PROFILE_LOADING =
+    'MY_PROFILE/TOGGLE_PROFILE_LOADING';
+  public static readonly SUBMIT_UPDATE_PROFILE =
+    'MY_PROFILE/SUBMIT_UPDATE_PROFILE';
 }
 
 export declare namespace myProfileActionTypes {
@@ -13,6 +17,14 @@ export declare namespace myProfileActionTypes {
   type openCameraActionType = Action<typeof myProfileActions.OPEN_CAMERA>;
   type openPhotolibraryActionType = Action<
     typeof myProfileActions.OPEN_PHOTO_LIBRARY
+  >;
+  type toggleProfileLoadingActionType = ActionWithPayload<
+    typeof myProfileActions.TOGGLE_PROFILE_LOADING,
+    boolean
+  >;
+  type submitUpdateProfileActionType = ActionWithPayload<
+    typeof myProfileActions.SUBMIT_UPDATE_PROFILE,
+    myProfile.updateProfilePayload
   >;
 }
 
@@ -28,5 +40,17 @@ export class myProfileActionCreators {
   });
   public static openPhotolibrary = (): myProfileActionTypes.openPhotolibraryActionType => ({
     type: myProfileActions.OPEN_PHOTO_LIBRARY,
+  });
+  public static toggleProfileLoading = (
+    payload: boolean,
+  ): myProfileActionTypes.toggleProfileLoadingActionType => ({
+    type: myProfileActions.TOGGLE_PROFILE_LOADING,
+    payload,
+  });
+  public static submitUpdateProfile = (
+    payload: myProfile.updateProfilePayload,
+  ): myProfileActionTypes.submitUpdateProfileActionType => ({
+    type: myProfileActions.SUBMIT_UPDATE_PROFILE,
+    payload,
   });
 }

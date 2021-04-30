@@ -20,3 +20,10 @@ export const RegisterSchema = yup.object().shape({
     .required('Confirm Password is required')
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 });
+
+export const UpdateProfileSchema = yup.object().shape({
+  email: yup.string().email('Invalid email').required('Email is required'),
+  name: yup.string().required('Name is required'),
+  dob: yup.string().required('Date of birth is required'),
+  gender: yup.string().required('Gender is required'),
+});

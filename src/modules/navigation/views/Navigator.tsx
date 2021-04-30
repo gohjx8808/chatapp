@@ -12,6 +12,7 @@ import routeNames from '../src/routeNames';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from './CustomDrawer';
 import PermissionErrorModal from '../../permissions/views/PermissionErrorModal';
+import ImagePickerDialog from '../../myProfile/views/ImagePickerDialog';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -45,6 +46,7 @@ const Navigator = () => {
       </Stack.Navigator>
       <StatusModal />
       <PermissionErrorModal />
+      <ImagePickerDialog />
     </NavigationContainer>
   );
 };
