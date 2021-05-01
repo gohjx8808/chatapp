@@ -45,6 +45,17 @@ const GlobalStyles = StyleSheet.create({
     fontSize: 16,
     color: '#b00021',
   },
+  sameRowButtonWidth: {
+    width: '40%',
+  },
+  customTextInputRenderValueText: {
+    paddingVertical: '3%',
+    paddingHorizontal: '5%',
+    fontSize: 16,
+  },
+  customTextInputRenderTouchable: {
+    height: 40,
+  },
 });
 
 export default GlobalStyles;

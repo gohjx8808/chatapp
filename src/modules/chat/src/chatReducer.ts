@@ -9,6 +9,7 @@ const INITIAL_STATE: chat.State = {
     name: '',
     photoURL: '',
   },
+  isAddFrenModalOpen: false,
 };
 
 const messages = (
@@ -47,8 +48,21 @@ const selectedFren = (
   }
 };
 
+const isAddFrenModalOpen = (
+  state = INITIAL_STATE.isAddFrenModalOpen,
+  action: chatActionTypes.toggleAddFrenModalActionType,
+): boolean => {
+  switch (action.type) {
+    case chatActions.TOGGLE_ADD_FREN_MODAL:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers<chat.State>({
   messages,
   frenList,
   selectedFren,
+  isAddFrenModalOpen,
 });

@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useState} from 'react';
 import {Control, Controller, FieldErrors} from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   HelperText,
@@ -9,6 +9,7 @@ import {
   Portal,
   Searchbar,
   Text,
+  TextInput,
   Title,
   useTheme,
 } from 'react-native-paper';
@@ -30,42 +31,33 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
   const [searchQuery, setSearchQuery] = useState('');
 
   return (
-    <View style={GlobalStyles.customInputTouchableContainer}>
+    <>
       <Controller
         name={name}
         control={control}
         defaultValue={defaultValue}
         render={({field: {onChange, value}}) => (
           <>
-            <TouchableOpacity
-              style={[
-                GlobalStyles.centerEverything,
-                GlobalStyles.customInputTouchableContainer,
-              ]}
-              onPress={() => setModalDisplay(true)}>
-              <View
-                style={[
-                  GlobalStyles.customPlaceholderContainer,
-                  error
-                    ? GlobalStyles.customErrorBorder
-                    : GlobalStyles.customNormalBorder,
-                ]}>
-                <Text
-                  style={
-                    error
-                      ? GlobalStyles.customErrorPlaceholderText
-                      : GlobalStyles.customNormalPlaceholderText
-                  }>
-                  {!value ? placeholder : value}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <HelperText
-              type="error"
-              visible={!!error}
-              style={GlobalStyles.centerText}>
-              {error?.message}
-            </HelperText>
+            <TextInput
+              mode="outlined"
+              label={placeholder}
+              value={value}
+              theme={{colors: {primary: colors.primary}}}
+              style={GlobalStyles.inputsWidth}
+              dense
+              error={!!error}
+              render={() => (
+                <TouchableOpacity
+                  style={GlobalStyles.customTextInputRenderTouchable}
+                  onPress={() => setModalDisplay(true)}>
+                  {value && (
+                    <Text style={GlobalStyles.customTextInputRenderValueText}>
+                      {value}
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              )}
+            />
             <Portal>
               <Modal
                 visible={modalDisplay}
@@ -112,7 +104,13 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
           </>
         )}
       />
-    </View>
+      <HelperText
+        type="error"
+        visible={!!error}
+        style={GlobalStyles.centerText}>
+        {error?.message}
+      </HelperText>
+    </>
   );
 };
 
