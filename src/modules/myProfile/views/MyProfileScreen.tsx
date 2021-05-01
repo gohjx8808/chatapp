@@ -1,9 +1,16 @@
 import {yupResolver} from '@hookform/resolvers/yup';
+import Clipboard from '@react-native-clipboard/clipboard';
 import moment from 'moment';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Appbar, Avatar, Button, HelperText} from 'react-native-paper';
+import {
+  Appbar,
+  Avatar,
+  Button,
+  HelperText,
+  TextInput,
+} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {UpdateProfileSchema} from '../../../helpers/validationSchema';
@@ -65,13 +72,12 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             error={errors.uid}
             defaultValue={currentUser.uid}
             disabled
-          />
-          <ControlledTextInput
-            control={control}
-            name="name"
-            label="Display Name"
-            error={errors.name}
-            defaultValue={currentUser.name}
+            rightElement={
+              <TextInput.Icon
+                name="content-copy"
+                onPress={() => Clipboard.setString(currentUser.uid)}
+              />
+            }
           />
           <ControlledTextInput
             control={control}
@@ -80,6 +86,19 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             error={errors.email}
             defaultValue={currentUser.email}
             disabled
+            rightElement={
+              <TextInput.Icon
+                name="content-copy"
+                onPress={() => Clipboard.setString(currentUser.email)}
+              />
+            }
+          />
+          <ControlledTextInput
+            control={control}
+            name="name"
+            label="Display Name"
+            error={errors.name}
+            defaultValue={currentUser.name}
           />
           <ControlledDatepicker
             control={control}
@@ -139,5 +158,13 @@ const styles = StyleSheet.create({
   },
   btnSpace: {
     marginTop: '8%',
+  },
+  copyText: {
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
+  secondCopyTextVerticalSpace: {
+    paddingTop: 10,
+    paddingBottom: 15,
   },
 });

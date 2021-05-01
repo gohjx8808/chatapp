@@ -12,6 +12,7 @@ interface ControlledTextInputOwnProps {
   defaultValue?: string;
   disabled?: boolean;
   customStyle?: ViewStyle;
+  rightElement?: React.ReactNode;
 }
 
 const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = props => {
@@ -23,6 +24,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
     defaultValue,
     disabled,
     customStyle,
+    rightElement,
   } = props;
   const {colors} = useTheme();
 
@@ -44,6 +46,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
             style={[GlobalStyles.inputsWidth, customStyle]}
             dense
             disabled={disabled}
+            right={rightElement}
           />
         )}
       />
