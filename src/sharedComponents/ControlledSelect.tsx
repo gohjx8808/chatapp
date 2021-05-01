@@ -7,6 +7,7 @@ import {
   List,
   Modal,
   Portal,
+  Searchbar,
   Text,
   Title,
   useTheme,
@@ -26,6 +27,7 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
   const {name, control, placeholder, error, defaultValue, options} = props;
   const {colors} = useTheme();
   const [modalDisplay, setModalDisplay] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   return (
     <View style={GlobalStyles.customInputTouchableContainer}>
@@ -70,31 +72,41 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
                 onDismiss={() => setModalDisplay(false)}
                 contentContainerStyle={styles.modalContainer}>
                 <Title>{placeholder}</Title>
-                {options.map(item => (
-                  <List.Item
-                    title={item}
-                    onPress={() => {
-                      onChange(item);
-                      setModalDisplay(false);
-                    }}
-                    right={
-                      value === item
-                        ? rightProps => (
-                            <List.Icon
-                              {...rightProps}
-                              icon="check"
-                              color={colors.primary}
-                            />
-                          )
-                        : undefined
-                    }
-                    titleStyle={[
-                      styles.pushOptionsToleft,
-                      value === item && styles.selected,
-                    ]}
-                    key={item}
-                  />
-                ))}
+                <Searchbar
+                  placeholder="Search"
+                  onChangeText={query => setSearchQuery(query)}
+                  value={searchQuery}
+                  style={styles.filterBar}
+                />
+                {options
+                  .filter(item =>
+                    item.toLowerCase().includes(searchQuery.toLowerCase()),
+                  )
+                  .map(item => (
+                    <List.Item
+                      title={item}
+                      onPress={() => {
+                        onChange(item);
+                        setModalDisplay(false);
+                      }}
+                      right={
+                        value === item
+                          ? rightProps => (
+                              <List.Icon
+                                {...rightProps}
+                                icon="check"
+                                color={colors.primary}
+                              />
+                            )
+                          : undefined
+                      }
+                      titleStyle={[
+                        styles.pushOptionsToleft,
+                        value === item && styles.selected,
+                      ]}
+                      key={item}
+                    />
+                  ))}
               </Modal>
             </Portal>
           </>
@@ -121,4 +133,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#0f4c81',
   },
+  filterBar: {elevation: 1, borderWidth: 0.2, marginVertical: 10},
 });
