@@ -1,6 +1,6 @@
 import React, {FunctionComponent, useState} from 'react';
 import {Control, Controller, FieldErrors} from 'react-hook-form';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   HelperText,
@@ -22,10 +22,21 @@ interface ControlledSelectOwnProps {
   error: FieldErrors;
   defaultValue?: string;
   options: string[];
+  customStyle?: ViewStyle;
+  customRenderTextStyle?: ViewStyle;
 }
 
 const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
-  const {name, control, placeholder, error, defaultValue, options} = props;
+  const {
+    name,
+    control,
+    placeholder,
+    error,
+    defaultValue,
+    options,
+    customStyle,
+    customRenderTextStyle,
+  } = props;
   const {colors} = useTheme();
   const [modalDisplay, setModalDisplay] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -43,7 +54,7 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
               label={placeholder}
               value={value}
               theme={{colors: {primary: colors.primary}}}
-              style={GlobalStyles.inputsWidth}
+              style={[GlobalStyles.inputsWidth, customStyle]}
               dense
               error={!!error}
               render={() => (
@@ -51,7 +62,11 @@ const ControlledSelect: FunctionComponent<ControlledSelectOwnProps> = props => {
                   style={GlobalStyles.customTextInputRenderTouchable}
                   onPress={() => setModalDisplay(true)}>
                   {value && (
-                    <Text style={GlobalStyles.customTextInputRenderValueText}>
+                    <Text
+                      style={[
+                        GlobalStyles.customTextInputRenderValueText,
+                        customRenderTextStyle,
+                      ]}>
                       {value}
                     </Text>
                   )}

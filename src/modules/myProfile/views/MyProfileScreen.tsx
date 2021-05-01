@@ -23,6 +23,8 @@ const MyProfileScreen = (props: PropsFromRedux) => {
     submitUpdateProfile,
   } = props;
 
+  const genders = ['Male', 'Female'];
+
   const {
     control,
     formState: {errors},
@@ -94,7 +96,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             placeholder="Gender"
             error={errors.gender}
             defaultValue={currentUser.gender}
-            options={['Male', 'Female']}
+            options={genders}
           />
           <Button
             mode="contained"

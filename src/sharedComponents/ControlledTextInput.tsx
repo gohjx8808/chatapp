@@ -1,5 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {Control, Controller, FieldErrors} from 'react-hook-form';
+import {ViewStyle} from 'react-native';
 import {HelperText, TextInput, useTheme} from 'react-native-paper';
 import GlobalStyles from '../helpers/globalStyles';
 
@@ -10,10 +11,19 @@ interface ControlledTextInputOwnProps {
   error: FieldErrors;
   defaultValue?: string;
   disabled?: boolean;
+  customStyle?: ViewStyle;
 }
 
 const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = props => {
-  const {name, control, label, error, defaultValue, disabled} = props;
+  const {
+    name,
+    control,
+    label,
+    error,
+    defaultValue,
+    disabled,
+    customStyle,
+  } = props;
   const {colors} = useTheme();
 
   return (
@@ -31,7 +41,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
             theme={{colors: {primary: colors.primary}}}
             autoCapitalize="none"
             error={!!error}
-            style={GlobalStyles.inputsWidth}
+            style={[GlobalStyles.inputsWidth, customStyle]}
             dense
             disabled={disabled}
           />

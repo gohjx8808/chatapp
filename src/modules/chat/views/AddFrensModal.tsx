@@ -4,6 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {Button, Modal, Portal, Title} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
+import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {chatActionCreators} from '../src/chatActions';
 import {isAddFrenModalOpenSelector} from '../src/chatSelectors';
@@ -14,7 +15,10 @@ const AddFrensModal = (props: PropsFromRedux) => {
   const {
     control,
     formState: {errors},
+    watch,
   } = useForm();
+
+  const addByOptions = ['UID', 'Email'];
 
   return (
     <Portal>
@@ -22,14 +26,26 @@ const AddFrensModal = (props: PropsFromRedux) => {
         visible={isAddFrenModalOpen}
         onDismiss={() => toggleAddFrenModal(false)}
         contentContainerStyle={styles.modalContainer}>
-        <View style={[GlobalStyles.centerEverything, styles.viewWidth]}>
+        <View style={[GlobalStyles.centerEverything, GlobalStyles.fullWidth]}>
           <Title style={styles.titleText}>Add Friends</Title>
-          <ControlledTextInput
-            name="uid"
-            label="Friend's UID"
-            control={control}
-            error={errors.uid}
-          />
+          <View style={[styles.sameRow, styles.bottomSpace]}>
+            <ControlledSelect
+              name="addBy"
+              placeholder="Add By"
+              control={control}
+              error={errors.addBy}
+              options={addByOptions}
+              customStyle={styles.customSelectWidth}
+              customRenderTextStyle={styles.customSelectValue}
+            />
+            <ControlledTextInput
+              name="uid"
+              label={`Friend's ${watch('addBy') ? watch('addBy') : 'UID'}`}
+              control={control}
+              error={errors.uid}
+              customStyle={styles.customInputWidth}
+            />
+          </View>
           <View style={styles.sameRow}>
             <Button
               mode="outlined"
@@ -82,31 +98,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
   },
-  viewWidth: {
-    width: '100%',
-  },
-  centerIcon: {
-    alignSelf: 'center',
-  },
-  endIcon: {
-    alignSelf: 'flex-end',
-  },
   titleText: {
     paddingTop: 10,
   },
-  closeBtn: {
-    borderRadius: 20,
-    width: '40%',
-    alignSelf: 'center',
+  bottomSpace: {
+    marginBottom: '10%',
+    marginTop: '2%',
+    width: '100%',
   },
-  msgText: {
-    paddingVertical: 20,
-    fontSize: 16,
+  customSelectWidth: {
+    width: '35%',
   },
-  lightGreenBorder: {
-    borderColor: '#90EE90',
+  customSelectValue: {
+    paddingTop: '10%',
+    paddingHorizontal: '12%',
   },
-  lightRedBorder: {
-    borderColor: '#FFCCCB',
+  customInputWidth: {
+    width: '58%',
   },
 });
