@@ -4,7 +4,13 @@ import React, {FunctionComponent, useState} from 'react';
 import {Control, FieldErrors, useController} from 'react-hook-form';
 import {Platform, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Button, HelperText, Text} from 'react-native-paper';
+import {
+  Button,
+  HelperText,
+  Text,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
 import GlobalStyles from '../helpers/globalStyles';
 
 interface ControlledDatepickerOwnProps {
@@ -28,6 +34,7 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
     label,
   } = props;
   const [datepickerDisplay, setDatepickerDisplay] = useState(false);
+  const {colors} = useTheme();
   const {
     field: {value, onChange},
   } = useController({
@@ -37,32 +44,29 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
   });
 
   return (
-    <View style={GlobalStyles.customInputTouchableContainer}>
-      <TouchableOpacity
-        style={[
-          GlobalStyles.centerEverything,
-          GlobalStyles.customInputTouchableContainer,
-        ]}
-        onPress={() => setDatepickerDisplay(true)}>
-        <View
-          style={[
-            GlobalStyles.customPlaceholderContainer,
-            error
-              ? GlobalStyles.customErrorBorder
-              : GlobalStyles.customNormalBorder,
-          ]}>
-          <Text
-            style={
-              error
-                ? GlobalStyles.customErrorPlaceholderText
-                : GlobalStyles.customNormalPlaceholderText
-            }>
-            {!value ? placeholder : value}
-          </Text>
-        </View>
-      </TouchableOpacity>
+    <>
+      <TextInput
+        mode="outlined"
+        label={placeholder}
+        value={value}
+        theme={{colors: {primary: colors.primary}}}
+        style={GlobalStyles.inputsWidth}
+        dense
+        error={!!error}
+        render={() => (
+          <TouchableOpacity
+            style={GlobalStyles.customTextInputRenderTouchable}
+            onPress={() => setDatepickerDisplay(true)}>
+            {value && (
+              <Text style={GlobalStyles.customTextInputRenderValueText}>
+                {value}
+              </Text>
+            )}
+          </TouchableOpacity>
+        )}
+      />
       {datepickerDisplay && (
-        <>
+        <View style={GlobalStyles.fullWidth}>
           {Platform.OS === 'ios' && <Text style={styles.label}>{label}</Text>}
           <DateTimePicker
             value={!value ? new Date() : new Date(value)}
@@ -83,7 +87,7 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
               confirm
             </Button>
           )}
-        </>
+        </View>
       )}
       <HelperText
         type="error"
@@ -91,27 +95,13 @@ const ControlledDatepicker: FunctionComponent<ControlledDatepickerOwnProps> = pr
         style={GlobalStyles.centerText}>
         {error?.message}
       </HelperText>
-    </View>
+    </>
   );
 };
 
 export default ControlledDatepicker;
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    backgroundColor: 'white',
-    padding: 20,
-    width: '90%',
-    alignSelf: 'center',
-    borderRadius: 5,
-  },
-  pushOptionsToleft: {
-    marginLeft: -12,
-  },
-  selected: {
-    fontWeight: 'bold',
-    color: '#0f4c81',
-  },
   label: {
     alignSelf: 'center',
     fontSize: 14,

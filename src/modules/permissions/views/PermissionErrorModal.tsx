@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {Button, Modal, Portal, Text, Title} from 'react-native-paper';
 import {openSettings} from 'react-native-permissions';
 import {connect, ConnectedProps} from 'react-redux';
+import GlobalStyles from '../../../helpers/globalStyles';
 import {permissionActionCreators} from '../src/permissionActions';
 import {
   isPermissionErrorModalOpenSelector,
@@ -25,8 +26,8 @@ const PermissionErrorModal = (props: PropsFromRedux) => {
         onDismiss={() => togglePermissionErrorModal(false)}
         contentContainerStyle={styles.modalContainer}>
         <View style={styles.viewWidth}>
-          <Title style={styles.centerText}>Permission Required</Title>
-          <Text style={[styles.centerText, styles.msgText]}>
+          <Title style={GlobalStyles.centerText}>Permission Required</Title>
+          <Text style={[GlobalStyles.centerText, styles.msgText]}>
             Full Access to your{' '}
             <Text style={styles.underlinedItalicText}>{permissionType}</Text> is
             required for ChatApp to work without error.
@@ -91,9 +92,6 @@ const styles = StyleSheet.create({
   },
   endIcon: {
     alignSelf: 'flex-end',
-  },
-  centerText: {
-    textAlign: 'center',
   },
   closeBtn: {
     borderRadius: 20,

@@ -91,9 +91,6 @@ const styles = StyleSheet.create({
   endIcon: {
     alignSelf: 'flex-end',
   },
-  centerText: {
-    textAlign: 'center',
-  },
   titleText: {
     paddingTop: 10,
   },

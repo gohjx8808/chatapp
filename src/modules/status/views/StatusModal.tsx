@@ -9,6 +9,7 @@ import {
   Title,
 } from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
+import GlobalStyles from '../../../helpers/globalStyles';
 import {statusActionCreators} from '../src/statusActions';
 import {
   isApiSuccessSelector,
@@ -39,12 +40,14 @@ const StatusModal = (props: PropsFromRedux) => {
           />
           <Title
             style={[
-              styles.centerText,
+              GlobalStyles.centerText,
               isApiSuccess ? styles.successColor : styles.errorColor,
             ]}>
             {isApiSuccess ? 'Success!' : 'Oops!'}
           </Title>
-          <Text style={[styles.centerText, styles.msgText]}>{statusMsg}</Text>
+          <Text style={[GlobalStyles.centerText, styles.msgText]}>
+            {statusMsg}
+          </Text>
           <Button
             mode="contained"
             color={isApiSuccess ? 'green' : 'red'}
@@ -97,9 +100,6 @@ const styles = StyleSheet.create({
   },
   endIcon: {
     alignSelf: 'flex-end',
-  },
-  centerText: {
-    textAlign: 'center',
   },
   successColor: {
     color: 'green',
