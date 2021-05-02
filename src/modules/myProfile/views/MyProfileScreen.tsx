@@ -1,7 +1,7 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import Clipboard from '@react-native-clipboard/clipboard';
 import moment from 'moment';
-import React from 'react';
+import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
@@ -9,6 +9,7 @@ import {
   Avatar,
   Button,
   HelperText,
+  Snackbar,
   TextInput,
 } from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
@@ -31,6 +32,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
   } = props;
 
   const genders = ['Male', 'Female'];
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
   const {
     control,
@@ -45,6 +47,11 @@ const MyProfileScreen = (props: PropsFromRedux) => {
       gender: data.gender,
     };
     submitUpdateProfile(postData);
+  };
+
+  const copyText = (text: string) => {
+    Clipboard.setString(text);
+    setIsSnackbarOpen(true);
   };
 
   return (
@@ -75,7 +82,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             rightElement={
               <TextInput.Icon
                 name="content-copy"
-                onPress={() => Clipboard.setString(currentUser.uid)}
+                onPress={() => copyText(currentUser.uid)}
               />
             }
           />
@@ -89,7 +96,7 @@ const MyProfileScreen = (props: PropsFromRedux) => {
             rightElement={
               <TextInput.Icon
                 name="content-copy"
-                onPress={() => Clipboard.setString(currentUser.email)}
+                onPress={() => copyText(currentUser.email)}
               />
             }
           />
@@ -128,6 +135,12 @@ const MyProfileScreen = (props: PropsFromRedux) => {
           </Button>
         </View>
       </ScrollView>
+      <Snackbar
+        visible={isSnackbarOpen}
+        duration={1500}
+        onDismiss={() => setIsSnackbarOpen(false)}>
+        Copied!
+      </Snackbar>
     </>
   );
 };

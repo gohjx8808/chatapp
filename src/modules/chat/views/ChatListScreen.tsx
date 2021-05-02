@@ -22,7 +22,7 @@ const ChatListScreen = (props: PropsFromRedux) => {
   }, [getFrenList]);
 
   return (
-    <ScrollView>
+    <>
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
         <Appbar.Content title="Messages" />
@@ -31,31 +31,33 @@ const ChatListScreen = (props: PropsFromRedux) => {
           onPress={() => toggleAddFrenModal(true)}
         />
       </Appbar.Header>
-      {frenList.map((fren, index) => {
-        return (
-          <List.Item
-            title={fren.name}
-            style={styles.chatList}
-            key={index}
-            onPress={() => {
-              loadSelectedFren(fren);
-              getChatMessages();
-              navigate(chatRouteNames.CHAT);
-            }}
-            left={iconProps => (
-              <Avatar.Image
-                {...iconProps}
-                source={{
-                  uri: fren.photoURL,
-                }}
-                size={36}
-              />
-            )}
-          />
-        );
-      })}
-      <AddFrensModal />
-    </ScrollView>
+      <ScrollView>
+        {frenList.map((fren, index) => {
+          return (
+            <List.Item
+              title={fren.name}
+              style={styles.chatList}
+              key={index}
+              onPress={() => {
+                loadSelectedFren(fren);
+                getChatMessages();
+                navigate(chatRouteNames.CHAT);
+              }}
+              left={iconProps => (
+                <Avatar.Image
+                  {...iconProps}
+                  source={{
+                    uri: fren.photoURL,
+                  }}
+                  size={36}
+                />
+              )}
+            />
+          );
+        })}
+        <AddFrensModal />
+      </ScrollView>
+    </>
   );
 };
 
