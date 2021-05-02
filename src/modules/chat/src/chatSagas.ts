@@ -8,7 +8,7 @@ import {selectedFrenSelector} from './chatSelectors';
 import storage from '@react-native-firebase/storage';
 
 export default function* chatRuntime() {
-  yield fork(getFrenListSaga);
+  yield fork(getChatFrenListSaga);
   yield fork(storeChatMessagesSaga);
 }
 
@@ -25,23 +25,23 @@ function getChatList(userID: string) {
             .ref(userDatabaseRef)
             .once('value', (userSnapshot: any) => {
               if (userSnapshot.val().photoName === '') {
-                const frenData = {
+                const chatFrenData = {
                   uid: receiverID,
                   name: userSnapshot.val().name,
                   photoURL: assets.defaultUser,
                 };
-                emitter(frenData);
+                emitter(chatFrenData);
               } else {
                 storage()
                   .ref(`/${userSnapshot.val().photoName}`)
                   .getDownloadURL()
                   .then(photoURL => {
-                    const frenData = {
+                    const chatFrenData = {
                       uid: receiverID,
                       name: userSnapshot.val().name,
                       photoURL: photoURL,
                     };
-                    emitter(frenData);
+                    emitter(chatFrenData);
                   });
               }
             });
@@ -52,8 +52,8 @@ function getChatList(userID: string) {
   });
 }
 
-function* getFrenListSaga() {
-  yield take(chatActions.GET_FREN_LIST);
+function* getChatFrenListSaga() {
+  yield take(chatActions.GET_CHAT_FREN_LIST);
   const currentUser: login.currentUserData = yield select(currentUserSelector);
   const userID = currentUser.uid;
   const chatSnapshotResponse: EventChannel<string> = yield call(
@@ -61,8 +61,8 @@ function* getFrenListSaga() {
     userID,
   );
   while (true) {
-    const fren: chat.frenData = yield take(chatSnapshotResponse);
-    yield put(chatActionCreators.loadFrenList(fren));
+    const fren: chat.chatFrenData = yield take(chatSnapshotResponse);
+    yield put(chatActionCreators.loadChatFrenList(fren));
   }
 }
 
@@ -91,7 +91,7 @@ function* storeChatMessagesSaga() {
 }
 
 function* storeChatMessagesListener() {
-  const selectedFren: chat.frenData = yield select(selectedFrenSelector);
+  const selectedFren: chat.chatFrenData = yield select(selectedFrenSelector);
   const currentUser: login.currentUserData = yield select(currentUserSelector);
   const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
   const getChatMessagesAction: EventChannel<chat.IMessage> = yield call(

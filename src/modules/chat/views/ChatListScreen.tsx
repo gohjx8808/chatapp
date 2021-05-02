@@ -5,17 +5,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
-import {frenListSelector} from '../src/chatSelectors';
-import AddFrensModal from './AddFrensModal';
+import {chatFrenListSelector} from '../src/chatSelectors';
 
 const ChatListScreen = (props: PropsFromRedux) => {
-  const {
-    frenList,
-    loadSelectedFren,
-    getFrenList,
-    getChatMessages,
-    toggleAddFrenModal,
-  } = props;
+  const {chatFrenList, loadSelectedFren, getFrenList, getChatMessages} = props;
 
   useEffect(() => {
     getFrenList();
@@ -26,13 +19,9 @@ const ChatListScreen = (props: PropsFromRedux) => {
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
         <Appbar.Content title="Messages" />
-        <Appbar.Action
-          icon="account-plus"
-          onPress={() => toggleAddFrenModal(true)}
-        />
       </Appbar.Header>
       <ScrollView>
-        {frenList.map((fren, index) => {
+        {chatFrenList.map((fren, index) => {
           return (
             <List.Item
               title={fren.name}
@@ -55,7 +44,6 @@ const ChatListScreen = (props: PropsFromRedux) => {
             />
           );
         })}
-        <AddFrensModal />
       </ScrollView>
     </>
   );
@@ -63,13 +51,12 @@ const ChatListScreen = (props: PropsFromRedux) => {
 
 const connector = connect(
   (state: GlobalState) => ({
-    frenList: frenListSelector(state),
+    chatFrenList: chatFrenListSelector(state),
   }),
   {
-    getFrenList: chatActionCreators.getFrenList,
+    getFrenList: chatActionCreators.getChatFrenList,
     loadSelectedFren: chatActionCreators.loadSelectedFren,
     getChatMessages: chatActionCreators.getChatMessages,
-    toggleAddFrenModal: chatActionCreators.toggleAddFrenModal,
   },
 );
 

@@ -6,8 +6,8 @@ import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
-import {chatActionCreators} from '../src/chatActions';
-import {isAddFrenModalOpenSelector} from '../src/chatSelectors';
+import {chatActionCreators} from '../../chat/src/chatActions';
+import {isAddFrenModalOpenSelector} from '../../chat/src/chatSelectors';
 
 const AddFrensModal = (props: PropsFromRedux) => {
   const {isAddFrenModalOpen, toggleAddFrenModal} = props;

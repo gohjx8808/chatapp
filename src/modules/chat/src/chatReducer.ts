@@ -3,7 +3,7 @@ import {chatActions, chatActionTypes} from './chatActions';
 
 const INITIAL_STATE: chat.State = {
   messages: [],
-  frenList: [],
+  chatFrenList: [],
   selectedFren: {
     uid: '',
     name: '',
@@ -24,12 +24,12 @@ const messages = (
   }
 };
 
-const frenList = (
-  state = INITIAL_STATE.frenList,
-  action: chatActionTypes.loadFrenListActionType,
-): chat.frenData[] => {
+const chatFrenList = (
+  state = INITIAL_STATE.chatFrenList,
+  action: chatActionTypes.loadChatFrenListActionType,
+): chat.chatFrenData[] => {
   switch (action.type) {
-    case chatActions.LOAD_FREN_LIST:
+    case chatActions.LOAD_CHAT_FREN_LIST:
       return [...state, action.payload];
     default:
       return state;
@@ -39,7 +39,7 @@ const frenList = (
 const selectedFren = (
   state = INITIAL_STATE.selectedFren,
   action: chatActionTypes.loadSelectedFrenActionType,
-): chat.frenData => {
+): chat.chatFrenData => {
   switch (action.type) {
     case chatActions.LOAD_SELECTED_FREN:
       return action.payload;
@@ -62,7 +62,7 @@ const isAddFrenModalOpen = (
 
 export default combineReducers<chat.State>({
   messages,
-  frenList,
+  chatFrenList,
   selectedFren,
   isAddFrenModalOpen,
 });

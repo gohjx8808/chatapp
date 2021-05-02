@@ -1,7 +1,7 @@
 declare namespace chat {
   interface State {
     messages: IMessage[];
-    frenList: frenData[];
+    chatFrenList: chatFrenData[];
     selectedFren: frenData;
     isAddFrenModalOpen: boolean;
   }
@@ -27,7 +27,7 @@ declare namespace chat {
     text: {text: string[]};
   }
 
-  interface frenData {
+  interface chatFrenData {
     uid: string;
     name: string;
     photoURL: string;
