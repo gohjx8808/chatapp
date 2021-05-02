@@ -7,10 +7,18 @@ import GlobalStyles from '../../../helpers/globalStyles';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {friendActionCreators} from '../src/friendActions';
-import {isAddFrenModalOpenSelector} from '../src/friendSelectors';
+import {
+  isAddFrenModalOpenSelector,
+  isFriendLoadingSelector,
+} from '../src/friendSelectors';
 
 const AddFrenModal = (props: PropsFromRedux) => {
-  const {isAddFrenModalOpen, toggleAddFrenModal, submitAddFren} = props;
+  const {
+    isAddFrenModalOpen,
+    toggleAddFrenModal,
+    submitAddFren,
+    isFriendLoading,
+  } = props;
 
   const {
     control,
@@ -59,13 +67,16 @@ const AddFrenModal = (props: PropsFromRedux) => {
                 GlobalStyles.whiteBackgroundBtn,
                 GlobalStyles.sameRowButtonWidth,
               ]}
-              onPress={() => toggleAddFrenModal(false)}>
+              onPress={() => toggleAddFrenModal(false)}
+              disabled={isFriendLoading}>
               Close
             </Button>
             <Button
               mode="contained"
               style={GlobalStyles.sameRowButtonWidth}
-              onPress={handleSubmit(onSubmitAddFren)}>
+              onPress={handleSubmit(onSubmitAddFren)}
+              disabled={isFriendLoading}
+              loading={isFriendLoading}>
               Confirm
             </Button>
           </View>
@@ -78,6 +89,7 @@ const AddFrenModal = (props: PropsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     isAddFrenModalOpen: isAddFrenModalOpenSelector(state),
+    isFriendLoading: isFriendLoadingSelector(state),
   }),
   {
     toggleAddFrenModal: friendActionCreators.toggleAddFrenModal,

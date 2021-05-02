@@ -19,7 +19,7 @@ const GlobalStyles = StyleSheet.create({
     textAlign: 'center',
   },
   sameRowButtonWidth: {
-    width: '40%',
+    width: '45%',
   },
   customTextInputRenderValueText: {
     paddingVertical: '3%',
