@@ -2,9 +2,9 @@ import {createSelector} from 'reselect';
 
 const friendSelector = (state: GlobalState) => state.friend;
 
-export const isAddFrenModalOpenSelector = createSelector(
+export const isAddFriendModalOpenSelector = createSelector(
   friendSelector,
-  friend => friend.isAddFrenModalOpen,
+  friend => friend.isAddFriendModalOpen,
 );
 
 export const isFriendLoadingSelector = createSelector(

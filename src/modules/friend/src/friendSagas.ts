@@ -1,6 +1,6 @@
 import {END, EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, select, take} from '@redux-saga/core/effects';
-import {postSubmitAddFren} from '../../../helpers/firebaseUtils';
+import {postSubmitAddFriend} from '../../../helpers/firebaseUtils';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
@@ -11,7 +11,7 @@ import {
 import database from '@react-native-firebase/database';
 
 export default function* friendRuntime() {
-  yield fork(submitAddFrenSaga);
+  yield fork(submitAddFriendSaga);
 }
 
 function checkUserAvailability(frenID: string) {
@@ -44,10 +44,10 @@ function* checkUserAvailabilitySaga(frenID: string) {
   }
 }
 
-function* submitAddFrenSaga() {
+function* submitAddFriendSaga() {
   while (true) {
-    const {payload}: friendActionTypes.submitAddFrenActionType = yield take(
-      friendActions.SUBMIT_ADD_FREN,
+    const {payload}: friendActionTypes.submitAddFriendActionType = yield take(
+      friendActions.SUBMIT_ADD_FRIEND,
     );
     yield put(friendActionCreators.toggleFriendLoading(true));
     yield put(statusActionCreators.updateStatusTitle('Add Friend'));
@@ -57,7 +57,7 @@ function* submitAddFrenSaga() {
       );
       const response: boolean = yield call(checkUserAvailabilitySaga, payload);
       if (response) {
-        yield call(postSubmitAddFren, currentUser.uid, payload);
+        yield call(postSubmitAddFriend, currentUser.uid, payload);
         yield put(statusActionCreators.toggleApiStatus(true));
         yield put(
           statusActionCreators.updateStatusMsg(

@@ -1,6 +1,7 @@
 declare namespace friend {
   interface State {
-    isAddFrenModalOpen: boolean;
+    isAddFriendModalOpen: boolean;
     isFriendLoading: boolean;
+    friendList: string[];
   }
 }

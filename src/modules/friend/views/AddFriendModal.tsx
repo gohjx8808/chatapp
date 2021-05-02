@@ -8,15 +8,15 @@ import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {friendActionCreators} from '../src/friendActions';
 import {
-  isAddFrenModalOpenSelector,
+  isAddFriendModalOpenSelector,
   isFriendLoadingSelector,
 } from '../src/friendSelectors';
 
-const AddFrenModal = (props: PropsFromRedux) => {
+const AddFriendModal = (props: PropsFromRedux) => {
   const {
-    isAddFrenModalOpen,
-    toggleAddFrenModal,
-    submitAddFren,
+    isAddFriendModalOpen,
+    toggleAddFriendModal,
+    submitAddFriend,
     isFriendLoading,
   } = props;
 
@@ -29,16 +29,16 @@ const AddFrenModal = (props: PropsFromRedux) => {
 
   const addByOptions = ['UID', 'Email'];
 
-  const onSubmitAddFren = (formData: {frenID: string}) => {
-    toggleAddFrenModal(false);
-    submitAddFren(formData.frenID);
+  const onSubmitAddFriend = (formData: {frenID: string}) => {
+    toggleAddFriendModal(false);
+    submitAddFriend(formData.frenID);
   };
 
   return (
     <Portal>
       <Modal
-        visible={isAddFrenModalOpen}
-        onDismiss={() => toggleAddFrenModal(false)}
+        visible={isAddFriendModalOpen}
+        onDismiss={() => toggleAddFriendModal(false)}
         contentContainerStyle={styles.modalContainer}>
         <View style={[GlobalStyles.centerEverything, GlobalStyles.fullWidth]}>
           <Title style={styles.titleText}>Add Friend</Title>
@@ -67,14 +67,14 @@ const AddFrenModal = (props: PropsFromRedux) => {
                 GlobalStyles.whiteBackgroundBtn,
                 GlobalStyles.sameRowButtonWidth,
               ]}
-              onPress={() => toggleAddFrenModal(false)}
+              onPress={() => toggleAddFriendModal(false)}
               disabled={isFriendLoading}>
               Close
             </Button>
             <Button
               mode="contained"
               style={GlobalStyles.sameRowButtonWidth}
-              onPress={handleSubmit(onSubmitAddFren)}
+              onPress={handleSubmit(onSubmitAddFriend)}
               disabled={isFriendLoading}
               loading={isFriendLoading}>
               Confirm
@@ -88,18 +88,18 @@ const AddFrenModal = (props: PropsFromRedux) => {
 
 const connector = connect(
   (state: GlobalState) => ({
-    isAddFrenModalOpen: isAddFrenModalOpenSelector(state),
+    isAddFriendModalOpen: isAddFriendModalOpenSelector(state),
     isFriendLoading: isFriendLoadingSelector(state),
   }),
   {
-    toggleAddFrenModal: friendActionCreators.toggleAddFrenModal,
-    submitAddFren: friendActionCreators.submitAddFren,
+    toggleAddFriendModal: friendActionCreators.toggleAddFriendModal,
+    submitAddFriend: friendActionCreators.submitAddFriend,
   },
 );
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(AddFrenModal);
+export default connector(AddFriendModal);
 
 const styles = StyleSheet.create({
   modalContainer: {
