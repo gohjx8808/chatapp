@@ -10,15 +10,21 @@ import {friendActionCreators} from '../src/friendActions';
 import {isAddFrenModalOpenSelector} from '../src/friendSelectors';
 
 const AddFrenModal = (props: PropsFromRedux) => {
-  const {isAddFrenModalOpen, toggleAddFrenModal} = props;
+  const {isAddFrenModalOpen, toggleAddFrenModal, submitAddFren} = props;
 
   const {
     control,
     formState: {errors},
     watch,
+    handleSubmit,
   } = useForm();
 
   const addByOptions = ['UID', 'Email'];
+
+  const onSubmitAddFren = (formData: {frenID: string}) => {
+    toggleAddFrenModal(false);
+    submitAddFren(formData.frenID);
+  };
 
   return (
     <Portal>
@@ -39,10 +45,10 @@ const AddFrenModal = (props: PropsFromRedux) => {
               customRenderTextStyle={styles.customSelectValue}
             />
             <ControlledTextInput
-              name="uid"
+              name="frenID"
               label={`Friend's ${watch('addBy') ? watch('addBy') : 'UID'}`}
               control={control}
-              error={errors.uid}
+              error={errors.frenID}
               customStyle={styles.customInputWidth}
             />
           </View>
@@ -59,7 +65,7 @@ const AddFrenModal = (props: PropsFromRedux) => {
             <Button
               mode="contained"
               style={GlobalStyles.sameRowButtonWidth}
-              onPress={() => toggleAddFrenModal(false)}>
+              onPress={handleSubmit(onSubmitAddFren)}>
               Confirm
             </Button>
           </View>
@@ -75,6 +81,7 @@ const connector = connect(
   }),
   {
     toggleAddFrenModal: friendActionCreators.toggleAddFrenModal,
+    submitAddFren: friendActionCreators.submitAddFren,
   },
 );
 

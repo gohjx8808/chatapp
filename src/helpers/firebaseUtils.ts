@@ -33,6 +33,12 @@ export const postDeletePrevUploadedPhoto = (prevPhotoName: string) => {
   storage().ref(`/${prevPhotoName}`).delete();
 };
 
+export const postSubmitAddFren = (uid: string, frenID: string) => {
+  return database()
+    .ref(`/users/${uid}/friends`)
+    .update({[frenID]: true});
+};
+
 export const defaultAvatar = {
   chatBot: 'chat-bot.jpg',
   defaultUser: 'default-user.png',

@@ -19,9 +19,8 @@ const FriendListScreen = (props: PropsFromRedux) => {
           onPress={() => toggleAddFrenModal(true)}
         />
       </Appbar.Header>
-      <ScrollView>
-        <AddFrensModal />
-      </ScrollView>
+      <ScrollView />
+      <AddFrensModal />
     </>
   );
 };
