@@ -16,8 +16,3 @@ export const selectedFrenSelector = createSelector(
   chatSelector,
   chat => chat.selectedFren,
 );
-
-export const isAddFrenModalOpenSelector = createSelector(
-  chatSelector,
-  chat => chat.isAddFrenModalOpen,
-);

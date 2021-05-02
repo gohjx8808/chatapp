@@ -6,10 +6,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
-import {chatActionCreators} from '../../chat/src/chatActions';
-import {isAddFrenModalOpenSelector} from '../../chat/src/chatSelectors';
+import {friendActionCreators} from '../src/friendActions';
+import {isAddFrenModalOpenSelector} from '../src/friendSelectors';
 
-const AddFrensModal = (props: PropsFromRedux) => {
+const AddFrenModal = (props: PropsFromRedux) => {
   const {isAddFrenModalOpen, toggleAddFrenModal} = props;
 
   const {
@@ -27,7 +27,7 @@ const AddFrensModal = (props: PropsFromRedux) => {
         onDismiss={() => toggleAddFrenModal(false)}
         contentContainerStyle={styles.modalContainer}>
         <View style={[GlobalStyles.centerEverything, GlobalStyles.fullWidth]}>
-          <Title style={styles.titleText}>Add Friends</Title>
+          <Title style={styles.titleText}>Add Friend</Title>
           <View style={[styles.sameRow, styles.bottomSpace]}>
             <ControlledSelect
               name="addBy"
@@ -74,13 +74,13 @@ const connector = connect(
     isAddFrenModalOpen: isAddFrenModalOpenSelector(state),
   }),
   {
-    toggleAddFrenModal: chatActionCreators.toggleAddFrenModal,
+    toggleAddFrenModal: friendActionCreators.toggleAddFrenModal,
   },
 );
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(AddFrensModal);
+export default connector(AddFrenModal);
 
 const styles = StyleSheet.create({
   modalContainer: {

@@ -3,7 +3,6 @@ declare namespace chat {
     messages: IMessage[];
     chatFrenList: chatFrenData[];
     selectedFren: frenData;
-    isAddFrenModalOpen: boolean;
   }
 
   interface IMessage {

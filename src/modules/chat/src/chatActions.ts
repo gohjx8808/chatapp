@@ -4,7 +4,6 @@ export class chatActions {
   public static readonly LOAD_CHAT_FREN_LIST = 'CHAT/LOAD_FREN_LIST';
   public static readonly LOAD_SELECTED_FREN = 'CHAT/LOAD_SELECTED_FREN';
   public static readonly GET_CHAT_MESSAGES = 'CHAT/GET_CHAT_MESSAGES';
-  public static readonly TOGGLE_ADD_FREN_MODAL = 'CHAT/TOGGLE_ADD_FREN_MODAL';
 }
 
 export declare namespace chatActionTypes {
@@ -24,10 +23,6 @@ export declare namespace chatActionTypes {
     chat.chatFrenData
   >;
   type getChatMessagesActionType = Action<typeof chatActions.GET_CHAT_MESSAGES>;
-  type toggleAddFrenModalActionType = ActionWithPayload<
-    typeof chatActions.TOGGLE_ADD_FREN_MODAL,
-    boolean
-  >;
 }
 
 export class chatActionCreators {
@@ -54,11 +49,5 @@ export class chatActionCreators {
   });
   public static getChatMessages = (): chatActionTypes.getChatMessagesActionType => ({
     type: chatActions.GET_CHAT_MESSAGES,
-  });
-  public static toggleAddFrenModal = (
-    payload: boolean,
-  ): chatActionTypes.toggleAddFrenModalActionType => ({
-    type: chatActions.TOGGLE_ADD_FREN_MODAL,
-    payload,
   });
 }

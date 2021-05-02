@@ -3,10 +3,11 @@ import {ScrollView, StyleSheet} from 'react-native';
 import {Appbar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import {toggleDrawer} from '../../navigation/src/navigationUtils';
-import AddFrensModal from './AddFrensModal';
+import {friendActionCreators} from '../src/friendActions';
+import AddFrensModal from './AddFrenModal';
 
 const FriendListScreen = (props: PropsFromRedux) => {
-  // const {toggleAddFrenModal} = props;
+  const {toggleAddFrenModal} = props;
 
   return (
     <>
@@ -15,7 +16,7 @@ const FriendListScreen = (props: PropsFromRedux) => {
         <Appbar.Content title="Messages" />
         <Appbar.Action
           icon="account-plus"
-          // onPress={() => toggleAddFrenModal(true)}
+          onPress={() => toggleAddFrenModal(true)}
         />
       </Appbar.Header>
       <ScrollView>
@@ -25,7 +26,9 @@ const FriendListScreen = (props: PropsFromRedux) => {
   );
 };
 
-const connector = connect(null, {});
+const connector = connect(null, {
+  toggleAddFrenModal: friendActionCreators.toggleAddFrenModal,
+});
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

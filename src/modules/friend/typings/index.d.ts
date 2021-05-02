@@ -1,3 +1,5 @@
 declare namespace friend {
-  interface State {}
+  interface State {
+    isAddFrenModalOpen: boolean;
+  }
 }

@@ -30,6 +30,12 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
           active={activeRouteName === routeNames.MY_PROFILE}
           icon="account-circle"
         />
+        <Drawer.Item
+          label="Friend List"
+          onPress={() => navigate(routeNames.FRIEND)}
+          active={activeRouteName === routeNames.FRIEND}
+          icon="account-multiple"
+        />
       </DrawerContentScrollView>
     </View>
   );

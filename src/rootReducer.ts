@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import chatReducer from './modules/chat/src/chatReducer';
+import friendReducer from './modules/friend/src/friendReducer';
 import loginReducer from './modules/login/src/loginReducer';
 import myProfileReducer from './modules/myProfile/src/myProfileReducer';
 import permissionReducer from './modules/permissions/src/permissionReducer';
@@ -13,4 +14,5 @@ export default combineReducers({
   chat: chatReducer,
   permission: permissionReducer,
   myProfile: myProfileReducer,
+  friend: friendReducer,
 });

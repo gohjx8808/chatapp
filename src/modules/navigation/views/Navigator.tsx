@@ -13,6 +13,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from './CustomDrawer';
 import PermissionErrorModal from '../../permissions/views/PermissionErrorModal';
 import ImagePickerDialog from '../../myProfile/views/ImagePickerDialog';
+import FriendListScreen from '../../friend/views/FriendListScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -24,6 +25,7 @@ const DashboardNavigator = () => {
       drawerContent={drawerProps => <CustomDrawer {...drawerProps} />}>
       <Drawer.Screen name={routeNames.CHAT_NAV} component={chatNavigator} />
       <Drawer.Screen name={routeNames.MY_PROFILE} component={MyProfileScreen} />
+      <Drawer.Screen name={routeNames.FRIEND} component={FriendListScreen} />
     </Drawer.Navigator>
   );
 };
