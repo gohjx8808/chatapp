@@ -26,12 +26,6 @@ declare namespace chat {
     text: {text: string[]};
   }
 
-  interface chatFrenData {
-    uid: string;
-    name: string;
-    photoURL: string;
-  }
-
   interface chatSnapshotData {
     key: string;
   }

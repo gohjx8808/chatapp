@@ -2,6 +2,8 @@ import auth from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import {ImagePickerResponse} from 'react-native-image-picker';
 import database from '@react-native-firebase/database';
+import {eventChannel} from '@redux-saga/core';
+import assets from './assets';
 
 export const postSubmitRegister = (
   data: registration.submitRegisterPayload,
@@ -37,6 +39,51 @@ export const postSubmitAddFriend = (uid: string, frenID: string) => {
   return database()
     .ref(`/users/${uid}/friends`)
     .update({[frenID]: true});
+};
+
+export const getFrenList = (userID: string, fromScreen: string) => {
+  let targetDatabaseRef = '';
+  if (fromScreen === 'chat') {
+    targetDatabaseRef = `/chat/${userID}`;
+  } else {
+    targetDatabaseRef = `/users/${userID}/friends`;
+  }
+  return eventChannel(emitter => {
+    database()
+      .ref(targetDatabaseRef)
+      .on('value', frenSnapshots => {
+        frenSnapshots.forEach(frenSnapshot => {
+          const frenID = frenSnapshot.key;
+          const userDatabaseRef = `/users/${frenID}`;
+          database()
+            .ref(userDatabaseRef)
+            .once('value', (userSnapshot: any) => {
+              if (userSnapshot.val().photoName === '') {
+                const chatFrenData = {
+                  uid: frenID,
+                  name: userSnapshot.val().name,
+                  photoURL: assets.defaultUser,
+                };
+                emitter(chatFrenData);
+              } else {
+                storage()
+                  .ref(`/${userSnapshot.val().photoName}`)
+                  .getDownloadURL()
+                  .then(photoURL => {
+                    const chatFrenData = {
+                      uid: frenID,
+                      name: userSnapshot.val().name,
+                      photoURL: photoURL,
+                    };
+                    emitter(chatFrenData);
+                  });
+              }
+            });
+          return undefined;
+        });
+      });
+    return () => {};
+  });
 };
 
 export const defaultAvatar = {

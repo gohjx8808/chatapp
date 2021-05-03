@@ -16,3 +16,9 @@ interface ActionWithPayload<T, P> {
   type: T;
   payload: P;
 }
+
+interface frenData {
+  uid: string;
+  name: string;
+  photoURL: string;
+}
