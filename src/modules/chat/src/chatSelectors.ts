@@ -7,11 +7,6 @@ export const messagesSelector = createSelector(
   chat => chat.messages,
 );
 
-export const chatFrenListSelector = createSelector(
-  chatSelector,
-  chat => chat.chatFrenList,
-);
-
 export const selectedFrenSelector = createSelector(
   chatSelector,
   chat => chat.selectedFren,

@@ -29,11 +29,6 @@ import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';
 
 const ChatScreen = (props: PropsFromRedux) => {
   const {messages, currentUser, getChatMessages, selectedFren} = props;
-  const botUser = {
-    _id: 'FAQ Bot',
-    name: 'tester2',
-    avatar: assets.chatBot,
-  };
 
   const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
 
@@ -65,7 +60,7 @@ const ChatScreen = (props: PropsFromRedux) => {
       _id: messages.length + 1,
       text: textResponse,
       createdAt: new Date(),
-      user: botUser,
+      user: selectedFren,
     };
     database().ref(databaseRef).push(msg);
     getChatMessages();

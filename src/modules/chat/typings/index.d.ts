@@ -1,7 +1,6 @@
 declare namespace chat {
   interface State {
     messages: IMessage[];
-    chatFrenList: chatFrenData[];
     selectedFren: frenData;
   }
 

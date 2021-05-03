@@ -71,7 +71,7 @@ const FriendListScreen = (props: PropsFromRedux) => {
     <>
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
-        <Appbar.Content title="Messages" />
+        <Appbar.Content title="Friends" />
         <Appbar.Action
           icon="account-plus"
           onPress={() => toggleAddFriendModal(true)}
