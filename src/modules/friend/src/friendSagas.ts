@@ -9,6 +9,7 @@ import {
   friendActionTypes,
 } from './friendActions';
 import database from '@react-native-firebase/database';
+import {friendListSelector} from './friendSelectors';
 
 export default function* friendRuntime() {
   yield fork(submitAddFriendSaga);
@@ -92,7 +93,11 @@ function* getFrenListSaga() {
     'friend',
   );
   while (true) {
+    const currentFrenList: frenData[] = yield select(friendListSelector);
     const fren: frenData = yield take(chatSnapshotResponse);
-    yield put(friendActionCreators.loadFriendList(fren));
+    const found = currentFrenList.some(el => el.name === fren.name);
+    if (!found) {
+      yield put(friendActionCreators.loadFriendList(fren));
+    }
   }
 }
