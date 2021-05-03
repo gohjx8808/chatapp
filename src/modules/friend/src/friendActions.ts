@@ -23,7 +23,7 @@ export declare namespace friendActionTypes {
   type getFriendListActionType = Action<typeof friendActions.GET_FRIEND_LIST>;
   type loadFriendListActionType = ActionWithPayload<
     typeof friendActions.LOAD_FRIEND_LIST,
-    string[]
+    frenData
   >;
 }
 
@@ -50,7 +50,7 @@ export class friendActionCreators {
     type: friendActions.GET_FRIEND_LIST,
   });
   public static loadFriendList = (
-    payload: string[],
+    payload: frenData,
   ): friendActionTypes.loadFriendListActionType => ({
     type: friendActions.LOAD_FRIEND_LIST,
     payload,

@@ -33,11 +33,16 @@ const isFriendLoading = (
 
 const friendList = (
   state = INITIAL_STATE.friendList,
-  action: friendActionTypes.loadFriendListActionType,
-): string[] => {
+  action:
+    | friendActionTypes.loadFriendListActionType
+    | friendActionTypes.cleanFriendListActionType,
+): frenData[] => {
   switch (action.type) {
     case friendActions.LOAD_FRIEND_LIST:
-      return action.payload;
+      return [...state, action.payload];
+    case friendActions.CLEAN_FRIEND_LIST:
+      console.log('clean');
+      return [];
     default:
       return state;
   }

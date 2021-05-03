@@ -16,11 +16,11 @@ export declare namespace chatActionTypes {
   >;
   type loadChatFrenListActionType = ActionWithPayload<
     typeof chatActions.LOAD_CHAT_FREN_LIST,
-    chat.chatFrenData
+    frenData
   >;
   type loadSelectedFrenActionType = ActionWithPayload<
     typeof chatActions.LOAD_SELECTED_FREN,
-    chat.chatFrenData
+    frenData
   >;
   type getChatMessagesActionType = Action<typeof chatActions.GET_CHAT_MESSAGES>;
 }
@@ -36,13 +36,13 @@ export class chatActionCreators {
     type: chatActions.GET_CHAT_FREN_LIST,
   });
   public static loadChatFrenList = (
-    payload: chat.chatFrenData,
+    payload: frenData,
   ): chatActionTypes.loadChatFrenListActionType => ({
     type: chatActions.LOAD_CHAT_FREN_LIST,
     payload,
   });
   public static loadSelectedFren = (
-    payload: chat.chatFrenData,
+    payload: frenData,
   ): chatActionTypes.loadSelectedFrenActionType => ({
     type: chatActions.LOAD_SELECTED_FREN,
     payload,

@@ -1,13 +1,26 @@
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
-import {Appbar} from 'react-native-paper';
+import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
-import {toggleDrawer} from '../../navigation/src/navigationUtils';
+import {chatActionCreators} from '../../chat/src/chatActions';
+import chatRouteNames from '../../chat/src/chatRouteNames';
+import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {friendActionCreators} from '../src/friendActions';
+import {friendListSelector} from '../src/friendSelectors';
 import AddFriendModal from './AddFriendModal';
 
 const FriendListScreen = (props: PropsFromRedux) => {
-  const {toggleAddFriendModal} = props;
+  const {
+    toggleAddFriendModal,
+    friendList,
+    getFrenList,
+    loadSelectedFren,
+    getChatMessages,
+  } = props;
+
+  useEffect(() => {
+    getFrenList();
+  }, [getFrenList]);
 
   return (
     <>
@@ -19,15 +32,47 @@ const FriendListScreen = (props: PropsFromRedux) => {
           onPress={() => toggleAddFriendModal(true)}
         />
       </Appbar.Header>
-      <ScrollView />
+      <ScrollView>
+        {friendList.map((fren, index) => {
+          return (
+            <List.Item
+              title={fren.name}
+              style={styles.chatList}
+              key={index}
+              onPress={() => {
+                loadSelectedFren(fren);
+                getChatMessages();
+                navigate(chatRouteNames.CHAT);
+              }}
+              left={iconProps => (
+                <Avatar.Image
+                  {...iconProps}
+                  source={{
+                    uri: fren.photoURL,
+                  }}
+                  size={36}
+                />
+              )}
+            />
+          );
+        })}
+      </ScrollView>
       <AddFriendModal />
     </>
   );
 };
 
-const connector = connect(null, {
-  toggleAddFriendModal: friendActionCreators.toggleAddFriendModal,
-});
+const connector = connect(
+  (state: GlobalState) => ({
+    friendList: friendListSelector(state),
+  }),
+  {
+    toggleAddFriendModal: friendActionCreators.toggleAddFriendModal,
+    getFrenList: friendActionCreators.getFriendList,
+    loadSelectedFren: chatActionCreators.loadSelectedFren,
+    getChatMessages: chatActionCreators.getChatMessages,
+  },
+);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

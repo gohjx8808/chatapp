@@ -26,7 +26,7 @@ const messages = (
 const chatFrenList = (
   state = INITIAL_STATE.chatFrenList,
   action: chatActionTypes.loadChatFrenListActionType,
-): chat.chatFrenData[] => {
+): frenData[] => {
   switch (action.type) {
     case chatActions.LOAD_CHAT_FREN_LIST:
       return [...state, action.payload];
@@ -38,7 +38,7 @@ const chatFrenList = (
 const selectedFren = (
   state = INITIAL_STATE.selectedFren,
   action: chatActionTypes.loadSelectedFrenActionType,
-): chat.chatFrenData => {
+): frenData => {
   switch (action.type) {
     case chatActions.LOAD_SELECTED_FREN:
       return action.payload;
