@@ -86,7 +86,7 @@ function* getFrenListSaga() {
   yield take(friendActions.GET_FRIEND_LIST);
   const currentUser: login.currentUserData = yield select(currentUserSelector);
   const userID = currentUser.uid;
-  const chatSnapshotResponse: EventChannel<string> = yield call(
+  const chatSnapshotResponse: EventChannel<frenData> = yield call(
     getFrenList,
     userID,
     'friend',

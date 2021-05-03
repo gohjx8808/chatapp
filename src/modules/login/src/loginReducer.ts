@@ -8,6 +8,7 @@ const INITIAL_STATE: login.State = {
     name: '',
     email: '',
     photoURL: '',
+    photoName: '',
     gender: '',
     dob: '',
   },
