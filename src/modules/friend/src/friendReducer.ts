@@ -4,7 +4,6 @@ import {friendActions, friendActionTypes} from './friendActions';
 const INITIAL_STATE: friend.State = {
   isAddFriendModalOpen: false,
   isFriendLoading: false,
-  friendList: [],
 };
 
 const isAddFriendModalOpen = (
@@ -31,20 +30,7 @@ const isFriendLoading = (
   }
 };
 
-const friendList = (
-  state = INITIAL_STATE.friendList,
-  action: friendActionTypes.loadFriendListActionType,
-): frenData[] => {
-  switch (action.type) {
-    case friendActions.LOAD_FRIEND_LIST:
-      return [...state, action.payload];
-    default:
-      return state;
-  }
-};
-
 export default combineReducers<friend.State>({
   isAddFriendModalOpen,
   isFriendLoading,
-  friendList,
 });

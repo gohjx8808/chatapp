@@ -1,26 +1,71 @@
-import React, {useEffect} from 'react';
+import database from '@react-native-firebase/database';
+import storage from '@react-native-firebase/storage';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
+import assets from '../../../helpers/assets';
 import {chatActionCreators} from '../../chat/src/chatActions';
 import chatRouteNames from '../../chat/src/chatRouteNames';
+import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {friendActionCreators} from '../src/friendActions';
-import {friendListSelector} from '../src/friendSelectors';
 import AddFriendModal from './AddFriendModal';
 
 const FriendListScreen = (props: PropsFromRedux) => {
   const {
     toggleAddFriendModal,
-    friendList,
-    getFrenList,
     loadSelectedFren,
     getChatMessages,
+    currentUser,
   } = props;
 
+  const [friendList, setFriendList] = useState<frenData[]>([]);
+
   useEffect(() => {
-    getFrenList();
-  }, [getFrenList]);
+    const targetDatabaseRef = `/users/${currentUser.uid}/friends`;
+    const getFrenList = database()
+      .ref(targetDatabaseRef)
+      .on('value', frenSnapshots => {
+        setFriendList([]);
+        frenSnapshots.forEach(frenSnapshot => {
+          const frenID = frenSnapshot.key!;
+          const userDatabaseRef = `/users/${frenID}`;
+          database()
+            .ref(userDatabaseRef)
+            .once('value', (userSnapshot: any) => {
+              if (userSnapshot.val().photoName === '') {
+                const chatFrenData = {
+                  uid: frenID,
+                  name: userSnapshot.val().name,
+                  photoURL: assets.defaultUser,
+                };
+                setFriendList(prevFriendList => [
+                  ...prevFriendList,
+                  chatFrenData,
+                ]);
+              } else {
+                storage()
+                  .ref(`/${userSnapshot.val().photoName}`)
+                  .getDownloadURL()
+                  .then(photoURL => {
+                    const chatFrenData = {
+                      uid: frenID,
+                      name: userSnapshot.val().name,
+                      photoURL: photoURL,
+                    };
+                    setFriendList(prevFriendList => [
+                      ...prevFriendList,
+                      chatFrenData,
+                    ]);
+                  });
+              }
+            });
+          return undefined;
+        });
+      });
+    return () => database().ref(targetDatabaseRef).off('value', getFrenList);
+  }, [currentUser.uid]);
 
   return (
     <>
@@ -64,11 +109,10 @@ const FriendListScreen = (props: PropsFromRedux) => {
 
 const connector = connect(
   (state: GlobalState) => ({
-    friendList: friendListSelector(state),
+    currentUser: currentUserSelector(state),
   }),
   {
     toggleAddFriendModal: friendActionCreators.toggleAddFriendModal,
-    getFrenList: friendActionCreators.getFriendList,
     loadSelectedFren: chatActionCreators.loadSelectedFren,
     getChatMessages: chatActionCreators.getChatMessages,
   },

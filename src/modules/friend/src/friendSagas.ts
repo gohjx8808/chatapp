@@ -1,6 +1,7 @@
+import database from '@react-native-firebase/database';
 import {END, EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, select, take} from '@redux-saga/core/effects';
-import {getFrenList, postSubmitAddFriend} from '../../../helpers/firebaseUtils';
+import {postSubmitAddFriend} from '../../../helpers/firebaseUtils';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
@@ -8,12 +9,9 @@ import {
   friendActions,
   friendActionTypes,
 } from './friendActions';
-import database from '@react-native-firebase/database';
-import {friendListSelector} from './friendSelectors';
 
 export default function* friendRuntime() {
   yield fork(submitAddFriendSaga);
-  yield fork(getFrenListSaga);
 }
 
 function checkUserAvailability(frenID: string) {
@@ -79,25 +77,6 @@ function* submitAddFriendSaga() {
       );
       yield put(statusActionCreators.toggleStatusModal(true));
       yield put(friendActionCreators.toggleFriendLoading(false));
-    }
-  }
-}
-
-function* getFrenListSaga() {
-  yield take(friendActions.GET_FRIEND_LIST);
-  const currentUser: login.currentUserData = yield select(currentUserSelector);
-  const userID = currentUser.uid;
-  const chatSnapshotResponse: EventChannel<frenData> = yield call(
-    getFrenList,
-    userID,
-    'friend',
-  );
-  while (true) {
-    const currentFrenList: frenData[] = yield select(friendListSelector);
-    const fren: frenData = yield take(chatSnapshotResponse);
-    const found = currentFrenList.some(el => el.name === fren.name);
-    if (!found) {
-      yield put(friendActionCreators.loadFriendList(fren));
     }
   }
 }
