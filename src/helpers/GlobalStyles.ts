@@ -32,6 +32,13 @@ const GlobalStyles = StyleSheet.create({
   fullWidth: {
     width: '100%',
   },
+  fullWidthSearchBar: {
+    width: '90%',
+    alignSelf: 'center',
+    marginVertical: 15,
+    elevation: 1,
+    borderWidth: 0.2,
+  },
 });
 
 export default GlobalStyles;

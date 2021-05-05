@@ -1,10 +1,11 @@
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
-import {Appbar, Avatar, List} from 'react-native-paper';
+import {FlatList, StyleSheet, View} from 'react-native';
+import {Appbar, Avatar, List, Searchbar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
+import GlobalStyles from '../../../helpers/globalStyles';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
@@ -13,6 +14,7 @@ import chatRouteNames from '../src/chatRouteNames';
 const ChatListScreen = (props: PropsFromRedux) => {
   const {loadSelectedFren, getChatMessages, currentUser} = props;
   const [chatFrenList, setChatFrenList] = useState<frenData[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const targetDatabaseRef = `/chat/${currentUser.uid}`;
@@ -60,27 +62,32 @@ const ChatListScreen = (props: PropsFromRedux) => {
       database().ref(targetDatabaseRef).off('value', getChatFrenList);
   }, [currentUser.uid]);
 
-  const renderChatFriend = ({item}: {item: frenData}) => (
-    <List.Item
-      title={item.name}
-      style={styles.chatList}
-      key={item.uid}
-      onPress={() => {
-        loadSelectedFren(item);
-        getChatMessages();
-        navigate(chatRouteNames.CHAT);
-      }}
-      left={iconProps => (
-        <Avatar.Image
-          {...iconProps}
-          source={{
-            uri: item.photoURL,
+  const renderChatFriend = ({item}: {item: frenData}) => {
+    if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+      return (
+        <List.Item
+          title={item.name}
+          style={styles.chatList}
+          key={item.uid}
+          onPress={() => {
+            loadSelectedFren(item);
+            getChatMessages();
+            navigate(chatRouteNames.CHAT);
           }}
-          size={36}
+          left={iconProps => (
+            <Avatar.Image
+              {...iconProps}
+              source={{
+                uri: item.photoURL,
+              }}
+              size={36}
+            />
+          )}
         />
-      )}
-    />
-  );
+      );
+    }
+    return <View />;
+  };
 
   return (
     <>
@@ -88,6 +95,12 @@ const ChatListScreen = (props: PropsFromRedux) => {
         <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
         <Appbar.Content title="Messages" />
       </Appbar.Header>
+      <Searchbar
+        placeholder="Search"
+        onChangeText={query => setSearchQuery(query)}
+        value={searchQuery}
+        style={GlobalStyles.fullWidthSearchBar}
+      />
       <FlatList
         data={chatFrenList}
         renderItem={renderChatFriend}
