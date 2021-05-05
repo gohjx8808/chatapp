@@ -1,7 +1,7 @@
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
@@ -67,6 +67,28 @@ const FriendListScreen = (props: PropsFromRedux) => {
     return () => database().ref(targetDatabaseRef).off('value', getFrenList);
   }, [currentUser.uid]);
 
+  const renderFriend = ({item}: {item: frenData}) => (
+    <List.Item
+      title={item.name}
+      style={styles.chatList}
+      key={item.uid}
+      onPress={() => {
+        loadSelectedFren(item);
+        getChatMessages();
+        navigate(chatRouteNames.CHAT);
+      }}
+      left={iconProps => (
+        <Avatar.Image
+          {...iconProps}
+          source={{
+            uri: item.photoURL,
+          }}
+          size={36}
+        />
+      )}
+    />
+  );
+
   return (
     <>
       <Appbar.Header>
@@ -77,31 +99,11 @@ const FriendListScreen = (props: PropsFromRedux) => {
           onPress={() => toggleAddFriendModal(true)}
         />
       </Appbar.Header>
-      <ScrollView>
-        {friendList.map((fren, index) => {
-          return (
-            <List.Item
-              title={fren.name}
-              style={styles.chatList}
-              key={index}
-              onPress={() => {
-                loadSelectedFren(fren);
-                getChatMessages();
-                navigate(chatRouteNames.CHAT);
-              }}
-              left={iconProps => (
-                <Avatar.Image
-                  {...iconProps}
-                  source={{
-                    uri: fren.photoURL,
-                  }}
-                  size={36}
-                />
-              )}
-            />
-          );
-        })}
-      </ScrollView>
+      <FlatList
+        data={friendList}
+        renderItem={renderFriend}
+        keyExtractor={item => item.uid}
+      />
       <AddFriendModal />
     </>
   );

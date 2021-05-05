@@ -1,14 +1,14 @@
+import database from '@react-native-firebase/database';
+import storage from '@react-native-firebase/storage';
 import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {Appbar, Avatar, List} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
+import assets from '../../../helpers/assets';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
-import database from '@react-native-firebase/database';
-import storage from '@react-native-firebase/storage';
-import assets from '../../../helpers/assets';
 
 const ChatListScreen = (props: PropsFromRedux) => {
   const {loadSelectedFren, getChatMessages, currentUser} = props;
@@ -60,37 +60,39 @@ const ChatListScreen = (props: PropsFromRedux) => {
       database().ref(targetDatabaseRef).off('value', getChatFrenList);
   }, [currentUser.uid]);
 
+  const renderChatFriend = ({item}: {item: frenData}) => (
+    <List.Item
+      title={item.name}
+      style={styles.chatList}
+      key={item.uid}
+      onPress={() => {
+        loadSelectedFren(item);
+        getChatMessages();
+        navigate(chatRouteNames.CHAT);
+      }}
+      left={iconProps => (
+        <Avatar.Image
+          {...iconProps}
+          source={{
+            uri: item.photoURL,
+          }}
+          size={36}
+        />
+      )}
+    />
+  );
+
   return (
     <>
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
         <Appbar.Content title="Messages" />
       </Appbar.Header>
-      <ScrollView>
-        {chatFrenList.map((fren, index) => {
-          return (
-            <List.Item
-              title={fren.name}
-              style={styles.chatList}
-              key={index}
-              onPress={() => {
-                loadSelectedFren(fren);
-                getChatMessages();
-                navigate(chatRouteNames.CHAT);
-              }}
-              left={iconProps => (
-                <Avatar.Image
-                  {...iconProps}
-                  source={{
-                    uri: fren.photoURL,
-                  }}
-                  size={36}
-                />
-              )}
-            />
-          );
-        })}
-      </ScrollView>
+      <FlatList
+        data={chatFrenList}
+        renderItem={renderChatFriend}
+        keyExtractor={item => item.uid}
+      />
     </>
   );
 };
