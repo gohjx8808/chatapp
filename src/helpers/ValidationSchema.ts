@@ -26,3 +26,8 @@ export const UpdateProfileSchema = yup.object().shape({
   dob: yup.string().required('Date of birth is required'),
   gender: yup.string().required('Gender is required'),
 });
+
+export const AddFriendSchema = yup.object().shape({
+  addBy: yup.string().required('Add by is required'),
+  frenID: yup.string().required("Friend's ID is required"),
+});

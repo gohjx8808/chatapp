@@ -1,9 +1,11 @@
+import {yupResolver} from '@hookform/resolvers/yup';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {StyleSheet, View} from 'react-native';
 import {Button, Modal, Portal, Title} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
+import {AddFriendSchema} from '../../../helpers/validationSchema';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {friendActionCreators} from '../src/friendActions';
@@ -25,7 +27,7 @@ const AddFriendModal = (props: PropsFromRedux) => {
     formState: {errors},
     watch,
     handleSubmit,
-  } = useForm();
+  } = useForm({resolver: yupResolver(AddFriendSchema)});
 
   const addByOptions = ['UID', 'Email'];
 
@@ -43,22 +45,24 @@ const AddFriendModal = (props: PropsFromRedux) => {
         <View style={[GlobalStyles.centerEverything, GlobalStyles.fullWidth]}>
           <Title style={styles.titleText}>Add Friend</Title>
           <View style={[styles.sameRow, styles.bottomSpace]}>
-            <ControlledSelect
-              name="addBy"
-              placeholder="Add By"
-              control={control}
-              error={errors.addBy}
-              options={addByOptions}
-              customStyle={styles.customSelectWidth}
-              customRenderTextStyle={styles.customSelectValue}
-            />
-            <ControlledTextInput
-              name="frenID"
-              label={`Friend's ${watch('addBy') ? watch('addBy') : 'UID'}`}
-              control={control}
-              error={errors.frenID}
-              customStyle={styles.customInputWidth}
-            />
+            <View style={styles.customSelectWidth}>
+              <ControlledSelect
+                name="addBy"
+                placeholder="Add By"
+                control={control}
+                error={errors.addBy}
+                options={addByOptions}
+                customRenderTextStyle={styles.customSelectValue}
+              />
+            </View>
+            <View style={styles.customInputWidth}>
+              <ControlledTextInput
+                name="frenID"
+                label={`Friend's ${watch('addBy') ? watch('addBy') : 'UID'}`}
+                control={control}
+                error={errors.frenID}
+              />
+            </View>
           </View>
           <View style={styles.sameRow}>
             <Button
@@ -121,18 +125,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   bottomSpace: {
-    marginBottom: '10%',
+    marginBottom: '5%',
     marginTop: '2%',
     width: '100%',
   },
-  customSelectWidth: {
-    width: '35%',
-  },
+  customSelectWidth: {flexDirection: 'column', width: '43%', marginRight: 5},
   customSelectValue: {
     paddingTop: '10%',
     paddingHorizontal: '12%',
   },
-  customInputWidth: {
-    width: '58%',
-  },
+  customInputWidth: {flexDirection: 'column', width: '58%'},
 });
