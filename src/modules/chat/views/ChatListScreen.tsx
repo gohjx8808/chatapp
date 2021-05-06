@@ -18,7 +18,7 @@ const ChatListScreen = (props: PropsFromRedux) => {
 
   useEffect(() => {
     const targetDatabaseRef = `/chat/${currentUser.uid}`;
-    const getChatFrenList = database()
+    database()
       .ref(targetDatabaseRef)
       .on('value', frenSnapshots => {
         setChatFrenList([]);
@@ -58,8 +58,6 @@ const ChatListScreen = (props: PropsFromRedux) => {
           return undefined;
         });
       });
-    return () =>
-      database().ref(targetDatabaseRef).off('value', getChatFrenList);
   }, [currentUser.uid]);
 
   const renderChatFriend = ({item}: {item: frenData}) => {

@@ -1,6 +1,11 @@
 import database from '@react-native-firebase/database';
 import React, {useEffect} from 'react';
-import {ImageBackground, StyleSheet, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Dialogflow_V2} from 'react-native-dialogflow';
 import {
   Bubble,
@@ -23,8 +28,9 @@ import {
   dialogFlowProjectID,
 } from '../../../helpers/constants';
 import {currentUserSelector} from '../../login/src/loginSelectors';
-import {goBack} from '../../navigation/src/navigationUtils';
+import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
+import chatRouteNames from '../src/chatRouteNames';
 import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';
 
 const ChatScreen = (props: PropsFromRedux) => {
@@ -45,12 +51,15 @@ const ChatScreen = (props: PropsFromRedux) => {
     const parsedMsg = newMessages[0];
     database().ref(databaseRef).push(parsedMsg);
     getChatMessages();
-    const message = parsedMsg.text;
-    Dialogflow_V2.requestQuery(
-      message,
-      response => handleDialogflowResponse(response as chat.dialogFlowResponse),
-      error => console.log(error),
-    );
+    if (selectedFren.uid === 'FAQ Bot') {
+      const message = parsedMsg.text;
+      Dialogflow_V2.requestQuery(
+        message,
+        response =>
+          handleDialogflowResponse(response as chat.dialogFlowResponse),
+        error => console.log(error),
+      );
+    }
   };
 
   const handleDialogflowResponse = (response: chat.dialogFlowResponse) => {
@@ -124,12 +133,15 @@ const ChatScreen = (props: PropsFromRedux) => {
       <Appbar.Header>
         <Appbar.Action icon="arrow-left" onPress={() => goBack()} />
         <Appbar.Content title={selectedFren.name} />
-        <Avatar.Image
-          size={36}
-          source={{
-            uri: selectedFren.photoURL,
-          }}
-        />
+        <TouchableOpacity
+          onPress={() => navigate(chatRouteNames.CHAT_FRIEND_DETAIL)}>
+          <Avatar.Image
+            size={36}
+            source={{
+              uri: selectedFren.photoURL,
+            }}
+          />
+        </TouchableOpacity>
       </Appbar.Header>
       <GiftedChat
         messages={messages}

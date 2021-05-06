@@ -1,4 +1,5 @@
 export default {
   CHAT_LIST: 'CHAT_LIST',
   CHAT: 'CHAT',
+  CHAT_FRIEND_DETAIL: 'CHAT_FRIEND_DETAIL',
 };
