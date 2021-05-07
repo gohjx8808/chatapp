@@ -4,7 +4,6 @@ export class chatActions {
   public static readonly GET_CHAT_MESSAGES = 'CHAT/GET_CHAT_MESSAGES';
   public static readonly GET_CHAT_FREN_LIST = 'CHAT/GET_CHAT_FREN_LIST';
   public static readonly LOAD_CHAT_FREN_LIST = 'CHAT/LOAD_CHAT_FREN_LIST';
-  public static readonly CLEAR_CHAT_FREN_LIST = 'CHAT/CLEAR_CHAT_FREN_LIST';
 }
 
 export declare namespace chatActionTypes {
@@ -23,9 +22,6 @@ export declare namespace chatActionTypes {
   type loadChatFrenListActionType = ActionWithPayload<
     typeof chatActions.LOAD_CHAT_FREN_LIST,
     frenDetails[]
-  >;
-  type clearChatFrenListActionType = Action<
-    typeof chatActions.CLEAR_CHAT_FREN_LIST
   >;
 }
 
@@ -53,8 +49,5 @@ export class chatActionCreators {
   ): chatActionTypes.loadChatFrenListActionType => ({
     type: chatActions.LOAD_CHAT_FREN_LIST,
     payload,
-  });
-  public static clearChatFrenList = (): chatActionTypes.clearChatFrenListActionType => ({
-    type: chatActions.CLEAR_CHAT_FREN_LIST,
   });
 }

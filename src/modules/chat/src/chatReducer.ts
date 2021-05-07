@@ -41,15 +41,11 @@ const selectedFren = (
 
 const chatFrenList = (
   state = INITIAL_STATE.chatFrenList,
-  action:
-    | chatActionTypes.loadChatFrenListActionType
-    | chatActionTypes.clearChatFrenListActionType,
+  action: chatActionTypes.loadChatFrenListActionType,
 ): frenDetails[] => {
   switch (action.type) {
     case chatActions.LOAD_CHAT_FREN_LIST:
       return action.payload;
-    case chatActions.CLEAR_CHAT_FREN_LIST:
-      return [];
     default:
       return state;
   }
