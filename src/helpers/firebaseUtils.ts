@@ -44,9 +44,8 @@ export const defaultAvatar = {
   defaultUser: 'default-user.png',
 };
 
-export const getChatFrenList = (uid: string) => {
-  const targetDatabaseRef = `/chat/${uid}`;
-  return database().ref(targetDatabaseRef).once('value');
+export const getChatFrenList = (databaseRef: string) => {
+  return database().ref(databaseRef).once('value');
 };
 
 export const getFrenDetail = (frenID: string) => {

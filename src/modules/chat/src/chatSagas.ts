@@ -65,9 +65,10 @@ function* getChatFrenListSaga() {
     const currentUser: login.currentUserData = yield select(
       currentUserSelector,
     );
+    const targetDatabaseRef = `/chat/${currentUser.uid}`;
     const frenSnapshots: FirebaseDatabaseTypes.DataSnapshot = yield call(
       getChatFrenList,
-      currentUser.uid,
+      targetDatabaseRef,
     );
     let frenIDList = [] as string[];
     frenSnapshots.forEach(frenSnapshot => {

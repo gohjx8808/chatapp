@@ -22,7 +22,6 @@ const ChatListScreen = (props: PropsFromRedux) => {
   }, [getChatFrenList]);
 
   const renderChatFriend = ({item}: {item: frenDetails}) => {
-    console.log(item);
     if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
       return (
         <List.Item
