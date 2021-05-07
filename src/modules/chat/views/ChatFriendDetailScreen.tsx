@@ -10,7 +10,9 @@ import {
   Button,
   HelperText,
   Snackbar,
+  Text,
   TextInput,
+  Title,
 } from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -19,9 +21,10 @@ import ControlledDatepicker from '../../../sharedComponents/ControlledDatepicker
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {currentUserSelector} from '../../login/src/loginSelectors';
-import {toggleDrawer} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../../myProfile/src/myProfileActions';
 import {isProfileLoadingSelector} from '../../myProfile/src/myProfileSelectors';
+import {goBack} from '../../navigation/src/navigationUtils';
+import {selectedFrenSelector} from '../src/chatSelectors';
 
 const ChatFriendDetailScreen = (props: PropsFromRedux) => {
   const {
@@ -29,6 +32,7 @@ const ChatFriendDetailScreen = (props: PropsFromRedux) => {
     toggleImagePickerDialog,
     isProfileLoading,
     submitUpdateProfile,
+    selectedFren,
   } = props;
 
   const genders = ['Male', 'Female'];
@@ -57,19 +61,19 @@ const ChatFriendDetailScreen = (props: PropsFromRedux) => {
   return (
     <>
       <Appbar.Header>
-        <Appbar.Action icon="menu" onPress={() => toggleDrawer()} />
-        <Appbar.Content title="My Profile" />
+        <Appbar.Action icon="arrow-left" onPress={() => goBack()} />
+        <Appbar.Content title="Profile" />
       </Appbar.Header>
       <ScrollView contentContainerStyle={GlobalStyles.centerEverything}>
         <TouchableOpacity
           style={GlobalStyles.centerEverything}
           onPress={() => toggleImagePickerDialog(true)}>
           <Avatar.Image
-            source={{uri: currentUser.photoURL}}
+            source={{uri: selectedFren.photoURL}}
             style={styles.iconTopSpace}
             size={80}
           />
-          <HelperText type="info">Touch to edit profile photo</HelperText>
+          <Title>{selectedFren.name}</Title>
         </TouchableOpacity>
         <View style={[GlobalStyles.centerEverything, styles.form]}>
           <ControlledTextInput
@@ -149,6 +153,7 @@ const connector = connect(
   (state: GlobalState) => ({
     currentUser: currentUserSelector(state),
     isProfileLoading: isProfileLoadingSelector(state),
+    selectedFren: selectedFrenSelector(state),
   }),
   {
     toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
