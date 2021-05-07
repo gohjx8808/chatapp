@@ -21,7 +21,7 @@ const FriendListScreen = (props: PropsFromRedux) => {
     currentUser,
   } = props;
 
-  const [friendList, setFriendList] = useState<frenData[]>([]);
+  const [friendList, setFriendList] = useState<frenDetails[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const FriendListScreen = (props: PropsFromRedux) => {
     return () => database().ref(targetDatabaseRef).off('value', getFrenList);
   }, [currentUser.uid]);
 
-  const renderFriend = ({item}: {item: frenData}) => {
+  const renderFriend = ({item}: {item: frenDetails}) => {
     if (item.name.toLowerCase().includes(searchQuery.toLowerCase())) {
       return (
         <List.Item

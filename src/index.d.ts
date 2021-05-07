@@ -17,8 +17,12 @@ interface ActionWithPayload<T, P> {
   payload: P;
 }
 
-interface frenData {
+interface frenDetails {
   uid: string;
+  dob: string;
+  email: string;
+  gender: string;
   name: string;
+  photoName: string;
   photoURL: string;
 }

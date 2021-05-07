@@ -7,7 +7,12 @@ const INITIAL_STATE: chat.State = {
     uid: '',
     name: '',
     photoURL: '',
+    dob: '',
+    email: '',
+    gender: '',
+    photoName: '',
   },
+  chatFrenList: [],
 };
 
 const messages = (
@@ -25,7 +30,7 @@ const messages = (
 const selectedFren = (
   state = INITIAL_STATE.selectedFren,
   action: chatActionTypes.loadSelectedFrenActionType,
-): frenData => {
+): frenDetails => {
   switch (action.type) {
     case chatActions.LOAD_SELECTED_FREN:
       return action.payload;
@@ -34,7 +39,24 @@ const selectedFren = (
   }
 };
 
+const chatFrenList = (
+  state = INITIAL_STATE.chatFrenList,
+  action:
+    | chatActionTypes.loadChatFrenListActionType
+    | chatActionTypes.clearChatFrenListActionType,
+): frenDetails[] => {
+  switch (action.type) {
+    case chatActions.LOAD_CHAT_FREN_LIST:
+      return action.payload;
+    case chatActions.CLEAR_CHAT_FREN_LIST:
+      return [];
+    default:
+      return state;
+  }
+};
+
 export default combineReducers<chat.State>({
   messages,
   selectedFren,
+  chatFrenList,
 });

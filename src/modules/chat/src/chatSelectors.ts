@@ -11,3 +11,8 @@ export const selectedFrenSelector = createSelector(
   chatSelector,
   chat => chat.selectedFren,
 );
+
+export const chatFrenListSelector = createSelector(
+  chatSelector,
+  chat => chat.chatFrenList,
+);
