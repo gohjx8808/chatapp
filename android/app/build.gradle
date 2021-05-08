@@ -152,6 +152,7 @@ android {
         versionName "1.0"
         resValue "string", "build_config_package", "com.jxapp.chatapp"
         manifestPlaceholders = [label: 'ChatApp']
+        vectorDrawables.useSupportLibrary = true
     }
     splits {
         abi {

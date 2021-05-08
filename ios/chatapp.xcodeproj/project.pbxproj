@@ -27,6 +27,7 @@
 		ADD50528B917416DA29E7065 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CD65BE1748B4108B71718D2 /* FontAwesome.ttf */; };
 		B0F014FC8C374B4E98F1B7E2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1EA070EF099441F9D1D9AC6 /* MaterialIcons.ttf */; };
 		D05A3125D627361DD8824BB3 /* libPods-chatapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D572F15C262E65BE0062FE37 /* libPods-chatapp.a */; };
+		D54F64612646E2DC00ACE599 /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54F64602646E2DC00ACE599 /* QBImagePicker.storyboard */; };
 		D571BE60263665CB009D2ED2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		D571BE61263665CB009D2ED2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		D571BE66263665CB009D2ED2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -104,6 +105,7 @@
 		C1EA070EF099441F9D1D9AC6 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		CAC76D99446BD76A870642C0 /* Pods-App-chatapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-chatapp.debug.xcconfig"; path = "Target Support Files/Pods-App-chatapp/Pods-App-chatapp.debug.xcconfig"; sourceTree = "<group>"; };
 		D305B593B7E4572D896D84EF /* libPods-chatapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-chatapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D54F64602646E2DC00ACE599 /* QBImagePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = QBImagePicker.storyboard; path = "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.storyboard"; sourceTree = "<group>"; };
 		D571BE7F263665CB009D2ED2 /* chatapp.staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatapp.staging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D571BE80263665CC009D2ED2 /* chatapp-staging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "chatapp-staging-Info.plist"; path = "/Users/jingxuangoh/Documents/chatapp/ios/chatapp-staging-Info.plist"; sourceTree = "<absolute>"; };
 		D572F15C262E65BE0062FE37 /* libPods-chatapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-chatapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +203,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				D54F64602646E2DC00ACE599 /* QBImagePicker.storyboard */,
 				13B07FAE1A68108700A75B9A /* chatapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* chatappTests */,
@@ -322,7 +325,6 @@
 				D571BE62263665CB009D2ED2 /* Frameworks */,
 				D571BE65263665CB009D2ED2 /* Resources */,
 				D571BE79263665CB009D2ED2 /* Bundle React Native code and images */,
-				645C04AC436E668A2FC8BE39 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -408,6 +410,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54F64612646E2DC00ACE599 /* QBImagePicker.storyboard in Resources */,
 				D571BE66263665CB009D2ED2 /* LaunchScreen.storyboard in Resources */,
 				D571BE67263665CB009D2ED2 /* Images.xcassets in Resources */,
 				D571BE68263665CB009D2ED2 /* AntDesign.ttf in Resources */,
@@ -497,23 +500,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		645C04AC436E668A2FC8BE39 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-chatapp-chatapp.staging/Pods-chatapp-chatapp.staging-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-chatapp-chatapp.staging/Pods-chatapp-chatapp.staging-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-chatapp-chatapp.staging/Pods-chatapp-chatapp.staging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7F2750E5488CF965536C4464 /* [CP] Check Pods Manifest.lock */ = {
@@ -904,7 +890,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7C2Y2P36M8;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "chatapp-staging-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
@@ -933,7 +919,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7C2Y2P36M8;
 				INFOPLIST_FILE = "chatapp-staging-Info.plist";
 				INFOPLIST_PREFIX_HEADER = "";
 				INFOPLIST_PREPROCESS = NO;
