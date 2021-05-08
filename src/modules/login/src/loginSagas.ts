@@ -73,9 +73,9 @@ function* submitLoginSaga() {
     yield put(loginActionCreators.toggleLoginLoading(true));
     try {
       yield call(postSubmitLogin, payload);
-      yield put(loginActionCreators.toggleLoginLoading(false));
       yield fork(getCurrentUserDataSaga);
       yield take(loginActions.DONE_STORING_CURRENT_USER_DATA);
+      yield put(loginActionCreators.toggleLoginLoading(false));
       navigate(routeNames.DASHBOARD_NAV);
     } catch (error) {
       yield put(statusActionCreators.updateStatusMsg('Invalid credentials!'));
