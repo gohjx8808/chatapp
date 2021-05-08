@@ -8,6 +8,7 @@ declare global {
   namespace ReactNativePaper {
     interface ThemeColors {
       primary: string;
+      danger: string;
     }
   }
 }
@@ -17,6 +18,7 @@ const theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: '#0f4c81',
+    danger: '#FF0000',
   },
 };
 

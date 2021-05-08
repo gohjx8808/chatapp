@@ -39,6 +39,12 @@ const GlobalStyles = StyleSheet.create({
     elevation: 1,
     borderWidth: 0.2,
   },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  sameRow: {
+    flexDirection: 'row',
+  },
 });
 
 export default GlobalStyles;

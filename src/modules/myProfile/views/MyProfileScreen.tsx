@@ -172,12 +172,4 @@ const styles = StyleSheet.create({
   btnSpace: {
     marginTop: '8%',
   },
-  copyText: {
-    color: 'blue',
-    textDecorationLine: 'underline',
-  },
-  secondCopyTextVerticalSpace: {
-    paddingTop: 10,
-    paddingBottom: 15,
-  },
 });
