@@ -52,3 +52,10 @@ export const getFrenDetail = (frenID: string) => {
   const userDatabaseRef = `/users/${frenID}`;
   return database().ref(userDatabaseRef).once('value');
 };
+
+export const deleteFriend = (userID: string, frenID: string) => {
+  const userFrenDatabaseRef = `/users/${userID}/friends/${frenID}`;
+  database().ref(userFrenDatabaseRef).remove();
+  const frenChatDatabaseRef = `/chat/${userID}/${frenID}`;
+  database().ref(frenChatDatabaseRef).remove();
+};

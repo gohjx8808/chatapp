@@ -34,7 +34,13 @@ import chatRouteNames from '../src/chatRouteNames';
 import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';
 
 const ChatScreen = (props: PropsFromRedux) => {
-  const {messages, currentUser, getChatMessages, selectedFren} = props;
+  const {
+    messages,
+    currentUser,
+    getChatMessages,
+    selectedFren,
+    getChatFriendList,
+  } = props;
 
   const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
 
@@ -131,7 +137,13 @@ const ChatScreen = (props: PropsFromRedux) => {
   return (
     <ImageBackground source={assets.chatBg} style={styles.chatBg}>
       <Appbar.Header>
-        <Appbar.Action icon="arrow-left" onPress={() => goBack()} />
+        <Appbar.Action
+          icon="arrow-left"
+          onPress={() => {
+            goBack();
+            getChatFriendList();
+          }}
+        />
         <Appbar.Content title={selectedFren.name} />
         <TouchableOpacity
           onPress={() => navigate(chatRouteNames.CHAT_FRIEND_DETAIL)}>
@@ -170,6 +182,7 @@ const connector = connect(
   }),
   {
     getChatMessages: chatActionCreators.getChatMessages,
+    getChatFriendList: chatActionCreators.getChatFrenList,
   },
 );
 

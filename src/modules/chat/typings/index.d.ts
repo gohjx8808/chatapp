@@ -3,6 +3,8 @@ declare namespace chat {
     messages: IMessage[];
     selectedFren: frenDetails;
     chatFrenList: frenDetails[];
+    isDeleteFriendConfirmModalOpen: boolean;
+    isChatLoading: boolean;
   }
 
   interface IMessage {

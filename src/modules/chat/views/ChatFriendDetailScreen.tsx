@@ -11,10 +11,12 @@ import {
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {goBack} from '../../navigation/src/navigationUtils';
+import {chatActionCreators} from '../src/chatActions';
 import {selectedFrenSelector} from '../src/chatSelectors';
+import DeleteFriendConfirmModal from './DeleteFriendConfirmModal';
 
 const ChatFriendDetailScreen = (props: PropsFromRedux) => {
-  const {selectedFren} = props;
+  const {selectedFren, toggleDeleteFriendConfirmModal} = props;
 
   const {colors} = useTheme();
 
@@ -52,17 +54,25 @@ const ChatFriendDetailScreen = (props: PropsFromRedux) => {
         <Button
           mode="outlined"
           theme={{colors: {primary: colors.danger}}}
-          style={{borderColor: colors.danger}}>
+          style={{borderColor: colors.danger}}
+          onPress={() => toggleDeleteFriendConfirmModal(true)}>
           Unfriend
         </Button>
       </ScrollView>
+      <DeleteFriendConfirmModal />
     </>
   );
 };
 
-const connector = connect((state: GlobalState) => ({
-  selectedFren: selectedFrenSelector(state),
-}));
+const connector = connect(
+  (state: GlobalState) => ({
+    selectedFren: selectedFrenSelector(state),
+  }),
+  {
+    toggleDeleteFriendConfirmModal:
+      chatActionCreators.toggleDeleteFriendConfirmModal,
+  },
+);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 

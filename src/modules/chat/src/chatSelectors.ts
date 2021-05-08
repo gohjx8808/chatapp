@@ -16,3 +16,13 @@ export const chatFrenListSelector = createSelector(
   chatSelector,
   chat => chat.chatFrenList,
 );
+
+export const isDeleteFriendConfirmModalOpenSelector = createSelector(
+  chatSelector,
+  chat => chat.isDeleteFriendConfirmModalOpen,
+);
+
+export const isChatLoadingSelector = createSelector(
+  chatSelector,
+  chat => chat.isChatLoading,
+);

@@ -65,6 +65,7 @@ function* submitAddFriendSaga() {
       const response: boolean = yield call(checkUserAvailabilitySaga, payload);
       if (response) {
         yield call(postSubmitAddFriend, currentUser.uid, payload);
+        yield put(friendActionCreators.getFriendList());
         yield put(statusActionCreators.toggleApiStatus(true));
         yield put(
           statusActionCreators.updateStatusMsg(

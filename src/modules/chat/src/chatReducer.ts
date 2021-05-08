@@ -13,6 +13,8 @@ const INITIAL_STATE: chat.State = {
     photoName: '',
   },
   chatFrenList: [],
+  isDeleteFriendConfirmModalOpen: false,
+  isChatLoading: false,
 };
 
 const messages = (
@@ -51,8 +53,34 @@ const chatFrenList = (
   }
 };
 
+const isDeleteFriendConfirmModalOpen = (
+  state = INITIAL_STATE.isDeleteFriendConfirmModalOpen,
+  action: chatActionTypes.toggleDeleteFriendConfirmModalActionType,
+): boolean => {
+  switch (action.type) {
+    case chatActions.TOGGLE_DELETE_FIEND_CONFIRM_MODAL:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const isChatLoading = (
+  state = INITIAL_STATE.isChatLoading,
+  action: chatActionTypes.toggleChatLoadingActionType,
+): boolean => {
+  switch (action.type) {
+    case chatActions.TOGGLE_CHAT_LOADING:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers<chat.State>({
   messages,
   selectedFren,
   chatFrenList,
+  isDeleteFriendConfirmModalOpen,
+  isChatLoading,
 });

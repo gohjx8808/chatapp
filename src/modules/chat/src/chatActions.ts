@@ -4,6 +4,10 @@ export class chatActions {
   public static readonly GET_CHAT_MESSAGES = 'CHAT/GET_CHAT_MESSAGES';
   public static readonly GET_CHAT_FREN_LIST = 'CHAT/GET_CHAT_FREN_LIST';
   public static readonly LOAD_CHAT_FREN_LIST = 'CHAT/LOAD_CHAT_FREN_LIST';
+  public static readonly TOGGLE_DELETE_FIEND_CONFIRM_MODAL =
+    'CHAT/TOGGLE_DELETE_FIEND_CONFIRM_MODAL';
+  public static readonly DELETE_FRIEND = 'CHAT/DELETE_FRIEND';
+  public static readonly TOGGLE_CHAT_LOADING = 'CHAT/TOGGLE_CHAT_LOADING';
 }
 
 export declare namespace chatActionTypes {
@@ -22,6 +26,18 @@ export declare namespace chatActionTypes {
   type loadChatFrenListActionType = ActionWithPayload<
     typeof chatActions.LOAD_CHAT_FREN_LIST,
     frenDetails[]
+  >;
+  type toggleDeleteFriendConfirmModalActionType = ActionWithPayload<
+    typeof chatActions.TOGGLE_DELETE_FIEND_CONFIRM_MODAL,
+    boolean
+  >;
+  type deleteFriendActionType = ActionWithPayload<
+    typeof chatActions.DELETE_FRIEND,
+    string
+  >;
+  type toggleChatLoadingActionType = ActionWithPayload<
+    typeof chatActions.TOGGLE_CHAT_LOADING,
+    boolean
   >;
 }
 
@@ -48,6 +64,24 @@ export class chatActionCreators {
     payload: frenDetails[],
   ): chatActionTypes.loadChatFrenListActionType => ({
     type: chatActions.LOAD_CHAT_FREN_LIST,
+    payload,
+  });
+  public static toggleDeleteFriendConfirmModal = (
+    payload: boolean,
+  ): chatActionTypes.toggleDeleteFriendConfirmModalActionType => ({
+    type: chatActions.TOGGLE_DELETE_FIEND_CONFIRM_MODAL,
+    payload,
+  });
+  public static deleteFriend = (
+    payload: string,
+  ): chatActionTypes.deleteFriendActionType => ({
+    type: chatActions.DELETE_FRIEND,
+    payload,
+  });
+  public static toggleChatLoading = (
+    payload: boolean,
+  ): chatActionTypes.toggleChatLoadingActionType => ({
+    type: chatActions.TOGGLE_CHAT_LOADING,
     payload,
   });
 }

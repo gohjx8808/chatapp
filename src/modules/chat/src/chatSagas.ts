@@ -3,17 +3,23 @@ import {END, EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, select, take} from '@redux-saga/core/effects';
 import assets from '../../../helpers/assets';
 import {
+  deleteFriend,
   getChatFrenList,
   getFrenDetail,
   getUploadedPhotoUrl,
 } from '../../../helpers/firebaseUtils';
+import {friendActionCreators} from '../../friend/src/friendActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
-import {chatActionCreators, chatActions} from './chatActions';
+import {navigate} from '../../navigation/src/navigationUtils';
+import {statusActionCreators} from '../../status/src/statusActions';
+import {chatActionCreators, chatActions, chatActionTypes} from './chatActions';
+import chatRouteNames from './chatRouteNames';
 import {selectedFrenSelector} from './chatSelectors';
 
 export default function* chatRuntime() {
   yield fork(storeChatMessagesSaga);
   yield fork(getChatFrenListSaga);
+  yield fork(deleteFriendSaga);
 }
 
 function getChatMessages(databaseRef: string) {
@@ -99,5 +105,42 @@ function* getChatFrenListSaga() {
       frenDataList.push(frenDatas);
     }
     yield put(chatActionCreators.loadChatFrenList(frenDataList));
+  }
+}
+
+function* deleteFriendSaga() {
+  while (true) {
+    const {payload}: chatActionTypes.deleteFriendActionType = yield take(
+      chatActions.DELETE_FRIEND,
+    );
+    yield put(chatActionCreators.toggleChatLoading(true));
+    const currentUser: login.currentUserData = yield select(
+      currentUserSelector,
+    );
+    yield put(statusActionCreators.updateStatusTitle('Delete Friend'));
+    try {
+      yield call(deleteFriend, currentUser.uid, payload);
+      yield put(chatActionCreators.getChatFrenList());
+      yield put(friendActionCreators.getFriendList());
+      yield put(chatActionCreators.toggleChatLoading(false));
+      yield put(
+        statusActionCreators.updateStatusMsg(
+          'Your friend had been successfully removed',
+        ),
+      );
+      yield put(statusActionCreators.toggleApiStatus(true));
+      yield put(chatActionCreators.toggleDeleteFriendConfirmModal(false));
+      yield put(statusActionCreators.toggleStatusModal(true));
+      navigate(chatRouteNames.CHAT_LIST);
+    } catch (error) {
+      yield put(chatActionCreators.toggleChatLoading(false));
+      yield put(
+        statusActionCreators.updateStatusMsg(
+          'Your friend had failed to remove',
+        ),
+      );
+      yield put(statusActionCreators.toggleApiStatus(false));
+      yield put(statusActionCreators.toggleStatusModal(true));
+    }
   }
 }
