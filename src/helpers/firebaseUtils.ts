@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
-import {ImagePickerResponse} from 'react-native-image-picker';
+import {ImageOrVideo} from 'react-native-image-crop-picker';
 
 export const postSubmitRegister = (
   data: registration.submitRegisterPayload,
@@ -17,8 +17,8 @@ export const postSubmitLogin = (data: login.onLoginPayload) => {
   return auth().signInWithEmailAndPassword(data.email, data.password);
 };
 
-export const postUploadProfilePhoto = (data: ImagePickerResponse) => {
-  return storage().ref(data.fileName).putFile(data.uri!);
+export const postUploadProfilePhoto = (data: ImageOrVideo) => {
+  return storage().ref(data.filename).putFile(data.path!);
 };
 
 export const getUploadedPhotoUrl = (imageName: string) => {

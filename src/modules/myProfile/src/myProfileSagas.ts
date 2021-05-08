@@ -1,12 +1,14 @@
 import {FirebaseStorageTypes} from '@react-native-firebase/storage';
 import {EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
+import ImageCropPicker, {
+  ImageOrVideo,
+  Options,
+} from 'react-native-image-crop-picker';
 import {
   CameraOptions,
-  ImageLibraryOptions,
   ImagePickerResponse,
   launchCamera,
-  launchImageLibrary,
 } from 'react-native-image-picker';
 import {RESULTS} from 'react-native-permissions';
 import {
@@ -80,6 +82,13 @@ function launchCameraActionSaga(cameraOptions: CameraOptions) {
 }
 
 function* triggerPhotoLibrarySaga() {
+  const imageCropPickerOptions: Options = {
+    width: 480,
+    height: 480,
+    cropping: true,
+    cropperCircleOverlay: true,
+    mediaType: 'photo',
+  };
   yield put(permissionActionCreators.requestPhotoLibraryPermission());
   yield take(permissionActions.PHOTO_LIBRARY_PERMISSION_CHECK_DONE);
   const photoLibraryPermission: permission.PermissionStatus = yield select(
@@ -87,48 +96,40 @@ function* triggerPhotoLibrarySaga() {
   );
   switch (photoLibraryPermission) {
     case RESULTS.GRANTED:
-      const imageLibraryOptions: ImageLibraryOptions = {
-        mediaType: 'photo',
-        maxHeight: 480,
-        maxWidth: 480,
-      };
-      const launchImageLibraryAction: EventChannel<ImagePickerResponse> = yield call(
+      let pickerResponse: ImageOrVideo = yield call(
         launchImageLibrarySaga,
-        imageLibraryOptions,
+        imageCropPickerOptions,
       );
-      while (true) {
-        const response: ImagePickerResponse = yield take(
-          launchImageLibraryAction,
+      const currentUser: login.currentUserData = yield select(
+        currentUserSelector,
+      );
+      pickerResponse.filename = `${new Date().toISOString()}.${pickerResponse.mime.replace(
+        'image/',
+        '',
+      )}`;
+      if (pickerResponse.path) {
+        const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
+          postUploadProfilePhoto,
+          pickerResponse,
         );
-        if (response.uri) {
-          const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
-            postUploadProfilePhoto,
-            response,
-          );
-          const currentUser: login.currentUserData = yield select(
-            currentUserSelector,
-          );
-          yield call(
-            postUpdateCurrentUserProfile,
-            {photoName: snapshot.metadata.name},
-            currentUser.uid,
-          );
-          if (
-            currentUser.photoName !== defaultAvatar.defaultUser &&
-            currentUser.photoName !== defaultAvatar.chatBot
-          ) {
-            yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
-          }
+        yield call(
+          postUpdateCurrentUserProfile,
+          {photoName: snapshot.metadata.name},
+          currentUser.uid,
+        );
+        if (
+          currentUser.photoName !== defaultAvatar.defaultUser &&
+          currentUser.photoName !== defaultAvatar.chatBot
+        ) {
+          yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
         }
+        yield put(myProfileActionCreators.toggleImagePickerDialog(false));
       }
   }
 }
 
-function launchImageLibrarySaga(options: ImageLibraryOptions) {
-  return eventChannel(emmitter => {
-    launchImageLibrary(options, response => emmitter(response));
-    return () => {};
-  });
+function launchImageLibrarySaga(imageCropPickerOptions: Options) {
+  return ImageCropPicker.openPicker(imageCropPickerOptions);
 }
 
 function* updateProfileSaga() {
