@@ -12,6 +12,7 @@ import {
   postUploadProfilePhoto,
 } from '../../../helpers/firebaseUtils';
 import {currentUserSelector} from '../../login/src/loginSelectors';
+import {navigate} from '../../navigation/src/navigationUtils';
 import {
   permissionActionCreators,
   permissionActions,
@@ -23,6 +24,7 @@ import {
   myProfileActions,
   myProfileActionTypes,
 } from './myProfileActions';
+import myProfileRouteNames from './myProfileRouteNames';
 
 export default function* myProfileRuntime() {
   yield fork(selectProfilePhotoSaga);
@@ -117,6 +119,7 @@ function* uploadPictureToFirebaseSaga(pickerResponse: ImageOrVideo) {
       yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
     }
     yield put(myProfileActionCreators.toggleImagePickerDialog(false));
+    navigate(myProfileRouteNames.MY_PROFILE);
   }
 }
 

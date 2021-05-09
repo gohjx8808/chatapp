@@ -4,14 +4,7 @@ import moment from 'moment';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {
-  Appbar,
-  Avatar,
-  Button,
-  HelperText,
-  Snackbar,
-  TextInput,
-} from 'react-native-paper';
+import {Appbar, Avatar, Button, Snackbar, TextInput} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {UpdateProfileSchema} from '../../../helpers/validationSchema';
@@ -19,17 +12,13 @@ import ControlledDatepicker from '../../../sharedComponents/ControlledDatepicker
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {currentUserSelector} from '../../login/src/loginSelectors';
-import {toggleDrawer} from '../../navigation/src/navigationUtils';
+import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../src/myProfileActions';
+import myProfileRouteNames from '../src/myProfileRouteNames';
 import {isProfileLoadingSelector} from '../src/myProfileSelectors';
 
 const MyProfileScreen = (props: PropsFromRedux) => {
-  const {
-    currentUser,
-    toggleImagePickerDialog,
-    isProfileLoading,
-    submitUpdateProfile,
-  } = props;
+  const {currentUser, isProfileLoading, submitUpdateProfile} = props;
 
   const genders = ['Male', 'Female'];
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
@@ -63,13 +52,12 @@ const MyProfileScreen = (props: PropsFromRedux) => {
       <ScrollView contentContainerStyle={GlobalStyles.centerEverything}>
         <TouchableOpacity
           style={GlobalStyles.centerEverything}
-          onPress={() => toggleImagePickerDialog(true)}>
+          onPress={() => navigate(myProfileRouteNames.VIEW_PROFILE_PICTURE)}>
           <Avatar.Image
             source={{uri: currentUser.photoURL}}
             style={styles.iconTopSpace}
             size={80}
           />
-          <HelperText type="info">Touch to edit profile photo</HelperText>
         </TouchableOpacity>
         <View style={[GlobalStyles.centerEverything, styles.form]}>
           <ControlledTextInput
@@ -151,7 +139,6 @@ const connector = connect(
     isProfileLoading: isProfileLoadingSelector(state),
   }),
   {
-    toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
     submitUpdateProfile: myProfileActionCreators.submitUpdateProfile,
   },
 );

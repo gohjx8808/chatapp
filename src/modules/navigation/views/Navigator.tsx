@@ -1,19 +1,19 @@
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import * as React from 'react';
 import 'react-native-gesture-handler';
 import {chatNavigator} from '../../chat/views/ChatNavigator';
+import FriendListScreen from '../../friend/views/FriendListScreen';
 import LoginScreen from '../../login/views/LoginScreen';
-import MyProfileScreen from '../../myProfile/views/MyProfileScreen';
+import ImagePickerDialog from '../../myProfile/views/ImagePickerDialog';
+import MyProfileNavigator from '../../myProfile/views/MyProfileNavigator';
+import PermissionErrorModal from '../../permissions/views/PermissionErrorModal';
 import RegistrationScreen from '../../registration/views/RegistrationScreen';
 import StatusModal from '../../status/views/StatusModal';
 import {navigationRef} from '../src/navigationUtils';
 import routeNames from '../src/routeNames';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import CustomDrawer from './CustomDrawer';
-import PermissionErrorModal from '../../permissions/views/PermissionErrorModal';
-import ImagePickerDialog from '../../myProfile/views/ImagePickerDialog';
-import FriendListScreen from '../../friend/views/FriendListScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -24,7 +24,10 @@ const DashboardNavigator = () => {
       initialRouteName={routeNames.CHAT_NAV}
       drawerContent={drawerProps => <CustomDrawer {...drawerProps} />}>
       <Drawer.Screen name={routeNames.CHAT_NAV} component={chatNavigator} />
-      <Drawer.Screen name={routeNames.MY_PROFILE} component={MyProfileScreen} />
+      <Drawer.Screen
+        name={routeNames.MY_PROFILE_NAV}
+        component={MyProfileNavigator}
+      />
       <Drawer.Screen name={routeNames.FRIEND} component={FriendListScreen} />
     </Drawer.Navigator>
   );

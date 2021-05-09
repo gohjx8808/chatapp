@@ -19,7 +19,7 @@ const ImagePickerDialog = (props: PropsFromRedux) => {
   return (
     <Portal>
       <Dialog visible={isImagePickerDialogOpen} onDismiss={hideDialog}>
-        <Dialog.Title>Image Picker Options</Dialog.Title>
+        <Dialog.Title>Edit Profile Picture</Dialog.Title>
         <Dialog.Content>
           <List.Item
             title="Photo Library"

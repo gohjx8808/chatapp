@@ -1,0 +1,4 @@
+export default {
+  MY_PROFILE: 'MY_PROFILE',
+  VIEW_PROFILE_PICTURE: 'VIEW_PROFILE_PICTURE',
+};

@@ -26,8 +26,8 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         />
         <Drawer.Item
           label="My Profile"
-          onPress={() => navigate(routeNames.MY_PROFILE)}
-          active={activeRouteName === routeNames.MY_PROFILE}
+          onPress={() => navigate(routeNames.MY_PROFILE_NAV)}
+          active={activeRouteName === routeNames.MY_PROFILE_NAV}
           icon="account-circle"
         />
         <Drawer.Item
