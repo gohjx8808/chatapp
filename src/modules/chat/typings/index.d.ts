@@ -5,6 +5,7 @@ declare namespace chat {
     chatFrenList: frenDetails[];
     isDeleteFriendConfirmModalOpen: boolean;
     isChatLoading: boolean;
+    isFriendProfilePhotoModalOpen: boolean;
   }
 
   interface IMessage {

@@ -26,3 +26,8 @@ export const isChatLoadingSelector = createSelector(
   chatSelector,
   chat => chat.isChatLoading,
 );
+
+export const isFriendProfilePhotoModalOpenSelector = createSelector(
+  chatSelector,
+  chat => chat.isFriendProfilePhotoModalOpen,
+);

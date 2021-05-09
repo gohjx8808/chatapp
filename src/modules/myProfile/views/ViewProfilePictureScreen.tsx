@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Appbar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
+import GlobalStyles from '../../../helpers/globalStyles';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {goBack} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../src/myProfileActions';
@@ -22,7 +23,7 @@ const ViewProfilePictureScreen = (props: PropsFromRedux) => {
       <View style={styles.profilePhotoContainer}>
         <Image
           source={{uri: currentUser.photoURL}}
-          style={styles.profilePhoto}
+          style={GlobalStyles.image}
           resizeMode="contain"
         />
       </View>
@@ -48,9 +49,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'black',
-  },
-  profilePhoto: {
-    height: '100%',
-    width: '100%',
   },
 });

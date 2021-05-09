@@ -8,6 +8,8 @@ export class chatActions {
     'CHAT/TOGGLE_DELETE_FIEND_CONFIRM_MODAL';
   public static readonly DELETE_FRIEND = 'CHAT/DELETE_FRIEND';
   public static readonly TOGGLE_CHAT_LOADING = 'CHAT/TOGGLE_CHAT_LOADING';
+  public static readonly TOGGLE_FRIEND_PROFILE_PHOTO =
+    'CHAT/TOGGLE_FRIEND_PROFILE_PHOTO';
 }
 
 export declare namespace chatActionTypes {
@@ -37,6 +39,10 @@ export declare namespace chatActionTypes {
   >;
   type toggleChatLoadingActionType = ActionWithPayload<
     typeof chatActions.TOGGLE_CHAT_LOADING,
+    boolean
+  >;
+  type toggleFriendProfilePhotoActionType = ActionWithPayload<
+    typeof chatActions.TOGGLE_FRIEND_PROFILE_PHOTO,
     boolean
   >;
 }
@@ -82,6 +88,12 @@ export class chatActionCreators {
     payload: boolean,
   ): chatActionTypes.toggleChatLoadingActionType => ({
     type: chatActions.TOGGLE_CHAT_LOADING,
+    payload,
+  });
+  public static toggleFriendProfilePhoto = (
+    payload: boolean,
+  ): chatActionTypes.toggleFriendProfilePhotoActionType => ({
+    type: chatActions.TOGGLE_FRIEND_PROFILE_PHOTO,
     payload,
   });
 }

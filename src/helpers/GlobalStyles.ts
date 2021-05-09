@@ -45,6 +45,10 @@ const GlobalStyles = StyleSheet.create({
   sameRow: {
     flexDirection: 'row',
   },
+  image: {
+    height: '100%',
+    width: '100%',
+  },
 });
 
 export default GlobalStyles;

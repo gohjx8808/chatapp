@@ -14,9 +14,14 @@ import {goBack} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import {selectedFrenSelector} from '../src/chatSelectors';
 import DeleteFriendConfirmModal from './DeleteFriendConfirmModal';
+import FriendProfilePhotoModal from './FriendProfilePhotoModal';
 
 const ChatFriendDetailScreen = (props: PropsFromRedux) => {
-  const {selectedFren, toggleDeleteFriendConfirmModal} = props;
+  const {
+    selectedFren,
+    toggleDeleteFriendConfirmModal,
+    toggleFriendProfilePhoto,
+  } = props;
 
   const {colors} = useTheme();
 
@@ -29,7 +34,7 @@ const ChatFriendDetailScreen = (props: PropsFromRedux) => {
       <ScrollView contentContainerStyle={GlobalStyles.centerEverything}>
         <TouchableOpacity
           style={GlobalStyles.centerEverything}
-          onPress={() => {}}>
+          onPress={() => toggleFriendProfilePhoto(true)}>
           <Avatar.Image
             source={{uri: selectedFren.photoURL}}
             style={styles.iconTopSpace}
@@ -60,6 +65,7 @@ const ChatFriendDetailScreen = (props: PropsFromRedux) => {
         </Button>
       </ScrollView>
       <DeleteFriendConfirmModal />
+      <FriendProfilePhotoModal />
     </>
   );
 };
@@ -71,6 +77,7 @@ const connector = connect(
   {
     toggleDeleteFriendConfirmModal:
       chatActionCreators.toggleDeleteFriendConfirmModal,
+    toggleFriendProfilePhoto: chatActionCreators.toggleFriendProfilePhoto,
   },
 );
 
