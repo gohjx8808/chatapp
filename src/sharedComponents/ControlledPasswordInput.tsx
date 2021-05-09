@@ -9,20 +9,11 @@ interface ControlledPasswordInputOwnProps {
   passwordSecure: boolean;
   toggleSecure: () => void;
   label: string;
-  validationFunction: () => void;
   error: FieldErrors;
 }
 
 const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps> = props => {
-  const {
-    name,
-    control,
-    passwordSecure,
-    toggleSecure,
-    label,
-    validationFunction,
-    error,
-  } = props;
+  const {name, control, passwordSecure, toggleSecure, label, error} = props;
   const {colors} = useTheme();
 
   return (
@@ -36,10 +27,7 @@ const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps
             mode="outlined"
             label={label}
             value={value}
-            onChangeText={text => {
-              onChange(text);
-              validationFunction();
-            }}
+            onChangeText={onChange}
             theme={{colors: {primary: colors.primary}}}
             style={GlobalStyles.inputsWidth}
             secureTextEntry={passwordSecure}
