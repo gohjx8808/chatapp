@@ -17,7 +17,7 @@ import {myProfileActionCreators} from '../src/myProfileActions';
 import myProfileRouteNames from '../src/myProfileRouteNames';
 import {isProfileLoadingSelector} from '../src/myProfileSelectors';
 
-const MyProfileScreen = (props: PropsFromRedux) => {
+const ProfileDetailScreen = (props: PropsFromRedux) => {
   const {currentUser, isProfileLoading, submitUpdateProfile} = props;
 
   const genders = ['Male', 'Female'];
@@ -145,7 +145,7 @@ const connector = connect(
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(MyProfileScreen);
+export default connector(ProfileDetailScreen);
 
 const styles = StyleSheet.create({
   iconTopSpace: {

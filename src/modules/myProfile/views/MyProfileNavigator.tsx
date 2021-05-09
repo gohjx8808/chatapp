@@ -1,25 +1,66 @@
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {useTheme} from 'react-native-paper';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import myProfileRouteNames from '../src/myProfileRouteNames';
-import MyProfileScreen from './MyProfileScreen';
+import ChangePasswordScreen from './ChangePasswordScreen';
+import ProfileDetailScreen from './ProfileDetailScreen';
 import ViewProfilePictureScreen from './ViewProfilePictureScreen';
 
-const MyProfileNavigator = () => {
-  const ProfileStack = createStackNavigator();
+const ProfileDetailNavigator = () => {
+  const ProfileDetailStack = createStackNavigator();
 
   return (
-    <ProfileStack.Navigator
+    <ProfileDetailStack.Navigator
       initialRouteName={myProfileRouteNames.MY_PROFILE}
       screenOptions={{headerShown: false}}>
-      <ProfileStack.Screen
+      <ProfileDetailStack.Screen
         name={myProfileRouteNames.MY_PROFILE}
-        component={MyProfileScreen}
+        component={ProfileDetailScreen}
       />
-      <ProfileStack.Screen
+      <ProfileDetailStack.Screen
         name={myProfileRouteNames.VIEW_PROFILE_PICTURE}
         component={ViewProfilePictureScreen}
       />
-    </ProfileStack.Navigator>
+    </ProfileDetailStack.Navigator>
+  );
+};
+
+const MyProfileNavigator = () => {
+  const MyProfileTab = createMaterialBottomTabNavigator();
+  const {colors} = useTheme();
+
+  return (
+    <MyProfileTab.Navigator
+      initialRouteName={myProfileRouteNames.PROFILE_DETAIL_NAV}
+      shifting={true}
+      barStyle={{backgroundColor: colors.primary}}>
+      <MyProfileTab.Screen
+        name={myProfileRouteNames.PROFILE_DETAIL_NAV}
+        component={ProfileDetailNavigator}
+        options={{
+          tabBarLabel: 'Profile Detail',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons
+              name="account-details"
+              color={color}
+              size={26}
+            />
+          ),
+        }}
+      />
+      <MyProfileTab.Screen
+        name={myProfileRouteNames.CHANGE_PASSWORD}
+        component={ChangePasswordScreen}
+        options={{
+          tabBarLabel: 'Security',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="lock" color={color} size={26} />
+          ),
+        }}
+      />
+    </MyProfileTab.Navigator>
   );
 };
 

@@ -325,6 +325,7 @@
 				D571BE62263665CB009D2ED2 /* Frameworks */,
 				D571BE65263665CB009D2ED2 /* Resources */,
 				D571BE79263665CB009D2ED2 /* Bundle React Native code and images */,
+				41A2305CD565435BD45780A1 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -478,6 +479,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-chatapp-chatappTests/Pods-chatapp-chatappTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		41A2305CD565435BD45780A1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-chatapp-chatapp.staging/Pods-chatapp-chatapp.staging-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-chatapp-chatapp.staging/Pods-chatapp-chatapp.staging-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-chatapp-chatapp.staging/Pods-chatapp-chatapp.staging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		53FE3CC71881AA4E67E8BD0E /* [CP] Check Pods Manifest.lock */ = {
