@@ -1,15 +1,17 @@
-import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
 import React, {FunctionComponent, useEffect, useState} from 'react';
+import {FlatList, ListRenderItem, StyleSheet, View} from 'react-native';
 import {IconButton, Text} from 'react-native-paper';
 import {validatingRequirements} from '../helpers/utils';
 
 interface PasswordRequirementsOwnProps {
   password: string;
   confirmPassword: string;
+  headerComponent?: React.ReactElement;
+  footerComponent?: React.ReactElement;
 }
 
 const PasswordRequirements: FunctionComponent<PasswordRequirementsOwnProps> = props => {
-  const {password, confirmPassword} = props;
+  const {password, confirmPassword, headerComponent, footerComponent} = props;
 
   const [passwordRequirement, setPasswordRequirement] = useState([
     {
@@ -78,6 +80,11 @@ const PasswordRequirements: FunctionComponent<PasswordRequirementsOwnProps> = pr
     <FlatList
       data={passwordRequirement}
       renderItem={renderPasswordRequirement}
+      ListHeaderComponent={headerComponent}
+      ListHeaderComponentStyle={styles.center}
+      ListFooterComponent={footerComponent}
+      ListFooterComponentStyle={styles.center}
+      keyboardShouldPersistTaps="handled"
     />
   );
 };
@@ -95,5 +102,8 @@ const styles = StyleSheet.create({
   },
   unverifiedColor: {
     color: '#606060',
+  },
+  center: {
+    alignItems: 'center',
   },
 });
