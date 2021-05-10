@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {IconButton, Modal, Portal} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -30,10 +31,10 @@ const FriendProfilePhotoModal = (props: PropsFromRedux) => {
         />
         <View style={[GlobalStyles.centerEverything, GlobalStyles.fullWidth]}>
           <View style={styles.bottomSpace}>
-            <Image
+            <FastImage
               source={{uri: selectedFren.photoURL}}
               style={GlobalStyles.image}
-              resizeMode="contain"
+              resizeMode={FastImage.resizeMode.contain}
             />
           </View>
         </View>

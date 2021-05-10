@@ -1,5 +1,6 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {Appbar} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -21,10 +22,10 @@ const ViewProfilePictureScreen = (props: PropsFromRedux) => {
         />
       </Appbar.Header>
       <View style={styles.profilePhotoContainer}>
-        <Image
+        <FastImage
           source={{uri: currentUser.photoURL}}
           style={GlobalStyles.image}
-          resizeMode="contain"
+          resizeMode={FastImage.resizeMode.contain}
         />
       </View>
     </>
