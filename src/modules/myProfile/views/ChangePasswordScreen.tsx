@@ -15,7 +15,7 @@ import {isProfileLoadingSelector} from '../src/myProfileSelectors';
 type PassType = 'currentPass' | 'newPass' | 'confirmNewPass';
 
 const ChangePasswordScreen = (props: PropsFromRedux) => {
-  const {isProfileLoading, submitUpdateProfile} = props;
+  const {isProfileLoading, submitChangePassword} = props;
   const [secure, setSecure] = useState({
     currentPass: true,
     newPass: true,
@@ -27,15 +27,12 @@ const ChangePasswordScreen = (props: PropsFromRedux) => {
     formState: {errors},
     handleSubmit,
     watch,
+    reset,
   } = useForm({resolver: yupResolver(ChangePasswordSchema)});
 
-  const onSubmit = (data: myProfile.updateProfilePayload) => {
-    const postData = {
-      name: data.name,
-      dob: data.dob,
-      gender: data.gender,
-    };
-    submitUpdateProfile(postData);
+  const onSubmit = (data: myProfile.changePasswordPayload) => {
+    reset({currentPass: '', newPass: '', confirmNewPass: ''});
+    submitChangePassword(data);
   };
 
   const toggleSecure = (passType: PassType) => {
@@ -110,7 +107,7 @@ const connector = connect(
     isProfileLoading: isProfileLoadingSelector(state),
   }),
   {
-    submitUpdateProfile: myProfileActionCreators.submitUpdateProfile,
+    submitChangePassword: myProfileActionCreators.submitChangePassword,
   },
 );
 
@@ -119,13 +116,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 export default connector(ChangePasswordScreen);
 
 const styles = StyleSheet.create({
-  iconTopSpace: {
-    marginTop: '10%',
-  },
   passwordRequirementContainer: {
     marginTop: '10%',
     paddingBottom: '15%',
-    paddingHorizontal: '5%',
+    marginHorizontal: '5%',
   },
   btnSpace: {
     marginVertical: '8%',

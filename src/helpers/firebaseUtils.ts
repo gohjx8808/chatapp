@@ -59,3 +59,12 @@ export const deleteFriend = (userID: string, frenID: string) => {
   const frenChatDatabaseRef = `/chat/${userID}/${frenID}`;
   database().ref(frenChatDatabaseRef).remove();
 };
+
+export const validateCurrentPassword = (email: string, password: string) => {
+  const credential = auth.EmailAuthProvider.credential(email, password);
+  return auth().currentUser?.reauthenticateWithCredential(credential);
+};
+
+export const changePassword = (newPassword: string) => {
+  auth().currentUser?.updatePassword(newPassword);
+};

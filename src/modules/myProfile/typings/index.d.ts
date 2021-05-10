@@ -9,4 +9,10 @@ declare namespace myProfile {
     dob: string;
     gender: string;
   }
+
+  interface changePasswordPayload {
+    currentPass: string;
+    newPass: string;
+    confirmNewPass: string;
+  }
 }

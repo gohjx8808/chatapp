@@ -6,10 +6,12 @@ import ImageCropPicker, {
 } from 'react-native-image-crop-picker';
 import {RESULTS} from 'react-native-permissions';
 import {
+  changePassword,
   defaultAvatar,
   postDeletePrevUploadedPhoto,
   postUpdateCurrentUserProfile,
   postUploadProfilePhoto,
+  validateCurrentPassword,
 } from '../../../helpers/firebaseUtils';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
@@ -29,6 +31,7 @@ import myProfileRouteNames from './myProfileRouteNames';
 export default function* myProfileRuntime() {
   yield fork(selectProfilePhotoSaga);
   yield fork(updateProfileSaga);
+  yield fork(changePasswordSaga);
 }
 
 function* selectProfilePhotoSaga() {
@@ -155,6 +158,50 @@ function* updateProfileSaga() {
           'Your profile had failed to update!',
         ),
       );
+      yield put(statusActionCreators.toggleApiStatus(false));
+      yield put(statusActionCreators.toggleStatusModal(true));
+      yield put(myProfileActionCreators.toggleProfileLoading(false));
+    }
+  }
+}
+
+function* changePasswordSaga() {
+  while (true) {
+    const {
+      payload,
+    }: myProfileActionTypes.submitChangePasswordActionType = yield take(
+      myProfileActions.SUBMIT_CHANGE_PASSWORD,
+    );
+    yield put(myProfileActionCreators.toggleProfileLoading(true));
+    yield put(statusActionCreators.updateStatusTitle('Change Password'));
+    try {
+      const currentUser: login.currentUserData = yield select(
+        currentUserSelector,
+      );
+      yield call(
+        validateCurrentPassword,
+        currentUser.email,
+        payload.currentPass,
+      );
+      yield call(changePassword, payload.newPass);
+      yield put(
+        statusActionCreators.updateStatusMsg(
+          'Your password has been successfully changed!',
+        ),
+      );
+      yield put(statusActionCreators.toggleApiStatus(true));
+      yield put(statusActionCreators.toggleStatusModal(true));
+      yield put(myProfileActionCreators.toggleProfileLoading(false));
+    } catch (error) {
+      if (error.code === 'auth/wrong-password') {
+        yield put(statusActionCreators.updateStatusMsg('Invalid credential!'));
+      } else {
+        yield put(
+          statusActionCreators.updateStatusMsg(
+            'Your password has failed to change!',
+          ),
+        );
+      }
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));
       yield put(myProfileActionCreators.toggleProfileLoading(false));
