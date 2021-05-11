@@ -17,7 +17,9 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
     <View style={styles.wholeFlex}>
       <Image source={assets.corgiSquare} style={styles.corgiImage} />
       <Title style={styles.logoTitle}>ChatApp</Title>
-      <DrawerContentScrollView {...props} style={styles.drawerItemReadjustment}>
+      <DrawerContentScrollView
+        {...props}
+        contentContainerStyle={styles.drawerContainerReadjustment}>
         <Drawer.Item
           label="Messages"
           onPress={() => navigate(routeNames.CHAT_NAV)}
@@ -37,6 +39,12 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
           icon="account-multiple"
         />
       </DrawerContentScrollView>
+      <Drawer.Item
+        label="Log Out"
+        onPress={() => navigate(routeNames.LOGOUT)}
+        active={activeRouteName === routeNames.LOGOUT}
+        icon="logout"
+      />
     </View>
   );
 };
@@ -58,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: Platform.OS === 'android' ? '5%' : '15%',
   },
-  drawerItemReadjustment: {
-    marginTop: Platform.OS === 'android' ? 0 : '-15%',
+  drawerContainerReadjustment: {
+    paddingTop: 15,
   },
 });

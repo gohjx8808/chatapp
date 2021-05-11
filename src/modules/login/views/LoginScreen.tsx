@@ -48,7 +48,6 @@ const LoginScreen = (props: propsFromRedux) => {
             passwordSecure={secure}
             toggleSecure={() => setSecure(!secure)}
             label="Password"
-            validationFunction={() => {}}
             error={errors.password}
           />
           <View style={styles.buttonContainer}>

@@ -6,6 +6,7 @@ import 'react-native-gesture-handler';
 import {chatNavigator} from '../../chat/views/ChatNavigator';
 import FriendListScreen from '../../friend/views/FriendListScreen';
 import LoginScreen from '../../login/views/LoginScreen';
+import LogoutScreen from '../../logout/views/LogoutScreen';
 import ImagePickerDialog from '../../myProfile/views/ImagePickerDialog';
 import MyProfileNavigator from '../../myProfile/views/MyProfileNavigator';
 import PermissionErrorModal from '../../permissions/views/PermissionErrorModal';
@@ -29,6 +30,7 @@ const DashboardNavigator = () => {
         component={MyProfileNavigator}
       />
       <Drawer.Screen name={routeNames.FRIEND} component={FriendListScreen} />
+      <Drawer.Screen name={routeNames.LOGOUT} component={LogoutScreen} />
     </Drawer.Navigator>
   );
 };

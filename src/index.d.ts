@@ -6,6 +6,7 @@ interface GlobalState {
   permission: permission.State;
   myProfile: myProfile.State;
   friend: friend.State;
+  logout: logout.State;
 }
 
 interface Action<T> {
