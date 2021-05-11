@@ -23,9 +23,18 @@ const LoginScreen = (props: propsFromRedux) => {
     control,
     handleSubmit,
     formState: {errors},
+    reset,
   } = useForm({
     resolver: yupResolver(LoginSchema),
   });
+
+  const onSubmit = (values: login.onLoginPayload) => {
+    submitLogin(values);
+    reset({
+      email: '',
+      password: '',
+    });
+  };
 
   return (
     <View style={styles.backgroundView}>
@@ -53,7 +62,7 @@ const LoginScreen = (props: propsFromRedux) => {
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={handleSubmit(submitLogin)}
+              onPress={handleSubmit(onSubmit)}
               style={GlobalStyles.blueBackgroundBtn}
               color="blue"
               loading={isLoginLoading}

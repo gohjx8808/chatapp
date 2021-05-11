@@ -68,3 +68,7 @@ export const validateCurrentPassword = (email: string, password: string) => {
 export const changePassword = (newPassword: string) => {
   auth().currentUser?.updatePassword(newPassword);
 };
+
+export const logout = () => {
+  return auth().signOut();
+};

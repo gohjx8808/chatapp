@@ -4,12 +4,12 @@ import {Button, Card, Title} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
 import GlobalStyles from '../../../helpers/globalStyles';
-import {loginActionCreators} from '../../login/src/loginActions';
 import {goBack} from '../../navigation/src/navigationUtils';
+import {logoutActionCreators} from '../src/logoutActions';
 import {isLogoutLoadingSelector} from '../src/logoutSelectors';
 
 const LogoutScreen = (props: propsFromRedux) => {
-  const {isLogoutLoading} = props;
+  const {isLogoutLoading, submitLogout} = props;
 
   return (
     <View style={styles.backgroundView}>
@@ -22,7 +22,7 @@ const LogoutScreen = (props: propsFromRedux) => {
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={() => {}}
+              onPress={() => submitLogout()}
               style={GlobalStyles.blueBackgroundBtn}
               color="blue"
               loading={isLogoutLoading}
@@ -49,7 +49,7 @@ const connector = connect(
     isLogoutLoading: isLogoutLoadingSelector(state),
   }),
   {
-    submitLogin: loginActionCreators.submitLogin,
+    submitLogout: logoutActionCreators.submitLogout,
   },
 );
 
