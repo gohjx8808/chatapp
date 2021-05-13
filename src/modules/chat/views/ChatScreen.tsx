@@ -32,8 +32,8 @@ import {
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
+import {imagePickerActionCreators} from '../../imagePicker/src/imagePickerActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
-import {myProfileActionCreators} from '../../myProfile/src/myProfileActions';
 import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
@@ -215,7 +215,7 @@ const connector = connect(
   {
     getChatMessages: chatActionCreators.getChatMessages,
     getChatFriendList: chatActionCreators.getChatFrenList,
-    toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
+    toggleImagePickerDialog: imagePickerActionCreators.toggleImagePickerDialog,
   },
 );
 

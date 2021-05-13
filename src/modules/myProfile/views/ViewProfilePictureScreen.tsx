@@ -9,17 +9,14 @@ import {goBack} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../src/myProfileActions';
 
 const ViewProfilePictureScreen = (props: PropsFromRedux) => {
-  const {currentUser, toggleImagePickerDialog} = props;
+  const {currentUser, updateProfilePhoto} = props;
 
   return (
     <>
       <Appbar.Header theme={{colors: {primary: 'black'}}}>
         <Appbar.Action icon="arrow-left" onPress={() => goBack()} />
         <Appbar.Content title="Profile Picture" />
-        <Appbar.Action
-          icon="pencil"
-          onPress={() => toggleImagePickerDialog(true)}
-        />
+        <Appbar.Action icon="pencil" onPress={() => updateProfilePhoto()} />
       </Appbar.Header>
       <View style={styles.profilePhotoContainer}>
         <FastImage
@@ -37,7 +34,7 @@ const connector = connect(
     currentUser: currentUserSelector(state),
   }),
   {
-    toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
+    updateProfilePhoto: myProfileActionCreators.updateProfilePhoto,
   },
 );
 

@@ -7,6 +7,7 @@ interface GlobalState {
   myProfile: myProfile.State;
   friend: friend.State;
   logout: logout.State;
+  imagePicker: imagePicker.State;
 }
 
 interface Action<T> {

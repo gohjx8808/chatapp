@@ -7,7 +7,7 @@ import {chatNavigator} from '../../chat/views/ChatNavigator';
 import FriendListScreen from '../../friend/views/FriendListScreen';
 import LoginScreen from '../../login/views/LoginScreen';
 import LogoutScreen from '../../logout/views/LogoutScreen';
-import ImagePickerDialog from '../../myProfile/views/ImagePickerDialog';
+import ImagePickerDialog from '../../imagePicker/views/ImagePickerDialog';
 import MyProfileNavigator from '../../myProfile/views/MyProfileNavigator';
 import PermissionErrorModal from '../../permissions/views/PermissionErrorModal';
 import RegistrationScreen from '../../registration/views/RegistrationScreen';

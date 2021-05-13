@@ -41,7 +41,6 @@ export const postSubmitAddFriend = (uid: string, frenID: string) => {
 
 export const defaultAvatar = {
   chatBot: 'chat-bot.jpg',
-  defaultUser: 'default-user.png',
 };
 
 export const getChatFrenList = (databaseRef: string) => {

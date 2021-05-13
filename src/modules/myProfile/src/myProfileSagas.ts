@@ -1,25 +1,18 @@
-import {FirebaseStorageTypes} from '@react-native-firebase/storage';
-import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
-import ImageCropPicker, {
-  ImageOrVideo,
-  Options,
-} from 'react-native-image-crop-picker';
-import {RESULTS} from 'react-native-permissions';
+import {call, fork, put, select, take} from '@redux-saga/core/effects';
 import {
   changePassword,
   defaultAvatar,
   postDeletePrevUploadedPhoto,
   postUpdateCurrentUserProfile,
-  postUploadProfilePhoto,
   validateCurrentPassword,
 } from '../../../helpers/firebaseUtils';
+import {
+  imagePickerActionCreators,
+  imagePickerActions,
+  imagePickerActionTypes,
+} from '../../imagePicker/src/imagePickerActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
-import {
-  permissionActionCreators,
-  permissionActions,
-} from '../../permissions/src/permissionActions';
-import {permissionStatusSelector} from '../../permissions/src/permissionSelectors';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
   myProfileActionCreators,
@@ -32,102 +25,38 @@ export default function* myProfileRuntime() {
   yield fork(selectProfilePhotoSaga);
   yield fork(updateProfileSaga);
   yield fork(changePasswordSaga);
+  yield fork(uploadPictureToFirebaseSaga);
 }
 
 function* selectProfilePhotoSaga() {
   while (true) {
-    const {camera, photoLibrary} = yield race({
-      camera: take(myProfileActions.OPEN_CAMERA),
-      photoLibrary: take(myProfileActions.OPEN_PHOTO_LIBRARY),
-    });
-    if (camera) {
-      yield fork(triggerCameraSaga);
-    } else if (photoLibrary) {
-      yield fork(triggerPhotoLibrarySaga);
-    }
+    yield take(myProfileActions.UPDATE_PROFILE_PHOTO);
+    yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
   }
 }
 
-function* triggerCameraSaga() {
-  let cameraOptions: Options = {
-    cropping: true,
-    width: 480,
-    height: 480,
-    cropperCircleOverlay: true,
-    useFrontCamera: true,
-    mediaType: 'photo',
-  };
-  yield put(permissionActionCreators.requestCameraPermission());
-  yield take(permissionActions.CAMERA_PERMISSION_CHECK_DONE);
-  const cameraPermission: permission.PermissionStatus = yield select(
-    permissionStatusSelector,
-  );
-  switch (cameraPermission) {
-    case RESULTS.GRANTED:
-      const cameraResponse: ImageOrVideo = yield call(
-        launchCameraActionSaga,
-        cameraOptions,
-      );
-      yield call(uploadPictureToFirebaseSaga, cameraResponse);
-  }
-}
-
-function launchCameraActionSaga(cameraOptions: Options) {
-  return ImageCropPicker.openCamera(cameraOptions);
-}
-
-function* triggerPhotoLibrarySaga() {
-  const imageCropPickerOptions: Options = {
-    width: 480,
-    height: 480,
-    cropping: true,
-    cropperCircleOverlay: true,
-    mediaType: 'photo',
-  };
-  yield put(permissionActionCreators.requestPhotoLibraryPermission());
-  yield take(permissionActions.PHOTO_LIBRARY_PERMISSION_CHECK_DONE);
-  const photoLibraryPermission: permission.PermissionStatus = yield select(
-    permissionStatusSelector,
-  );
-  switch (photoLibraryPermission) {
-    case RESULTS.GRANTED:
-      const pickerResponse: ImageOrVideo = yield call(
-        launchImageLibrarySaga,
-        imageCropPickerOptions,
-      );
-      yield call(uploadPictureToFirebaseSaga, pickerResponse);
-  }
-}
-
-function* uploadPictureToFirebaseSaga(pickerResponse: ImageOrVideo) {
-  const currentUser: login.currentUserData = yield select(currentUserSelector);
-  pickerResponse.filename = `${new Date().toISOString()}.${pickerResponse.mime.replace(
-    'image/',
-    '',
-  )}`;
-  if (pickerResponse.path) {
-    const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
-      postUploadProfilePhoto,
-      pickerResponse,
+function* uploadPictureToFirebaseSaga() {
+  while (true) {
+    const updatedImageName: imagePickerActionTypes.updateUploadedPhotoNameActionType = yield take(
+      imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
+    );
+    const currentUser: login.currentUserData = yield select(
+      currentUserSelector,
     );
     yield call(
       postUpdateCurrentUserProfile,
-      {photoName: snapshot.metadata.name},
+      {photoName: updatedImageName.payload},
       currentUser.uid,
     );
     if (
-      currentUser.photoName !== defaultAvatar.defaultUser &&
-      currentUser.photoName !== defaultAvatar.chatBot
+      currentUser.photoName !== defaultAvatar.chatBot &&
+      currentUser.photoName !== ''
     ) {
       yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
     }
-    yield put(myProfileActionCreators.toggleImagePickerDialog(false));
-    navigate(myProfileRouteNames.MY_PROFILE);
+    yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
+    navigate(myProfileRouteNames.PROFILE_DETAIL);
   }
-}
-
-function launchImageLibrarySaga(imageCropPickerOptions: Options) {
-  return ImageCropPicker.openPicker(imageCropPickerOptions);
 }
 
 function* updateProfileSaga() {

@@ -1,25 +1,15 @@
 export class myProfileActions {
-  public static readonly TOGGLE_IMAGE_PICKER_DIALOG =
-    'MY_PROFILE/TOGGLE_IMAGE_PICKER_DIALOG';
-  public static readonly OPEN_CAMERA = 'MY_PROFILE/OPEN_CAMERA';
-  public static readonly OPEN_PHOTO_LIBRARY = 'MY_PROFILE/OPEN_PHOTO_LIBRARY';
   public static readonly TOGGLE_PROFILE_LOADING =
     'MY_PROFILE/TOGGLE_PROFILE_LOADING';
   public static readonly SUBMIT_UPDATE_PROFILE =
     'MY_PROFILE/SUBMIT_UPDATE_PROFILE';
   public static readonly SUBMIT_CHANGE_PASSWORD =
     'MY_PROFILE/SUBMIT_CHANGE_PASSWORD';
+  public static readonly UPDATE_PROFILE_PHOTO =
+    'MY_PROFILE/UPDATE_PROFILE_PHOTO';
 }
 
 export declare namespace myProfileActionTypes {
-  type toggleImagePickerDialogActionType = ActionWithPayload<
-    typeof myProfileActions.TOGGLE_IMAGE_PICKER_DIALOG,
-    boolean
-  >;
-  type openCameraActionType = Action<typeof myProfileActions.OPEN_CAMERA>;
-  type openPhotolibraryActionType = Action<
-    typeof myProfileActions.OPEN_PHOTO_LIBRARY
-  >;
   type toggleProfileLoadingActionType = ActionWithPayload<
     typeof myProfileActions.TOGGLE_PROFILE_LOADING,
     boolean
@@ -32,21 +22,12 @@ export declare namespace myProfileActionTypes {
     typeof myProfileActions.SUBMIT_CHANGE_PASSWORD,
     myProfile.changePasswordPayload
   >;
+  type updateProfilePhotoActionType = Action<
+    typeof myProfileActions.UPDATE_PROFILE_PHOTO
+  >;
 }
 
 export class myProfileActionCreators {
-  public static toggleImagePickerDialog = (
-    payload: boolean,
-  ): myProfileActionTypes.toggleImagePickerDialogActionType => ({
-    type: myProfileActions.TOGGLE_IMAGE_PICKER_DIALOG,
-    payload,
-  });
-  public static openCamera = (): myProfileActionTypes.openCameraActionType => ({
-    type: myProfileActions.OPEN_CAMERA,
-  });
-  public static openPhotolibrary = (): myProfileActionTypes.openPhotolibraryActionType => ({
-    type: myProfileActions.OPEN_PHOTO_LIBRARY,
-  });
   public static toggleProfileLoading = (
     payload: boolean,
   ): myProfileActionTypes.toggleProfileLoadingActionType => ({
@@ -64,5 +45,8 @@ export class myProfileActionCreators {
   ): myProfileActionTypes.submitChangePasswordActionType => ({
     type: myProfileActions.SUBMIT_CHANGE_PASSWORD,
     payload,
+  });
+  public static updateProfilePhoto = (): myProfileActionTypes.updateProfilePhotoActionType => ({
+    type: myProfileActions.UPDATE_PROFILE_PHOTO,
   });
 }

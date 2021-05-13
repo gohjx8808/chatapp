@@ -13,11 +13,11 @@ const ProfileDetailNavigator = () => {
 
   return (
     <ProfileDetailStack.Navigator
-      initialRouteName={myProfileRouteNames.MY_PROFILE}
+      initialRouteName={myProfileRouteNames.MY_PROFILE_NAV}
       screenOptions={{headerShown: false}}>
       <ProfileDetailStack.Screen
-        name={myProfileRouteNames.MY_PROFILE}
-        component={ProfileDetailScreen}
+        name={myProfileRouteNames.MY_PROFILE_NAV}
+        component={MyProfileNavigator}
       />
       <ProfileDetailStack.Screen
         name={myProfileRouteNames.VIEW_PROFILE_PICTURE}
@@ -33,12 +33,12 @@ const MyProfileNavigator = () => {
 
   return (
     <MyProfileTab.Navigator
-      initialRouteName={myProfileRouteNames.PROFILE_DETAIL_NAV}
+      initialRouteName={myProfileRouteNames.PROFILE_DETAIL}
       shifting={true}
       barStyle={{backgroundColor: colors.primary}}>
       <MyProfileTab.Screen
-        name={myProfileRouteNames.PROFILE_DETAIL_NAV}
-        component={ProfileDetailNavigator}
+        name={myProfileRouteNames.PROFILE_DETAIL}
+        component={ProfileDetailScreen}
         options={{
           tabBarLabel: 'Profile Detail',
           tabBarIcon: ({color}) => (
@@ -64,4 +64,4 @@ const MyProfileNavigator = () => {
   );
 };
 
-export default MyProfileNavigator;
+export default ProfileDetailNavigator;

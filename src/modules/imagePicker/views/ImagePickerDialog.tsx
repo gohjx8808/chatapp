@@ -1,8 +1,8 @@
 import React from 'react';
 import {Dialog, List, Portal} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
-import {myProfileActionCreators} from '../src/myProfileActions';
-import {isImagePickerDialogOpenSelector} from '../src/myProfileSelectors';
+import {imagePickerActionCreators} from '../src/imagePickerActions';
+import {isImagePickerDialogOpenSelector} from '../src/imagePickerSelectors';
 
 const ImagePickerDialog = (props: PropsFromRedux) => {
   const {
@@ -42,9 +42,9 @@ const connector = connect(
     isImagePickerDialogOpen: isImagePickerDialogOpenSelector(state),
   }),
   {
-    toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
-    openCamera: myProfileActionCreators.openCamera,
-    openPhotoLibrary: myProfileActionCreators.openPhotolibrary,
+    toggleImagePickerDialog: imagePickerActionCreators.toggleImagePickerDialog,
+    openCamera: imagePickerActionCreators.openCamera,
+    openPhotoLibrary: imagePickerActionCreators.openPhotolibrary,
   },
 );
 
