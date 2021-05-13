@@ -2,7 +2,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {useNavigation} from '@react-navigation/core';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
 import {Button, Card} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -29,7 +29,9 @@ const RegistrationScreen = (props: PropsFromRedux) => {
   });
 
   return (
-    <View style={styles.backgroundView}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.backgroundView}>
       <Card style={styles.registerCard}>
         <Card.Title title="Registration" titleStyle={styles.loginTitle} />
         <Card.Content style={GlobalStyles.centerEverything}>
@@ -85,7 +87,7 @@ const RegistrationScreen = (props: PropsFromRedux) => {
           </View>
         </Card.Content>
       </Card>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -110,7 +112,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   registerCard: {
-    height: Dimensions.get('screen').height * 0.8,
     width: '80%',
   },
   loginTitle: {
@@ -125,23 +126,5 @@ const styles = StyleSheet.create({
   },
   btnSpace: {
     marginTop: '5%',
-  },
-  corgiImage: {
-    height: '20%',
-    width: '40%',
-    alignSelf: 'center',
-    marginTop: '10%',
-    borderRadius: 10,
-  },
-  sameRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 25,
-  },
-  verifiedColor: {
-    color: 'green',
-  },
-  unverifiedColor: {
-    color: '#606060',
   },
 });

@@ -1,7 +1,13 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
-import {Dimensions, Image, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {Button, Card} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
@@ -37,7 +43,9 @@ const LoginScreen = (props: propsFromRedux) => {
   };
 
   return (
-    <View style={styles.backgroundView}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.backgroundView}>
       <Card style={styles.loginCard}>
         <Image source={Assets.corgiSquare} style={styles.corgiImage} />
         <Card.Title
@@ -80,7 +88,7 @@ const LoginScreen = (props: propsFromRedux) => {
           </View>
         </Card.Content>
       </Card>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -105,7 +113,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   loginCard: {
-    height: Dimensions.get('screen').height * 0.6,
     width: '80%',
   },
   loginTitle: {
@@ -114,7 +121,6 @@ const styles = StyleSheet.create({
     marginBottom: '5%',
   },
   buttonContainer: {
-    marginVertical: '10%',
     width: '100%',
     alignItems: 'center',
   },
