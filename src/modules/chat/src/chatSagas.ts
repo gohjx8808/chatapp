@@ -169,5 +169,20 @@ function* sendImageSaga() {
 
 function* uploadPictureToFirebaseSaga(imageName: string) {
   const sentImageURL: string = yield call(getUploadedPhotoUrl, imageName);
-  console.log(sentImageURL);
+  const currentUser: login.currentUserData = yield select(currentUserSelector);
+  const selectedFren: frenDetails = yield select(selectedFrenSelector);
+  const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
+  const processedCurrentUser = {
+    name: currentUser.name,
+    avatar: currentUser.photoURL,
+    _id: currentUser.uid,
+  };
+  const msg = {
+    _id: new Date().toISOString(),
+    image: sentImageURL,
+    createdAt: new Date(),
+    user: processedCurrentUser,
+  };
+  database().ref(databaseRef).push(msg);
+  yield put(chatActionCreators.getChatMessages());
 }
