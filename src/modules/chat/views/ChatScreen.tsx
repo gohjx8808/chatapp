@@ -138,13 +138,14 @@ const ChatScreen = (props: PropsFromRedux) => {
     return (
       <Actions
         {...actionProps}
-        options={{
-          ['Send Image']: () => toggleImagePickerDialog(true),
-        }}
         icon={() => (
-          <Icon name={'attachment'} size={28} color={colors.primary} />
+          <Icon
+            name={'attachment'}
+            size={28}
+            color={colors.primary}
+            onPress={() => toggleImagePickerDialog(true)}
+          />
         )}
-        onSend={args => console.log(args)}
       />
     );
   };
@@ -201,6 +202,7 @@ const ChatScreen = (props: PropsFromRedux) => {
         renderAvatar={() => <View />}
         renderActions={renderActions}
         renderComposer={renderCustomComposer}
+        scrollToBottom
       />
     </ImageBackground>
   );

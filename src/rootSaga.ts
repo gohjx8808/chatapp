@@ -1,7 +1,7 @@
 import {all, call} from 'redux-saga/effects';
 import chatRuntime from './modules/chat/src/chatSagas';
 import friendRuntime from './modules/friend/src/friendSagas';
-import imagePickerRuntime from './modules/imagePicker/src/imagePickerSaga';
+import imagePickerRuntime from './modules/imagePicker/src/imagePickerSagas';
 import loginRuntime from './modules/login/src/loginSagas';
 import logoutRuntime from './modules/logout/src/logoutSagas';
 import myProfileRuntime from './modules/myProfile/src/myProfileSagas';

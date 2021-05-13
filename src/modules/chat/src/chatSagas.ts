@@ -9,6 +9,7 @@ import {
   getUploadedPhotoUrl,
 } from '../../../helpers/firebaseUtils';
 import {friendActionCreators} from '../../friend/src/friendActions';
+import { imagePickerActions, imagePickerActionTypes } from '../../imagePicker/src/imagePickerActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
@@ -142,5 +143,22 @@ function* deleteFriendSaga() {
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));
     }
+  }
+}
+
+function* uploadPictureToFirebaseSaga() {
+  while (true) {
+    const updatedImageName: imagePickerActionTypes.updateUploadedPhotoNameActionType = yield take(
+      imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
+    );
+    console.log('chat');
+    const currentUser: login.currentUserData = yield select(
+      currentUserSelector,
+    );
+    // yield call(
+    //   postUpdateCurrentUserProfile,
+    //   {photoName: updatedImageName.payload},
+    //   currentUser.uid,
+    // );
   }
 }

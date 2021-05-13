@@ -5,6 +5,8 @@ export class imagePickerActions {
   public static readonly OPEN_PHOTO_LIBRARY = 'IMAGE_PICKER/OPEN_PHOTO_LIBRARY';
   public static readonly UPDATE_UPLOADED_PHOTO_NAME =
     'IMAGE_PICKER/UPDATE_UPLOADED_PHOTO_NAME';
+  public static readonly CANCEL_IMAGE_PICKER =
+    'IMAGE_PICKER/CANCEL_IMAGE_PICKER';
 }
 
 export declare namespace imagePickerActionTypes {
@@ -19,6 +21,9 @@ export declare namespace imagePickerActionTypes {
   type updateUploadedPhotoNameActionType = ActionWithPayload<
     typeof imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
     string
+  >;
+  type cancelImagePickerActionType = Action<
+    typeof imagePickerActions.CANCEL_IMAGE_PICKER
   >;
 }
 
@@ -40,5 +45,8 @@ export class imagePickerActionCreators {
   ): imagePickerActionTypes.updateUploadedPhotoNameActionType => ({
     type: imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
     payload,
+  });
+  public static cancelImagePicker = (): imagePickerActionTypes.cancelImagePickerActionType => ({
+    type: imagePickerActions.CANCEL_IMAGE_PICKER,
   });
 }

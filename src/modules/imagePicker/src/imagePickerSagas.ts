@@ -85,7 +85,11 @@ function* triggerPhotoLibrarySaga() {
           imageCropPickerOptions,
         );
         yield call(uploadPictureToFirebaseSaga, pickerResponse);
-      } catch (error) {}
+      } catch (error) {
+        if (error.code.match(/E_PICKER_CANCELLED/)) {
+          yield put(imagePickerActionCreators.cancelImagePicker());
+        }
+      }
   }
 }
 

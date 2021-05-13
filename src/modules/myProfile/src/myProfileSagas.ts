@@ -1,4 +1,4 @@
-import {call, fork, put, select, take} from '@redux-saga/core/effects';
+import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
 import {
   changePassword,
   defaultAvatar,
@@ -25,38 +25,40 @@ export default function* myProfileRuntime() {
   yield fork(selectProfilePhotoSaga);
   yield fork(updateProfileSaga);
   yield fork(changePasswordSaga);
-  yield fork(uploadPictureToFirebaseSaga);
 }
 
 function* selectProfilePhotoSaga() {
   while (true) {
     yield take(myProfileActions.UPDATE_PROFILE_PHOTO);
     yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
+    const {selectedImage, cancelImagePicker, dismissDialog} = yield race({
+      selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME),
+      cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
+      dismissDialog: take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG),
+    });
+    if (selectedImage) {
+      yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
+    } else if (cancelImagePicker) {
+    } else if (dismissDialog) {
+    }
   }
 }
 
-function* uploadPictureToFirebaseSaga() {
-  while (true) {
-    const updatedImageName: imagePickerActionTypes.updateUploadedPhotoNameActionType = yield take(
-      imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
-    );
-    const currentUser: login.currentUserData = yield select(
-      currentUserSelector,
-    );
-    yield call(
-      postUpdateCurrentUserProfile,
-      {photoName: updatedImageName.payload},
-      currentUser.uid,
-    );
-    if (
-      currentUser.photoName !== defaultAvatar.chatBot &&
-      currentUser.photoName !== ''
-    ) {
-      yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
-    }
-    yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
-    navigate(myProfileRouteNames.PROFILE_DETAIL);
+function* uploadPictureToFirebaseSaga(updatedImageName: string) {
+  const currentUser: login.currentUserData = yield select(currentUserSelector);
+  yield call(
+    postUpdateCurrentUserProfile,
+    {photoName: updatedImageName},
+    currentUser.uid,
+  );
+  if (
+    currentUser.photoName !== defaultAvatar.chatBot &&
+    currentUser.photoName !== ''
+  ) {
+    yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
   }
+  yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
+  navigate(myProfileRouteNames.PROFILE_DETAIL);
 }
 
 function* updateProfileSaga() {
