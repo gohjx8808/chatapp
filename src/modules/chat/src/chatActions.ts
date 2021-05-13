@@ -10,6 +10,7 @@ export class chatActions {
   public static readonly TOGGLE_CHAT_LOADING = 'CHAT/TOGGLE_CHAT_LOADING';
   public static readonly TOGGLE_FRIEND_PROFILE_PHOTO =
     'CHAT/TOGGLE_FRIEND_PROFILE_PHOTO';
+  public static readonly SEND_IMAGE = 'CHAT/SEND_IMAGE';
 }
 
 export declare namespace chatActionTypes {
@@ -45,6 +46,7 @@ export declare namespace chatActionTypes {
     typeof chatActions.TOGGLE_FRIEND_PROFILE_PHOTO,
     boolean
   >;
+  type sendImageActionType = Action<typeof chatActions.SEND_IMAGE>;
 }
 
 export class chatActionCreators {
@@ -95,5 +97,8 @@ export class chatActionCreators {
   ): chatActionTypes.toggleFriendProfilePhotoActionType => ({
     type: chatActions.TOGGLE_FRIEND_PROFILE_PHOTO,
     payload,
+  });
+  public static sendImage = (): chatActionTypes.sendImageActionType => ({
+    type: chatActions.SEND_IMAGE,
   });
 }

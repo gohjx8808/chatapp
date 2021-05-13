@@ -1,6 +1,6 @@
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {END, EventChannel, eventChannel} from '@redux-saga/core';
-import {call, fork, put, select, take} from '@redux-saga/core/effects';
+import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
 import assets from '../../../helpers/assets';
 import {
   deleteFriend,
@@ -9,7 +9,10 @@ import {
   getUploadedPhotoUrl,
 } from '../../../helpers/firebaseUtils';
 import {friendActionCreators} from '../../friend/src/friendActions';
-import { imagePickerActions, imagePickerActionTypes } from '../../imagePicker/src/imagePickerActions';
+import {
+  imagePickerActionCreators,
+  imagePickerActions,
+} from '../../imagePicker/src/imagePickerActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
@@ -21,6 +24,7 @@ export default function* chatRuntime() {
   yield fork(storeChatMessagesSaga);
   yield fork(getChatFrenListSaga);
   yield fork(deleteFriendSaga);
+  yield fork(sendImageSaga);
 }
 
 function getChatMessages(databaseRef: string) {
@@ -146,19 +150,24 @@ function* deleteFriendSaga() {
   }
 }
 
-function* uploadPictureToFirebaseSaga() {
+function* sendImageSaga() {
   while (true) {
-    const updatedImageName: imagePickerActionTypes.updateUploadedPhotoNameActionType = yield take(
-      imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
-    );
-    console.log('chat');
-    const currentUser: login.currentUserData = yield select(
-      currentUserSelector,
-    );
-    // yield call(
-    //   postUpdateCurrentUserProfile,
-    //   {photoName: updatedImageName.payload},
-    //   currentUser.uid,
-    // );
+    yield take(chatActions.SEND_IMAGE);
+    yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
+    const {selectedImage, cancelImagePicker, dismissDialog} = yield race({
+      selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME),
+      cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
+      dismissDialog: take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG),
+    });
+    if (selectedImage) {
+      yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
+    } else if (cancelImagePicker) {
+    } else if (dismissDialog) {
+    }
   }
+}
+
+function* uploadPictureToFirebaseSaga(imageName: string) {
+  const sentImageURL: string = yield call(getUploadedPhotoUrl, imageName);
+  console.log(sentImageURL);
 }

@@ -32,7 +32,6 @@ import {
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
-import {imagePickerActionCreators} from '../../imagePicker/src/imagePickerActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
@@ -46,7 +45,7 @@ const ChatScreen = (props: PropsFromRedux) => {
     getChatMessages,
     selectedFren,
     getChatFriendList,
-    toggleImagePickerDialog,
+    sendImage,
   } = props;
 
   const {colors} = useTheme();
@@ -143,7 +142,7 @@ const ChatScreen = (props: PropsFromRedux) => {
             name={'attachment'}
             size={28}
             color={colors.primary}
-            onPress={() => toggleImagePickerDialog(true)}
+            onPress={() => sendImage()}
           />
         )}
       />
@@ -217,7 +216,7 @@ const connector = connect(
   {
     getChatMessages: chatActionCreators.getChatMessages,
     getChatFriendList: chatActionCreators.getChatFrenList,
-    toggleImagePickerDialog: imagePickerActionCreators.toggleImagePickerDialog,
+    sendImage: chatActionCreators.sendImage,
   },
 );
 

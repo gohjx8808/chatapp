@@ -9,7 +9,6 @@ import {
 import {
   imagePickerActionCreators,
   imagePickerActions,
-  imagePickerActionTypes,
 } from '../../imagePicker/src/imagePickerActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
