@@ -8,8 +8,12 @@ import {
 } from 'react-native';
 import {Dialogflow_V2} from 'react-native-dialogflow';
 import {
+  Actions,
+  ActionsProps,
   Bubble,
   BubbleProps,
+  Composer,
+  ComposerProps,
   Day,
   DayProps,
   GiftedChat,
@@ -19,7 +23,8 @@ import {
   Time,
   TimeProps,
 } from 'react-native-gifted-chat';
-import {Appbar, Avatar} from 'react-native-paper';
+import {Appbar, Avatar, useTheme} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
 import {
@@ -28,6 +33,7 @@ import {
   dialogFlowProjectID,
 } from '../../../helpers/constants';
 import {currentUserSelector} from '../../login/src/loginSelectors';
+import {myProfileActionCreators} from '../../myProfile/src/myProfileActions';
 import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
@@ -40,7 +46,10 @@ const ChatScreen = (props: PropsFromRedux) => {
     getChatMessages,
     selectedFren,
     getChatFriendList,
+    toggleImagePickerDialog,
   } = props;
+
+  const {colors} = useTheme();
 
   const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
 
@@ -125,12 +134,33 @@ const ChatScreen = (props: PropsFromRedux) => {
     );
   };
 
+  const renderActions = (actionProps: Readonly<ActionsProps>) => {
+    return (
+      <Actions
+        {...actionProps}
+        options={{
+          ['Send Image']: () => toggleImagePickerDialog(true),
+        }}
+        icon={() => (
+          <Icon name={'attachment'} size={28} color={colors.primary} />
+        )}
+        onSend={args => console.log(args)}
+      />
+    );
+  };
+
   const renderCustomInputToolbar = (toolbarProps: InputToolbarProps) => {
     return (
       <InputToolbar
         {...toolbarProps}
         containerStyle={styles.textInputContainer}
       />
+    );
+  };
+
+  const renderCustomComposer = (composerProps: ComposerProps) => {
+    return (
+      <Composer {...composerProps} textInputStyle={styles.zeroLineheight} />
     );
   };
 
@@ -169,6 +199,8 @@ const ChatScreen = (props: PropsFromRedux) => {
         renderInputToolbar={renderCustomInputToolbar}
         placeholder="Type a message"
         renderAvatar={() => <View />}
+        renderActions={renderActions}
+        renderComposer={renderCustomComposer}
       />
     </ImageBackground>
   );
@@ -183,6 +215,7 @@ const connector = connect(
   {
     getChatMessages: chatActionCreators.getChatMessages,
     getChatFriendList: chatActionCreators.getChatFrenList,
+    toggleImagePickerDialog: myProfileActionCreators.toggleImagePickerDialog,
   },
 );
 
@@ -206,5 +239,8 @@ const styles = StyleSheet.create({
   },
   textInputContainer: {
     borderRadius: 10,
+  },
+  zeroLineheight: {
+    lineHeight: 0,
   },
 });
