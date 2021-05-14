@@ -59,6 +59,9 @@ const AddFriendModal = (props: PropsFromRedux) => {
               <ControlledTextInput
                 name="frenID"
                 label={`Friend's ${watch('addBy') ? watch('addBy') : 'UID'}`}
+                keyboardType={
+                  watch('addBy') === 'email' ? 'email-address' : 'default'
+                }
                 control={control}
                 error={errors.frenID}
               />

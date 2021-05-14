@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {Control, Controller, FieldErrors} from 'react-hook-form';
-import {ViewStyle} from 'react-native';
+import {KeyboardTypeOptions, ViewStyle} from 'react-native';
 import {HelperText, TextInput, useTheme} from 'react-native-paper';
 import GlobalStyles from '../helpers/globalStyles';
 
@@ -13,6 +13,7 @@ interface ControlledTextInputOwnProps {
   disabled?: boolean;
   customStyle?: ViewStyle;
   rightElement?: React.ReactNode;
+  keyboardType?: KeyboardTypeOptions;
 }
 
 const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = props => {
@@ -25,6 +26,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
     disabled,
     customStyle,
     rightElement,
+    keyboardType,
   } = props;
   const {colors} = useTheme();
 
@@ -47,6 +49,7 @@ const ControlledTextInput: FunctionComponent<ControlledTextInputOwnProps> = prop
             dense
             disabled={disabled}
             right={rightElement}
+            keyboardType={keyboardType}
           />
         )}
       />

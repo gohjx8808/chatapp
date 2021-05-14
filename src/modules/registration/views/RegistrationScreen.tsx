@@ -46,6 +46,7 @@ const RegistrationScreen = (props: PropsFromRedux) => {
             control={control}
             label="Email"
             error={errors.email}
+            keyboardType="email-address"
           />
           <ControlledPasswordInput
             name="password"

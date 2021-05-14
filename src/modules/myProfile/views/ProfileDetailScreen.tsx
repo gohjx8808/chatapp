@@ -87,6 +87,7 @@ const ProfileDetailScreen = (props: PropsFromRedux) => {
                 onPress={() => copyText(currentUser.email)}
               />
             }
+            keyboardType="email-address"
           />
           <ControlledTextInput
             control={control}
