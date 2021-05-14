@@ -2,7 +2,10 @@ import React from 'react';
 import {Dialog, List, Portal} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import {imagePickerActionCreators} from '../src/imagePickerActions';
-import {isImagePickerDialogOpenSelector} from '../src/imagePickerSelectors';
+import {
+  imagePickerDialogTitleSelector,
+  isImagePickerDialogOpenSelector,
+} from '../src/imagePickerSelectors';
 
 const ImagePickerDialog = (props: PropsFromRedux) => {
   const {
@@ -10,6 +13,7 @@ const ImagePickerDialog = (props: PropsFromRedux) => {
     toggleImagePickerDialog,
     openCamera,
     openPhotoLibrary,
+    imagePickerDialogTitle,
   } = props;
 
   const hideDialog = () => {
@@ -19,7 +23,7 @@ const ImagePickerDialog = (props: PropsFromRedux) => {
   return (
     <Portal>
       <Dialog visible={isImagePickerDialogOpen} onDismiss={hideDialog}>
-        <Dialog.Title>Edit Profile Picture</Dialog.Title>
+        <Dialog.Title>{imagePickerDialogTitle}</Dialog.Title>
         <Dialog.Content>
           <List.Item
             title="Photo Library"
@@ -40,6 +44,7 @@ const ImagePickerDialog = (props: PropsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     isImagePickerDialogOpen: isImagePickerDialogOpenSelector(state),
+    imagePickerDialogTitle: imagePickerDialogTitleSelector(state),
   }),
   {
     toggleImagePickerDialog: imagePickerActionCreators.toggleImagePickerDialog,

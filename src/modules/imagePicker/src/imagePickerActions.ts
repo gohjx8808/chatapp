@@ -7,6 +7,9 @@ export class imagePickerActions {
     'IMAGE_PICKER/UPDATE_UPLOADED_PHOTO_NAME';
   public static readonly CANCEL_IMAGE_PICKER =
     'IMAGE_PICKER/CANCEL_IMAGE_PICKER';
+  public static readonly UPDATE_IMAGE_PICKER_DIALOG_TITLE =
+    'IMAGE_PICKER/UPDATE_IMAGE_PICKER_DIALOG_TITLE';
+  public static readonly TOGGLE_IS_CROPPING = 'IMAGE_PICKER/TOGGLE_IS_CROPPING';
 }
 
 export declare namespace imagePickerActionTypes {
@@ -24,6 +27,14 @@ export declare namespace imagePickerActionTypes {
   >;
   type cancelImagePickerActionType = Action<
     typeof imagePickerActions.CANCEL_IMAGE_PICKER
+  >;
+  type updateImagePickerDialogTitleActionType = ActionWithPayload<
+    typeof imagePickerActions.UPDATE_IMAGE_PICKER_DIALOG_TITLE,
+    string
+  >;
+  type toggleIsCroppingActionType = ActionWithPayload<
+    typeof imagePickerActions.TOGGLE_IS_CROPPING,
+    boolean
   >;
 }
 
@@ -48,5 +59,17 @@ export class imagePickerActionCreators {
   });
   public static cancelImagePicker = (): imagePickerActionTypes.cancelImagePickerActionType => ({
     type: imagePickerActions.CANCEL_IMAGE_PICKER,
+  });
+  public static updateImagePickerDialogTitle = (
+    payload: string,
+  ): imagePickerActionTypes.updateImagePickerDialogTitleActionType => ({
+    type: imagePickerActions.UPDATE_IMAGE_PICKER_DIALOG_TITLE,
+    payload,
+  });
+  public static toggleIsCropping = (
+    payload: boolean,
+  ): imagePickerActionTypes.toggleIsCroppingActionType => ({
+    type: imagePickerActions.TOGGLE_IS_CROPPING,
+    payload,
   });
 }

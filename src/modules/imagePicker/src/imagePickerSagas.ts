@@ -15,6 +15,7 @@ import {
   imagePickerActionCreators,
   imagePickerActions,
 } from './imagePickerActions';
+import {isCroppingSelector} from './imagePickerSelectors';
 
 export default function* imagePickerRuntime() {
   yield fork(selectProfilePhotoSaga);
@@ -35,11 +36,12 @@ function* selectProfilePhotoSaga() {
 }
 
 function* triggerCameraSaga() {
+  const isCroppingMode: boolean = yield select(isCroppingSelector);
   let cameraOptions: Options = {
-    cropping: true,
+    cropping: isCroppingMode,
     width: 480,
     height: 480,
-    cropperCircleOverlay: true,
+    cropperCircleOverlay: isCroppingMode,
     useFrontCamera: true,
     mediaType: 'photo',
   };
@@ -65,11 +67,12 @@ function launchCameraActionSaga(cameraOptions: Options) {
 }
 
 function* triggerPhotoLibrarySaga() {
+  const isCroppingMode: boolean = yield select(isCroppingSelector);
   const imageCropPickerOptions: Options = {
     width: 480,
     height: 480,
-    cropping: true,
-    cropperCircleOverlay: true,
+    cropping: isCroppingMode,
+    cropperCircleOverlay: isCroppingMode,
     mediaType: 'photo',
   };
   yield put(permissionActionCreators.requestPhotoLibraryPermission());

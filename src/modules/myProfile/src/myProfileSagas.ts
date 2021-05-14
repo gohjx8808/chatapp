@@ -38,6 +38,12 @@ export default function* myProfileRuntime() {
 function* selectProfilePhotoSaga() {
   while (true) {
     yield take(myProfileActions.UPDATE_PROFILE_PHOTO);
+    yield put(
+      imagePickerActionCreators.updateImagePickerDialogTitle(
+        'Edit Profile Photo',
+      ),
+    );
+    yield put(imagePickerActionCreators.toggleIsCropping(true));
     yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
     const startImagePicker: Task = yield fork(startImagePickerSaga);
     yield take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG);

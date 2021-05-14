@@ -161,6 +161,10 @@ function* deleteFriendSaga() {
 function* sendImageSaga() {
   while (true) {
     yield take(chatActions.SEND_IMAGE);
+    yield put(
+      imagePickerActionCreators.updateImagePickerDialogTitle('Select Image'),
+    );
+    yield put(imagePickerActionCreators.toggleIsCropping(false));
     yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
     const startImagePicker: Task = yield fork(startImagePickerSaga);
     yield take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG);
