@@ -1,6 +1,14 @@
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
-import {END, EventChannel, eventChannel} from '@redux-saga/core';
-import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
+import {END, EventChannel, eventChannel, Task} from '@redux-saga/core';
+import {
+  call,
+  cancel,
+  fork,
+  put,
+  race,
+  select,
+  take,
+} from '@redux-saga/core/effects';
 import assets from '../../../helpers/assets';
 import {
   deleteFriend,
@@ -154,15 +162,21 @@ function* sendImageSaga() {
   while (true) {
     yield take(chatActions.SEND_IMAGE);
     yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
-    const {selectedImage, cancelImagePicker, dismissDialog} = yield race({
+    const startImagePicker: Task = yield fork(startImagePickerSaga);
+    yield take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG);
+    yield cancel(startImagePicker);
+  }
+}
+
+function* startImagePickerSaga() {
+  while (true) {
+    const {selectedImage, cancelImagePicker} = yield race({
       selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME),
       cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
-      dismissDialog: take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG),
     });
     if (selectedImage) {
       yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
     } else if (cancelImagePicker) {
-    } else if (dismissDialog) {
     }
   }
 }

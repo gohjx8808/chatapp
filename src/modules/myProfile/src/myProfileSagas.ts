@@ -1,4 +1,13 @@
-import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
+import {
+  call,
+  cancel,
+  fork,
+  put,
+  race,
+  select,
+  take,
+} from '@redux-saga/core/effects';
+import {Task} from '@redux-saga/types';
 import {
   changePassword,
   defaultAvatar,
@@ -30,15 +39,21 @@ function* selectProfilePhotoSaga() {
   while (true) {
     yield take(myProfileActions.UPDATE_PROFILE_PHOTO);
     yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
-    const {selectedImage, cancelImagePicker, dismissDialog} = yield race({
+    const startImagePicker: Task = yield fork(startImagePickerSaga);
+    yield take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG);
+    yield cancel(startImagePicker);
+  }
+}
+
+function* startImagePickerSaga() {
+  while (true) {
+    const {selectedImage, cancelImagePicker} = yield race({
       selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME),
       cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
-      dismissDialog: take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG),
     });
     if (selectedImage) {
       yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
     } else if (cancelImagePicker) {
-    } else if (dismissDialog) {
     }
   }
 }
@@ -56,8 +71,8 @@ function* uploadPictureToFirebaseSaga(updatedImageName: string) {
   ) {
     yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
   }
-  yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
   navigate(myProfileRouteNames.PROFILE_DETAIL);
+  yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
 }
 
 function* updateProfileSaga() {
