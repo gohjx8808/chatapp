@@ -1,11 +1,6 @@
-import {FirebaseStorageTypes} from '@react-native-firebase/storage';
 import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
-import ImageCropPicker, {
-  ImageOrVideo,
-  Options,
-} from 'react-native-image-crop-picker';
+import ImageCropPicker, {Image, Options} from 'react-native-image-crop-picker';
 import {RESULTS} from 'react-native-permissions';
-import {postUploadProfilePhoto} from '../../../helpers/firebaseUtils';
 import {
   permissionActionCreators,
   permissionActions,
@@ -53,11 +48,18 @@ function* triggerCameraSaga() {
   switch (cameraPermission) {
     case RESULTS.GRANTED:
       try {
-        const cameraResponse: ImageOrVideo = yield call(
+        const cameraResponse: Image = yield call(
           launchCameraActionSaga,
           cameraOptions,
         );
-        yield call(uploadPictureToFirebaseSaga, cameraResponse);
+        cameraResponse.filename = `${new Date().toISOString()}.${cameraResponse.mime.replace(
+          'image/',
+          '',
+        )}`;
+        yield put(
+          imagePickerActionCreators.updateUploadedPhoto(cameraResponse),
+        );
+        // yield call(uploadPictureToFirebaseSaga, cameraResponse);
       } catch (error) {}
   }
 }
@@ -83,11 +85,17 @@ function* triggerPhotoLibrarySaga() {
   switch (photoLibraryPermission) {
     case RESULTS.GRANTED:
       try {
-        const pickerResponse: ImageOrVideo = yield call(
+        const pickerResponse: Image = yield call(
           launchImageLibrarySaga,
           imageCropPickerOptions,
         );
-        yield call(uploadPictureToFirebaseSaga, pickerResponse);
+        pickerResponse.filename = `${new Date().toISOString()}.${pickerResponse.mime.replace(
+          'image/',
+          '',
+        )}`;
+        yield put(
+          imagePickerActionCreators.updateUploadedPhoto(pickerResponse),
+        );
       } catch (error) {
         if (error.code.match(/E_PICKER_CANCELLED/)) {
           yield put(imagePickerActionCreators.cancelImagePicker());
@@ -98,20 +106,4 @@ function* triggerPhotoLibrarySaga() {
 
 function launchImageLibrarySaga(imageCropPickerOptions: Options) {
   return ImageCropPicker.openPicker(imageCropPickerOptions);
-}
-
-function* uploadPictureToFirebaseSaga(pickerResponse: ImageOrVideo) {
-  pickerResponse.filename = `${new Date().toISOString()}.${pickerResponse.mime.replace(
-    'image/',
-    '',
-  )}`;
-  if (pickerResponse.path) {
-    const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
-      postUploadProfilePhoto,
-      pickerResponse,
-    );
-    yield put(
-      imagePickerActionCreators.updateUploadedPhotoName(snapshot.metadata.name),
-    );
-  }
 }

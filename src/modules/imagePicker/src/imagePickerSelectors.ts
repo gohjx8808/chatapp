@@ -16,3 +16,8 @@ export const isCroppingSelector = createSelector(
   imagePickerSelector,
   imagePicker => imagePicker.isCropping,
 );
+
+export const uploadedPhotoSelector = createSelector(
+  imagePickerSelector,
+  imagePicker => imagePicker.uploadedPhoto,
+);

@@ -1,3 +1,4 @@
+import {Image} from 'react-native-image-crop-picker';
 import {combineReducers} from 'redux';
 import {imagePickerActions, imagePickerActionTypes} from './imagePickerActions';
 
@@ -5,6 +6,14 @@ const INITIAL_STATE: imagePicker.State = {
   isImagePickerDialogOpen: false,
   imagePickerDialogTitle: '',
   isCropping: true,
+  uploadedPhoto: {
+    filename: '',
+    path: '',
+    size: 0,
+    width: 0,
+    height: 0,
+    mime: '',
+  },
 };
 
 const isImagePickerDialogOpen = (
@@ -43,8 +52,21 @@ const isCropping = (
   }
 };
 
+const uploadedPhoto = (
+  state = INITIAL_STATE.uploadedPhoto,
+  action: imagePickerActionTypes.updateUploadedPhotoActionType,
+): Image => {
+  switch (action.type) {
+    case imagePickerActions.UPDATE_UPLOADED_PHOTO:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers<imagePicker.State>({
   isImagePickerDialogOpen,
   imagePickerDialogTitle,
   isCropping,
+  uploadedPhoto,
 });

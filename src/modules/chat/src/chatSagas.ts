@@ -175,11 +175,13 @@ function* sendImageSaga() {
 function* startImagePickerSaga() {
   while (true) {
     const {selectedImage, cancelImagePicker} = yield race({
-      selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME),
+      selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO),
       cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
     });
     if (selectedImage) {
-      yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
+      navigate(chatRouteNames.PENDING_IMAGE);
+      yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
+      // yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
     } else if (cancelImagePicker) {
     }
   }

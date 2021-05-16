@@ -1,3 +1,4 @@
+import {FirebaseStorageTypes} from '@react-native-firebase/storage';
 import {
   call,
   cancel,
@@ -8,11 +9,13 @@ import {
   take,
 } from '@redux-saga/core/effects';
 import {Task} from '@redux-saga/types';
+import {Image} from 'react-native-image-crop-picker';
 import {
   changePassword,
   defaultAvatar,
   postDeletePrevUploadedPhoto,
   postUpdateCurrentUserProfile,
+  postUploadProfilePhoto,
   validateCurrentPassword,
 } from '../../../helpers/firebaseUtils';
 import {
@@ -54,7 +57,7 @@ function* selectProfilePhotoSaga() {
 function* startImagePickerSaga() {
   while (true) {
     const {selectedImage, cancelImagePicker} = yield race({
-      selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME),
+      selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO),
       cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
     });
     if (selectedImage) {
@@ -64,11 +67,15 @@ function* startImagePickerSaga() {
   }
 }
 
-function* uploadPictureToFirebaseSaga(updatedImageName: string) {
+function* uploadPictureToFirebaseSaga(uploadedPhoto: Image) {
+  const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
+    postUploadProfilePhoto,
+    uploadedPhoto,
+  );
   const currentUser: login.currentUserData = yield select(currentUserSelector);
   yield call(
     postUpdateCurrentUserProfile,
-    {photoName: updatedImageName},
+    {photoName: snapshot.metadata.name},
     currentUser.uid,
   );
   if (

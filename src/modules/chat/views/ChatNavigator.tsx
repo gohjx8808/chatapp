@@ -5,6 +5,7 @@ import chatRouteNames from '../src/chatRouteNames';
 import ChatFriendDetailScreen from './ChatFriendDetailScreen';
 import ChatListScreen from './ChatListScreen';
 import ChatScreen from './ChatScreen';
+import PendingImageScreen from './PendingImageScreen';
 
 const ChatStack = createStackNavigator();
 
@@ -21,6 +22,10 @@ export const chatNavigator = () => {
       <ChatStack.Screen
         name={chatRouteNames.CHAT_FRIEND_DETAIL}
         component={ChatFriendDetailScreen}
+      />
+      <ChatStack.Screen
+        name={chatRouteNames.PENDING_IMAGE}
+        component={PendingImageScreen}
       />
     </ChatStack.Navigator>
   );

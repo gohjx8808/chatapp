@@ -1,10 +1,12 @@
+import {Image} from 'react-native-image-crop-picker';
+
 export class imagePickerActions {
   public static readonly TOGGLE_IMAGE_PICKER_DIALOG =
     'IMAGE_PICKER/TOGGLE_IMAGE_PICKER_DIALOG';
   public static readonly OPEN_CAMERA = 'IMAGE_PICKER/OPEN_CAMERA';
   public static readonly OPEN_PHOTO_LIBRARY = 'IMAGE_PICKER/OPEN_PHOTO_LIBRARY';
-  public static readonly UPDATE_UPLOADED_PHOTO_NAME =
-    'IMAGE_PICKER/UPDATE_UPLOADED_PHOTO_NAME';
+  public static readonly UPDATE_UPLOADED_PHOTO =
+    'IMAGE_PICKER/UPDATE_UPLOADED_PHOTO';
   public static readonly CANCEL_IMAGE_PICKER =
     'IMAGE_PICKER/CANCEL_IMAGE_PICKER';
   public static readonly UPDATE_IMAGE_PICKER_DIALOG_TITLE =
@@ -21,9 +23,9 @@ export declare namespace imagePickerActionTypes {
   type openPhotolibraryActionType = Action<
     typeof imagePickerActions.OPEN_PHOTO_LIBRARY
   >;
-  type updateUploadedPhotoNameActionType = ActionWithPayload<
-    typeof imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
-    string
+  type updateUploadedPhotoActionType = ActionWithPayload<
+    typeof imagePickerActions.UPDATE_UPLOADED_PHOTO,
+    Image
   >;
   type cancelImagePickerActionType = Action<
     typeof imagePickerActions.CANCEL_IMAGE_PICKER
@@ -51,10 +53,10 @@ export class imagePickerActionCreators {
   public static openPhotolibrary = (): imagePickerActionTypes.openPhotolibraryActionType => ({
     type: imagePickerActions.OPEN_PHOTO_LIBRARY,
   });
-  public static updateUploadedPhotoName = (
-    payload: string,
-  ): imagePickerActionTypes.updateUploadedPhotoNameActionType => ({
-    type: imagePickerActions.UPDATE_UPLOADED_PHOTO_NAME,
+  public static updateUploadedPhoto = (
+    payload: Image,
+  ): imagePickerActionTypes.updateUploadedPhotoActionType => ({
+    type: imagePickerActions.UPDATE_UPLOADED_PHOTO,
     payload,
   });
   public static cancelImagePicker = (): imagePickerActionTypes.cancelImagePickerActionType => ({
