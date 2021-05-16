@@ -21,3 +21,8 @@ export const uploadedPhotoSelector = createSelector(
   imagePickerSelector,
   imagePicker => imagePicker.uploadedPhoto,
 );
+
+export const originScreenSelector = createSelector(
+  imagePickerSelector,
+  imagePicker => imagePicker.originScreen,
+);

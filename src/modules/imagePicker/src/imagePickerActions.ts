@@ -12,6 +12,8 @@ export class imagePickerActions {
   public static readonly UPDATE_IMAGE_PICKER_DIALOG_TITLE =
     'IMAGE_PICKER/UPDATE_IMAGE_PICKER_DIALOG_TITLE';
   public static readonly TOGGLE_IS_CROPPING = 'IMAGE_PICKER/TOGGLE_IS_CROPPING';
+  public static readonly UPDATE_ORIGIN_SCREEN =
+    'IMAGE_PICKER/UPDATE_ORIGIN_SCREEN';
 }
 
 export declare namespace imagePickerActionTypes {
@@ -37,6 +39,10 @@ export declare namespace imagePickerActionTypes {
   type toggleIsCroppingActionType = ActionWithPayload<
     typeof imagePickerActions.TOGGLE_IS_CROPPING,
     boolean
+  >;
+  type updateOriginScreenActionType = ActionWithPayload<
+    typeof imagePickerActions.UPDATE_ORIGIN_SCREEN,
+    string
   >;
 }
 
@@ -72,6 +78,12 @@ export class imagePickerActionCreators {
     payload: boolean,
   ): imagePickerActionTypes.toggleIsCroppingActionType => ({
     type: imagePickerActions.TOGGLE_IS_CROPPING,
+    payload,
+  });
+  public static updateOriginScreen = (
+    payload: string,
+  ): imagePickerActionTypes.updateOriginScreenActionType => ({
+    type: imagePickerActions.UPDATE_ORIGIN_SCREEN,
     payload,
   });
 }

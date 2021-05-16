@@ -13,6 +13,7 @@ import {
   imagePickerActionCreators,
   imagePickerActions,
 } from '../../imagePicker/src/imagePickerActions';
+import {originScreenSelector} from '../../imagePicker/src/imagePickerSelectors';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
@@ -42,10 +43,16 @@ function* selectProfilePhotoSaga() {
           'Edit Profile Photo',
         ),
       );
+      yield put(imagePickerActionCreators.updateOriginScreen('myProfile'));
       yield put(imagePickerActionCreators.toggleIsCropping(true));
       yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
     } else if (selectedImage) {
-      yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
+      const imagePickerOriginScreen: string = yield select(
+        originScreenSelector,
+      );
+      if (imagePickerOriginScreen === 'myProfile') {
+        yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
+      }
     } else if (cancelImagePicker) {
     }
   }

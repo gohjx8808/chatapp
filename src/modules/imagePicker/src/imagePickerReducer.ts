@@ -14,6 +14,7 @@ const INITIAL_STATE: imagePicker.State = {
     height: 0,
     mime: '',
   },
+  originScreen: '',
 };
 
 const isImagePickerDialogOpen = (
@@ -64,9 +65,22 @@ const uploadedPhoto = (
   }
 };
 
+const originScreen = (
+  state = INITIAL_STATE.originScreen,
+  action: imagePickerActionTypes.updateOriginScreenActionType,
+): string => {
+  switch (action.type) {
+    case imagePickerActions.UPDATE_ORIGIN_SCREEN:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers<imagePicker.State>({
   isImagePickerDialogOpen,
   imagePickerDialogTitle,
   isCropping,
   uploadedPhoto,
+  originScreen,
 });

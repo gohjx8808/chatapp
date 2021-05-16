@@ -4,6 +4,7 @@ declare namespace imagePicker {
     imagePickerDialogTitle: string;
     isCropping: boolean;
     uploadedPhoto: uploadedPhotoData;
+    originScreen: string;
   }
 
   interface uploadedPhotoData {

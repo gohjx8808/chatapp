@@ -25,7 +25,10 @@ import {
   imagePickerActionCreators,
   imagePickerActions,
 } from '../../imagePicker/src/imagePickerActions';
-import {uploadedPhotoSelector} from '../../imagePicker/src/imagePickerSelectors';
+import {
+  originScreenSelector,
+  uploadedPhotoSelector,
+} from '../../imagePicker/src/imagePickerSelectors';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
@@ -174,16 +177,22 @@ function* sendImageSaga() {
       yield put(
         imagePickerActionCreators.updateImagePickerDialogTitle('Select Image'),
       );
+      yield put(imagePickerActionCreators.updateOriginScreen('chat'));
       yield put(imagePickerActionCreators.toggleIsCropping(false));
       yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
     } else if (selectedImage) {
-      navigate(chatRouteNames.PENDING_IMAGE);
-      yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
-      const uploadPictureToChatFirebase: Task = yield fork(
-        uploadPictureToFirebaseSaga,
+      const imagePickerOriginScreen: string = yield select(
+        originScreenSelector,
       );
-      yield take(chatActions.ON_PENDING_IMAGE_UNMOUNT);
-      yield cancel(uploadPictureToChatFirebase);
+      if (imagePickerOriginScreen === 'chat') {
+        navigate(chatRouteNames.PENDING_IMAGE);
+        yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
+        const uploadPictureToChatFirebase: Task = yield fork(
+          uploadPictureToFirebaseSaga,
+        );
+        yield take(chatActions.ON_PENDING_IMAGE_UNMOUNT);
+        yield cancel(uploadPictureToChatFirebase);
+      }
     } else if (cancelImagePicker) {
     }
   }
