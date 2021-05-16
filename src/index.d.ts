@@ -8,6 +8,7 @@ interface GlobalState {
   friend: friend.State;
   logout: logout.State;
   imagePicker: imagePicker.State;
+  loadingOverlay: loadingOverlay.State;
 }
 
 interface Action<T> {
