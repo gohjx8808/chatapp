@@ -34,8 +34,9 @@ function* triggerCameraSaga() {
   const isCroppingMode: boolean = yield select(isCroppingSelector);
   let cameraOptions: Options = {
     cropping: isCroppingMode,
-    width: 480,
-    height: 480,
+    width: 1080,
+    height: 1080,
+    compressImageQuality: 0.5,
     cropperCircleOverlay: isCroppingMode,
     useFrontCamera: true,
     mediaType: 'photo',
@@ -71,8 +72,9 @@ function launchCameraActionSaga(cameraOptions: Options) {
 function* triggerPhotoLibrarySaga() {
   const isCroppingMode: boolean = yield select(isCroppingSelector);
   const imageCropPickerOptions: Options = {
-    width: 480,
-    height: 480,
+    width: 1080,
+    height: 1080,
+    compressImageQuality: 0.5,
     cropping: isCroppingMode,
     cropperCircleOverlay: isCroppingMode,
     mediaType: 'photo',
