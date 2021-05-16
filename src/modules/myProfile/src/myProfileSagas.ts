@@ -1,14 +1,5 @@
 import {FirebaseStorageTypes} from '@react-native-firebase/storage';
-import {
-  call,
-  cancel,
-  fork,
-  put,
-  race,
-  select,
-  take,
-} from '@redux-saga/core/effects';
-import {Task} from '@redux-saga/types';
+import {call, fork, put, race, select, take} from '@redux-saga/core/effects';
 import {Image} from 'react-native-image-crop-picker';
 import {
   changePassword,
@@ -40,27 +31,20 @@ export default function* myProfileRuntime() {
 
 function* selectProfilePhotoSaga() {
   while (true) {
-    yield take(myProfileActions.UPDATE_PROFILE_PHOTO);
-    yield put(
-      imagePickerActionCreators.updateImagePickerDialogTitle(
-        'Edit Profile Photo',
-      ),
-    );
-    yield put(imagePickerActionCreators.toggleIsCropping(true));
-    yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
-    const startImagePicker: Task = yield fork(startImagePickerSaga);
-    yield take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG);
-    yield cancel(startImagePicker);
-  }
-}
-
-function* startImagePickerSaga() {
-  while (true) {
-    const {selectedImage, cancelImagePicker} = yield race({
+    const {updateProfilePhoto, selectedImage, cancelImagePicker} = yield race({
+      updateProfilePhoto: take(myProfileActions.UPDATE_PROFILE_PHOTO),
       selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO),
       cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
     });
-    if (selectedImage) {
+    if (updateProfilePhoto) {
+      yield put(
+        imagePickerActionCreators.updateImagePickerDialogTitle(
+          'Edit Profile Photo',
+        ),
+      );
+      yield put(imagePickerActionCreators.toggleIsCropping(true));
+      yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
+    } else if (selectedImage) {
       yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
     } else if (cancelImagePicker) {
     }

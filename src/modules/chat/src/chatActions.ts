@@ -10,7 +10,10 @@ export class chatActions {
   public static readonly TOGGLE_CHAT_LOADING = 'CHAT/TOGGLE_CHAT_LOADING';
   public static readonly TOGGLE_FRIEND_PROFILE_PHOTO =
     'CHAT/TOGGLE_FRIEND_PROFILE_PHOTO';
-  public static readonly SEND_IMAGE = 'CHAT/SEND_IMAGE';
+  public static readonly SELECT_CHAT_IMAGE = 'CHAT/SELECT_CHAT_IMAGE';
+  public static readonly ON_PENDING_IMAGE_UNMOUNT =
+    'CHAT/ON_PENDING_IMAGE_UNMOUNT';
+  public static readonly SEND_IMAGE_MSG = 'CHAT/SEND_IMAGE_MSG';
 }
 
 export declare namespace chatActionTypes {
@@ -46,7 +49,14 @@ export declare namespace chatActionTypes {
     typeof chatActions.TOGGLE_FRIEND_PROFILE_PHOTO,
     boolean
   >;
-  type sendImageActionType = Action<typeof chatActions.SEND_IMAGE>;
+  type selectChatImageActionType = Action<typeof chatActions.SELECT_CHAT_IMAGE>;
+  type onPendingImageUnmountActionType = Action<
+    typeof chatActions.ON_PENDING_IMAGE_UNMOUNT
+  >;
+  type sendImageMsgActionType = ActionWithPayload<
+    typeof chatActions.SEND_IMAGE_MSG,
+    string
+  >;
 }
 
 export class chatActionCreators {
@@ -98,7 +108,16 @@ export class chatActionCreators {
     type: chatActions.TOGGLE_FRIEND_PROFILE_PHOTO,
     payload,
   });
-  public static sendImage = (): chatActionTypes.sendImageActionType => ({
-    type: chatActions.SEND_IMAGE,
+  public static selectChatImage = (): chatActionTypes.selectChatImageActionType => ({
+    type: chatActions.SELECT_CHAT_IMAGE,
+  });
+  public static onPendingImageUnmount = (): chatActionTypes.onPendingImageUnmountActionType => ({
+    type: chatActions.ON_PENDING_IMAGE_UNMOUNT,
+  });
+  public static sendImageMsg = (
+    payload: string,
+  ): chatActionTypes.sendImageMsgActionType => ({
+    type: chatActions.SEND_IMAGE_MSG,
+    payload,
   });
 }

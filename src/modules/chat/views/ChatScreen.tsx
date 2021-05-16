@@ -45,7 +45,7 @@ const ChatScreen = (props: PropsFromRedux) => {
     getChatMessages,
     selectedFren,
     getChatFriendList,
-    sendImage,
+    selectChatImage,
   } = props;
 
   const {colors} = useTheme();
@@ -139,10 +139,10 @@ const ChatScreen = (props: PropsFromRedux) => {
         {...actionProps}
         icon={() => (
           <Icon
-            name={'attachment'}
+            name="attachment"
             size={28}
             color={colors.primary}
-            onPress={() => sendImage()}
+            onPress={() => selectChatImage()}
           />
         )}
       />
@@ -216,7 +216,7 @@ const connector = connect(
   {
     getChatMessages: chatActionCreators.getChatMessages,
     getChatFriendList: chatActionCreators.getChatFrenList,
-    sendImage: chatActionCreators.sendImage,
+    selectChatImage: chatActionCreators.selectChatImage,
   },
 );
 

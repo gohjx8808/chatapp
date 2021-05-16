@@ -1,4 +1,5 @@
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
+import {FirebaseStorageTypes} from '@react-native-firebase/storage';
 import {END, EventChannel, eventChannel, Task} from '@redux-saga/core';
 import {
   call,
@@ -9,20 +10,24 @@ import {
   select,
   take,
 } from '@redux-saga/core/effects';
+import {IMessage} from 'react-native-gifted-chat';
+import {Image} from 'react-native-image-crop-picker';
 import assets from '../../../helpers/assets';
 import {
   deleteFriend,
   getChatFrenList,
   getFrenDetail,
   getUploadedPhotoUrl,
+  postUploadProfilePhoto,
 } from '../../../helpers/firebaseUtils';
 import {friendActionCreators} from '../../friend/src/friendActions';
 import {
   imagePickerActionCreators,
   imagePickerActions,
 } from '../../imagePicker/src/imagePickerActions';
+import {uploadedPhotoSelector} from '../../imagePicker/src/imagePickerSelectors';
 import {currentUserSelector} from '../../login/src/loginSelectors';
-import {navigate} from '../../navigation/src/navigationUtils';
+import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {chatActionCreators, chatActions, chatActionTypes} from './chatActions';
 import chatRouteNames from './chatRouteNames';
@@ -160,35 +165,43 @@ function* deleteFriendSaga() {
 
 function* sendImageSaga() {
   while (true) {
-    yield take(chatActions.SEND_IMAGE);
-    yield put(
-      imagePickerActionCreators.updateImagePickerDialogTitle('Select Image'),
-    );
-    yield put(imagePickerActionCreators.toggleIsCropping(false));
-    yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
-    const startImagePicker: Task = yield fork(startImagePickerSaga);
-    yield take(imagePickerActions.TOGGLE_IMAGE_PICKER_DIALOG);
-    yield cancel(startImagePicker);
-  }
-}
-
-function* startImagePickerSaga() {
-  while (true) {
-    const {selectedImage, cancelImagePicker} = yield race({
+    const {selectChatImage, selectedImage, cancelImagePicker} = yield race({
+      selectChatImage: take(chatActions.SELECT_CHAT_IMAGE),
       selectedImage: take(imagePickerActions.UPDATE_UPLOADED_PHOTO),
       cancelImagePicker: take(imagePickerActions.CANCEL_IMAGE_PICKER),
     });
-    if (selectedImage) {
+    if (selectChatImage) {
+      yield put(
+        imagePickerActionCreators.updateImagePickerDialogTitle('Select Image'),
+      );
+      yield put(imagePickerActionCreators.toggleIsCropping(false));
+      yield put(imagePickerActionCreators.toggleImagePickerDialog(true));
+    } else if (selectedImage) {
       navigate(chatRouteNames.PENDING_IMAGE);
       yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
-      // yield call(uploadPictureToFirebaseSaga, selectedImage.payload);
+      const uploadPictureToChatFirebase: Task = yield fork(
+        uploadPictureToFirebaseSaga,
+      );
+      yield take(chatActions.ON_PENDING_IMAGE_UNMOUNT);
+      yield cancel(uploadPictureToChatFirebase);
     } else if (cancelImagePicker) {
     }
   }
 }
 
-function* uploadPictureToFirebaseSaga(imageName: string) {
-  const sentImageURL: string = yield call(getUploadedPhotoUrl, imageName);
+function* uploadPictureToFirebaseSaga() {
+  const {payload}: chatActionTypes.sendImageMsgActionType = yield take(
+    chatActions.SEND_IMAGE_MSG,
+  );
+  const uploadedPhoto: Image = yield select(uploadedPhotoSelector);
+  const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
+    postUploadProfilePhoto,
+    uploadedPhoto,
+  );
+  const sentImageURL: string = yield call(
+    getUploadedPhotoUrl,
+    snapshot.metadata.name,
+  );
   const currentUser: login.currentUserData = yield select(currentUserSelector);
   const selectedFren: frenDetails = yield select(selectedFrenSelector);
   const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
@@ -197,12 +210,14 @@ function* uploadPictureToFirebaseSaga(imageName: string) {
     avatar: currentUser.photoURL,
     _id: currentUser.uid,
   };
-  const msg = {
+  const msg: IMessage = {
     _id: new Date().toISOString(),
     image: sentImageURL,
+    text: payload,
     createdAt: new Date(),
     user: processedCurrentUser,
   };
   database().ref(databaseRef).push(msg);
   yield put(chatActionCreators.getChatMessages());
+  goBack();
 }
