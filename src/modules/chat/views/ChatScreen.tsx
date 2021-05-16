@@ -1,5 +1,5 @@
 import database from '@react-native-firebase/database';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import {Dialogflow_V2} from 'react-native-dialogflow';
+import FastImage from 'react-native-fast-image';
 import {
   Actions,
   ActionsProps,
@@ -20,11 +21,12 @@ import {
   IMessage,
   InputToolbar,
   InputToolbarProps,
+  MessageImageProps,
   Time,
   TimeProps,
 } from 'react-native-gifted-chat';
 import {Appbar, Avatar, useTheme} from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {default as Icon} from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
 import {
@@ -37,6 +39,7 @@ import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
 import {messagesSelector, selectedFrenSelector} from '../src/chatSelectors';
+import EnlargedMessageImageModal from './EnlargedMessageImageModal';
 
 const ChatScreen = (props: PropsFromRedux) => {
   const {
@@ -47,6 +50,9 @@ const ChatScreen = (props: PropsFromRedux) => {
     getChatFriendList,
     selectChatImage,
   } = props;
+
+  const [isShowEnlargedImage, setIsShowEnlargedImage] = useState(false);
+  const [enlargedImageURL, setEnlargedImageURL] = useState('');
 
   const {colors} = useTheme();
 
@@ -164,6 +170,23 @@ const ChatScreen = (props: PropsFromRedux) => {
     );
   };
 
+  const renderCustomMessageImage = (
+    messageImageprops: MessageImageProps<IMessage>,
+  ) => {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          setEnlargedImageURL(messageImageprops.currentMessage!.image!);
+          setIsShowEnlargedImage(true);
+        }}>
+        <FastImage
+          source={{uri: messageImageprops.currentMessage!.image}}
+          style={styles.image}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ImageBackground source={assets.chatBg} style={styles.chatBg}>
       <Appbar.Header>
@@ -202,6 +225,12 @@ const ChatScreen = (props: PropsFromRedux) => {
         renderActions={renderActions}
         renderComposer={renderCustomComposer}
         scrollToBottom
+        renderMessageImage={renderCustomMessageImage}
+      />
+      <EnlargedMessageImageModal
+        isShowEnlargedImage={isShowEnlargedImage}
+        toggleEnlargedModal={() => setIsShowEnlargedImage(false)}
+        enlargedImageURL={enlargedImageURL}
       />
     </ImageBackground>
   );
@@ -243,5 +272,12 @@ const styles = StyleSheet.create({
   },
   zeroLineheight: {
     lineHeight: 0,
+  },
+  image: {
+    width: 150,
+    height: 100,
+    borderRadius: 13,
+    margin: 3,
+    resizeMode: 'cover',
   },
 });
