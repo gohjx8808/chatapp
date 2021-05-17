@@ -1,6 +1,4 @@
 export class myProfileActions {
-  public static readonly TOGGLE_PROFILE_LOADING =
-    'MY_PROFILE/TOGGLE_PROFILE_LOADING';
   public static readonly SUBMIT_UPDATE_PROFILE =
     'MY_PROFILE/SUBMIT_UPDATE_PROFILE';
   public static readonly SUBMIT_CHANGE_PASSWORD =
@@ -10,10 +8,6 @@ export class myProfileActions {
 }
 
 export declare namespace myProfileActionTypes {
-  type toggleProfileLoadingActionType = ActionWithPayload<
-    typeof myProfileActions.TOGGLE_PROFILE_LOADING,
-    boolean
-  >;
   type submitUpdateProfileActionType = ActionWithPayload<
     typeof myProfileActions.SUBMIT_UPDATE_PROFILE,
     myProfile.updateProfilePayload
@@ -28,12 +22,6 @@ export declare namespace myProfileActionTypes {
 }
 
 export class myProfileActionCreators {
-  public static toggleProfileLoading = (
-    payload: boolean,
-  ): myProfileActionTypes.toggleProfileLoadingActionType => ({
-    type: myProfileActions.TOGGLE_PROFILE_LOADING,
-    payload,
-  });
   public static submitUpdateProfile = (
     payload: myProfile.updateProfilePayload,
   ): myProfileActionTypes.submitUpdateProfileActionType => ({

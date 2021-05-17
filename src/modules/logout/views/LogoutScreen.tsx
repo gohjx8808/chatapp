@@ -4,12 +4,12 @@ import {Button, Card, Title} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
 import GlobalStyles from '../../../helpers/globalStyles';
+import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
 import {goBack} from '../../navigation/src/navigationUtils';
 import {logoutActionCreators} from '../src/logoutActions';
-import {isLogoutLoadingSelector} from '../src/logoutSelectors';
 
 const LogoutScreen = (props: propsFromRedux) => {
-  const {isLogoutLoading, submitLogout} = props;
+  const {isLoadingOverlayOpen, submitLogout} = props;
 
   return (
     <View style={styles.backgroundView}>
@@ -25,8 +25,8 @@ const LogoutScreen = (props: propsFromRedux) => {
               onPress={() => submitLogout()}
               style={GlobalStyles.blueBackgroundBtn}
               color="blue"
-              loading={isLogoutLoading}
-              disabled={isLogoutLoading}>
+              loading={isLoadingOverlayOpen}
+              disabled={isLoadingOverlayOpen}>
               Log Out
             </Button>
             <Button
@@ -34,7 +34,7 @@ const LogoutScreen = (props: propsFromRedux) => {
               onPress={() => goBack()}
               style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
               color="blue"
-              disabled={isLogoutLoading}>
+              disabled={isLoadingOverlayOpen}>
               Go Back
             </Button>
           </View>
@@ -46,7 +46,7 @@ const LogoutScreen = (props: propsFromRedux) => {
 
 const connector = connect(
   (state: GlobalState) => ({
-    isLogoutLoading: isLogoutLoadingSelector(state),
+    isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {
     submitLogout: logoutActionCreators.submitLogout,

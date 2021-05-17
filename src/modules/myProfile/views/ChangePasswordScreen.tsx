@@ -8,14 +8,14 @@ import GlobalStyles from '../../../helpers/globalStyles';
 import {ChangePasswordSchema} from '../../../helpers/validationSchema';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
+import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
 import {toggleDrawer} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../src/myProfileActions';
-import {isProfileLoadingSelector} from '../src/myProfileSelectors';
 
 type PassType = 'currentPass' | 'newPass' | 'confirmNewPass';
 
 const ChangePasswordScreen = (props: PropsFromRedux) => {
-  const {isProfileLoading, submitChangePassword} = props;
+  const {isLoadingOverlayOpen, submitChangePassword} = props;
   const [secure, setSecure] = useState({
     currentPass: true,
     newPass: true,
@@ -77,8 +77,8 @@ const ChangePasswordScreen = (props: PropsFromRedux) => {
         onPress={handleSubmit(onSubmit)}
         style={[GlobalStyles.blueBackgroundBtn, styles.btnSpace]}
         color="blue"
-        loading={isProfileLoading}
-        disabled={isProfileLoading}>
+        loading={isLoadingOverlayOpen}
+        disabled={isLoadingOverlayOpen}>
         Submit
       </Button>
     );
@@ -104,7 +104,7 @@ const ChangePasswordScreen = (props: PropsFromRedux) => {
 
 const connector = connect(
   (state: GlobalState) => ({
-    isProfileLoading: isProfileLoadingSelector(state),
+    isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {
     submitChangePassword: myProfileActionCreators.submitChangePassword,

@@ -14,14 +14,11 @@ import {
   imagePickerActions,
 } from '../../imagePicker/src/imagePickerActions';
 import {originScreenSelector} from '../../imagePicker/src/imagePickerSelectors';
+import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
-import {
-  myProfileActionCreators,
-  myProfileActions,
-  myProfileActionTypes,
-} from './myProfileActions';
+import {myProfileActions, myProfileActionTypes} from './myProfileActions';
 import myProfileRouteNames from './myProfileRouteNames';
 
 export default function* myProfileRuntime() {
@@ -59,6 +56,7 @@ function* selectProfilePhotoSaga() {
 }
 
 function* uploadPictureToFirebaseSaga(uploadedPhoto: Image) {
+  yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
   const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
     postUploadProfilePhoto,
     uploadedPhoto,
@@ -75,6 +73,7 @@ function* uploadPictureToFirebaseSaga(uploadedPhoto: Image) {
   ) {
     yield call(postDeletePrevUploadedPhoto, currentUser.photoName);
   }
+  yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   navigate(myProfileRouteNames.PROFILE_DETAIL);
   yield put(imagePickerActionCreators.toggleImagePickerDialog(false));
 }
@@ -86,7 +85,7 @@ function* updateProfileSaga() {
     }: myProfileActionTypes.submitUpdateProfileActionType = yield take(
       myProfileActions.SUBMIT_UPDATE_PROFILE,
     );
-    yield put(myProfileActionCreators.toggleProfileLoading(true));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     yield put(statusActionCreators.updateStatusTitle('Update Profile'));
     try {
       const currentUser: login.currentUserData = yield select(
@@ -100,7 +99,7 @@ function* updateProfileSaga() {
       );
       yield put(statusActionCreators.toggleApiStatus(true));
       yield put(statusActionCreators.toggleStatusModal(true));
-      yield put(myProfileActionCreators.toggleProfileLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     } catch (error) {
       yield put(
         statusActionCreators.updateStatusMsg(
@@ -109,7 +108,7 @@ function* updateProfileSaga() {
       );
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));
-      yield put(myProfileActionCreators.toggleProfileLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     }
   }
 }
@@ -121,7 +120,7 @@ function* changePasswordSaga() {
     }: myProfileActionTypes.submitChangePasswordActionType = yield take(
       myProfileActions.SUBMIT_CHANGE_PASSWORD,
     );
-    yield put(myProfileActionCreators.toggleProfileLoading(true));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     yield put(statusActionCreators.updateStatusTitle('Change Password'));
     try {
       const currentUser: login.currentUserData = yield select(
@@ -140,7 +139,7 @@ function* changePasswordSaga() {
       );
       yield put(statusActionCreators.toggleApiStatus(true));
       yield put(statusActionCreators.toggleStatusModal(true));
-      yield put(myProfileActionCreators.toggleProfileLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     } catch (error) {
       if (error.code === 'auth/wrong-password') {
         yield put(statusActionCreators.updateStatusMsg('Invalid credential!'));
@@ -153,7 +152,7 @@ function* changePasswordSaga() {
       }
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));
-      yield put(myProfileActionCreators.toggleProfileLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     }
   }
 }

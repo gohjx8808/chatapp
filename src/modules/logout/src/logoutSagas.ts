@@ -1,9 +1,10 @@
 import {call, fork, put, take} from '@redux-saga/core/effects';
 import {logout} from '../../../helpers/firebaseUtils';
+import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
 import {statusActionCreators} from '../../status/src/statusActions';
-import {logoutActionCreators, logoutActions} from './logoutActions';
+import {logoutActions} from './logoutActions';
 
 export default function* logoutRuntime() {
   yield fork(submitLogoutSaga);
@@ -12,13 +13,12 @@ export default function* logoutRuntime() {
 function* submitLogoutSaga() {
   while (true) {
     yield take(logoutActions.SUBMIT_LOGOUT);
-    yield put(logoutActionCreators.toggleLogoutLoading(true));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     try {
       yield call(logout);
-      yield put(logoutActionCreators.toggleLogoutLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       navigate(routeNames.LOGIN);
     } catch (error) {
-      yield put(logoutActionCreators.toggleLogoutLoading(false));
       yield put(statusActionCreators.updateStatusTitle('Logout'));
       yield put(
         statusActionCreators.updateStatusMsg(
@@ -26,6 +26,7 @@ function* submitLogoutSaga() {
         ),
       );
       yield put(statusActionCreators.toggleApiStatus(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       yield put(statusActionCreators.toggleStatusModal(true));
     }
   }

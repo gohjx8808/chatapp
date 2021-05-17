@@ -16,9 +16,9 @@ export default combineReducers({
   login: loginReducer,
   chat: chatReducer,
   permission: permissionReducer,
-  myProfile: myProfileReducer,
+  // myProfile: myProfileReducer,
   friend: friendReducer,
-  logout: logoutReducer,
+  // logout: logoutReducer,
   imagePicker: imagePickerReducer,
   loadingOverlay: loadingOverlayReducer,
 });

@@ -11,14 +11,14 @@ import {UpdateProfileSchema} from '../../../helpers/validationSchema';
 import ControlledDatepicker from '../../../sharedComponents/ControlledDatepicker';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../src/myProfileActions';
 import myProfileRouteNames from '../src/myProfileRouteNames';
-import {isProfileLoadingSelector} from '../src/myProfileSelectors';
 
 const ProfileDetailScreen = (props: PropsFromRedux) => {
-  const {currentUser, isProfileLoading, submitUpdateProfile} = props;
+  const {currentUser, isLoadingOverlayOpen, submitUpdateProfile} = props;
 
   const genders = ['Male', 'Female'];
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
@@ -118,8 +118,8 @@ const ProfileDetailScreen = (props: PropsFromRedux) => {
             onPress={handleSubmit(onSubmit)}
             style={[GlobalStyles.blueBackgroundBtn, styles.btnSpace]}
             color="blue"
-            loading={isProfileLoading}
-            disabled={isProfileLoading}>
+            loading={isLoadingOverlayOpen}
+            disabled={isLoadingOverlayOpen}>
             Update
           </Button>
         </View>
@@ -137,7 +137,7 @@ const ProfileDetailScreen = (props: PropsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     currentUser: currentUserSelector(state),
-    isProfileLoading: isProfileLoadingSelector(state),
+    isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {
     submitUpdateProfile: myProfileActionCreators.submitUpdateProfile,

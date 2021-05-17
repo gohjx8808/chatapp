@@ -1,7 +1,5 @@
 declare namespace myProfile {
-  interface State {
-    isProfileLoading: boolean;
-  }
+  interface State {}
 
   interface updateProfilePayload {
     name: string;
