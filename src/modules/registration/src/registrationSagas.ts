@@ -1,17 +1,17 @@
+import database from '@react-native-firebase/database';
 import {call, fork, put, take} from '@redux-saga/core/effects';
 import {
   postSubmitRegister,
   postUpdateProfile,
 } from '../../../helpers/firebaseUtils';
+import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {navigate} from '../../navigation/src/navigationUtils';
+import routeNames from '../../navigation/src/routeNames';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
-  registrationActionCreators,
   registrationActions,
   registrationActionTypes,
 } from './registrationActions';
-import database from '@react-native-firebase/database';
-import routeNames from '../../navigation/src/routeNames';
 
 export default function* registrationRuntime() {
   yield fork(submitRegistrationSaga);
@@ -24,7 +24,7 @@ function* submitRegistrationSaga() {
     }: registrationActionTypes.submitRegisterActionType = yield take(
       registrationActions.SUBMIT_REGISTER,
     );
-    yield put(registrationActionCreators.toggleRegisterLoading(true));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     try {
       const registerResponse: registration.registerResponse = yield call(
         postSubmitRegister,
@@ -37,13 +37,12 @@ function* submitRegistrationSaga() {
       };
       database().ref(`users/${registerResponse.user.uid}`).set(userData);
       yield call(postUpdateProfile, payload.displayName);
-      yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(true));
       yield put(statusActionCreators.updateStatusMsg('register success!'));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       yield put(statusActionCreators.toggleStatusModal(true));
       navigate(routeNames.LOGIN);
     } catch (error) {
-      yield put(registrationActionCreators.toggleRegisterLoading(false));
       yield put(statusActionCreators.toggleApiStatus(false));
       if (error.code === 'auth/email-already-in-use') {
         yield put(
@@ -62,6 +61,7 @@ function* submitRegistrationSaga() {
           ),
         );
       }
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       yield put(statusActionCreators.toggleStatusModal(true));
     }
   }

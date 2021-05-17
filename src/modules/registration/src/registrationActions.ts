@@ -1,17 +1,11 @@
 export class registrationActions {
   public static readonly SUBMIT_REGISTER = 'REGISTRATION/SUBMIT_REGISTER';
-  public static readonly TOGGLE_REGISTER_LOADING =
-    'REGISTRATION/TOGGLE_REGISTER_LOADING';
 }
 
 export declare namespace registrationActionTypes {
   type submitRegisterActionType = ActionWithPayload<
     typeof registrationActions.SUBMIT_REGISTER,
     registration.submitRegisterPayload
-  >;
-  type toggleRegisterLoadingActionType = ActionWithPayload<
-    typeof registrationActions.TOGGLE_REGISTER_LOADING,
-    boolean
   >;
 }
 
@@ -20,12 +14,6 @@ export class registrationActionCreators {
     payload: registration.submitRegisterPayload,
   ): registrationActionTypes.submitRegisterActionType => ({
     type: registrationActions.SUBMIT_REGISTER,
-    payload,
-  });
-  public static toggleRegisterLoading = (
-    payload: boolean,
-  ): registrationActionTypes.toggleRegisterLoadingActionType => ({
-    type: registrationActions.TOGGLE_REGISTER_LOADING,
     payload,
   });
 }

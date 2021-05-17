@@ -12,7 +12,7 @@ import statusReducer from './modules/status/src/statusReducer';
 
 export default combineReducers({
   status: statusReducer,
-  registration: registrationReducer,
+  // registration: registrationReducer,
   login: loginReducer,
   chat: chatReducer,
   permission: permissionReducer,

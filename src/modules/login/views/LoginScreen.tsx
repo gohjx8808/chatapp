@@ -19,7 +19,6 @@ import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOver
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
 import {loginActionCreators} from '../src/loginActions';
-import {isLoginLoadingSelector} from '../src/loginSelectors';
 
 const LoginScreen = (props: propsFromRedux) => {
   const [secure, setSecure] = useState(true);
@@ -96,7 +95,6 @@ const LoginScreen = (props: propsFromRedux) => {
 
 const connector = connect(
   (state: GlobalState) => ({
-    isLoginLoading: isLoginLoadingSelector(state),
     isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {

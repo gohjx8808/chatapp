@@ -1,6 +1,5 @@
 declare namespace login {
   interface State {
-    isLoginLoading: boolean;
     currentUser: currentUserData;
   }
   interface onLoginPayload {

@@ -10,11 +10,11 @@ import {RegisterSchema} from '../../../helpers/validationSchema';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import PasswordRequirements from '../../../sharedComponents/PasswordRequirements';
+import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
 import {registrationActionCreators} from '../src/registrationActions';
-import {isRegisterLoadingSelector} from '../src/registrationSelectors';
 
 const RegistrationScreen = (props: PropsFromRedux) => {
-  const {submitRegister, isRegisterLoading} = props;
+  const {submitRegister, isLoadingOverlayOpen} = props;
   const [secure, setSecure] = useState(true);
   const [confirmPassSecure, setConfirmPassSecure] = useState(true);
   const navigation = useNavigation();
@@ -74,15 +74,15 @@ const RegistrationScreen = (props: PropsFromRedux) => {
               onPress={handleSubmit(submitRegister)}
               style={GlobalStyles.blueBackgroundBtn}
               color="blue"
-              loading={isRegisterLoading}
-              disabled={isRegisterLoading}>
+              loading={isLoadingOverlayOpen}
+              disabled={isLoadingOverlayOpen}>
               Submit
             </Button>
             <Button
               mode="outlined"
               onPress={() => navigation.goBack()}
               style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
-              disabled={isRegisterLoading}>
+              disabled={isLoadingOverlayOpen}>
               Back
             </Button>
           </View>
@@ -94,7 +94,7 @@ const RegistrationScreen = (props: PropsFromRedux) => {
 
 const connector = connect(
   (state: GlobalState) => ({
-    isRegisterLoading: isRegisterLoadingSelector(state),
+    isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {
     submitRegister: registrationActionCreators.submitRegister,

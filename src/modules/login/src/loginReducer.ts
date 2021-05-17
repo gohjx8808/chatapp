@@ -2,7 +2,6 @@ import {combineReducers} from 'redux';
 import {loginActions, loginActionTypes} from './loginActions';
 
 const INITIAL_STATE: login.State = {
-  isLoginLoading: false,
   currentUser: {
     uid: '',
     name: '',
@@ -12,18 +11,6 @@ const INITIAL_STATE: login.State = {
     gender: '',
     dob: '',
   },
-};
-
-const isLoginLoading = (
-  state = INITIAL_STATE.isLoginLoading,
-  action: loginActionTypes.toggleLoginLoadingActionType,
-): boolean => {
-  switch (action.type) {
-    case loginActions.TOGGLE_LOGIN_LOADING:
-      return action.payload;
-    default:
-      return state;
-  }
 };
 
 const currentUser = (
@@ -38,4 +25,4 @@ const currentUser = (
   }
 };
 
-export default combineReducers<login.State>({isLoginLoading, currentUser});
+export default combineReducers<login.State>({currentUser});
