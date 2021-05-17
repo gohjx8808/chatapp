@@ -7,6 +7,7 @@ import {
   getUploadedPhotoUrl,
   postSubmitLogin,
 } from '../../../helpers/firebaseUtils';
+import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
 import {statusActionCreators} from '../../status/src/statusActions';
@@ -70,18 +71,18 @@ function* submitLoginSaga() {
     const {payload}: loginActionTypes.submitLoginActionType = yield take(
       loginActions.SUBMIT_LOGIN,
     );
-    yield put(loginActionCreators.toggleLoginLoading(true));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     try {
       yield call(postSubmitLogin, payload);
       yield fork(getCurrentUserDataSaga);
       yield take(loginActions.DONE_STORING_CURRENT_USER_DATA);
-      yield put(loginActionCreators.toggleLoginLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       navigate(routeNames.DASHBOARD_NAV);
     } catch (error) {
       yield put(statusActionCreators.updateStatusMsg('Invalid credentials!'));
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));
-      yield put(loginActionCreators.toggleLoginLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     }
   }
 }

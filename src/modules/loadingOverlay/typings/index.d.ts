@@ -1,3 +1,5 @@
 declare namespace loadingOverlay {
-  interface State {}
+  interface State {
+    isLoadingOverlayOpen: boolean;
+  }
 }

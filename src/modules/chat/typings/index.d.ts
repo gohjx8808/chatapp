@@ -6,7 +6,6 @@ declare namespace chat {
     isDeleteFriendConfirmModalOpen: boolean;
     isChatLoading: boolean;
     isFriendProfilePhotoModalOpen: boolean;
-    imageMsg: submitImageMsgPayload;
   }
 
   interface IMessage {
@@ -28,22 +27,5 @@ declare namespace chat {
 
   interface fulfillmentMessageText {
     text: {text: string[]};
-  }
-
-  interface chatSnapshotData {
-    key: string;
-  }
-
-  interface submitImageMsgPayload {
-    _id: string;
-    image: string;
-    createdAt: Date;
-    user: processedCurrentUserData;
-  }
-
-  interface processedCurrentUserData {
-    name: string;
-    avatar: string;
-    _id: string;
   }
 }

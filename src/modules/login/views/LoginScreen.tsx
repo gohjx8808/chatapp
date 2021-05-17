@@ -15,6 +15,7 @@ import GlobalStyles from '../../../helpers/globalStyles';
 import {LoginSchema} from '../../../helpers/validationSchema';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
 import {loginActionCreators} from '../src/loginActions';
@@ -23,7 +24,7 @@ import {isLoginLoadingSelector} from '../src/loginSelectors';
 const LoginScreen = (props: propsFromRedux) => {
   const [secure, setSecure] = useState(true);
 
-  const {submitLogin, isLoginLoading} = props;
+  const {submitLogin, isLoadingOverlayOpen} = props;
 
   const {
     control,
@@ -74,8 +75,8 @@ const LoginScreen = (props: propsFromRedux) => {
               onPress={handleSubmit(onSubmit)}
               style={GlobalStyles.blueBackgroundBtn}
               color="blue"
-              loading={isLoginLoading}
-              disabled={isLoginLoading}>
+              loading={isLoadingOverlayOpen}
+              disabled={isLoadingOverlayOpen}>
               Log In
             </Button>
             <Button
@@ -83,7 +84,7 @@ const LoginScreen = (props: propsFromRedux) => {
               onPress={() => navigate(routeNames.REGISTER)}
               style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
               color="blue"
-              disabled={isLoginLoading}>
+              disabled={isLoadingOverlayOpen}>
               Register
             </Button>
           </View>
@@ -96,6 +97,7 @@ const LoginScreen = (props: propsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     isLoginLoading: isLoginLoadingSelector(state),
+    isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {
     submitLogin: loginActionCreators.submitLogin,

@@ -15,6 +15,7 @@ import StatusModal from '../../status/views/StatusModal';
 import {navigationRef} from '../src/navigationUtils';
 import routeNames from '../src/routeNames';
 import CustomDrawer from './CustomDrawer';
+import LoadingOverlay from '../../loadingOverlay/views/LoadingOverlay';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -54,6 +55,7 @@ const Navigator = () => {
       <StatusModal />
       <PermissionErrorModal />
       <ImagePickerDialog />
+      <LoadingOverlay />
     </NavigationContainer>
   );
 };
