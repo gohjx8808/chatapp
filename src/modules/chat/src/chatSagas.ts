@@ -29,6 +29,7 @@ import {
   originScreenSelector,
   uploadedPhotoSelector,
 } from '../../imagePicker/src/imagePickerSelectors';
+import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {statusActionCreators} from '../../status/src/statusActions';
@@ -63,6 +64,7 @@ function getChatMessages(databaseRef: string) {
 function* storeChatMessagesSaga() {
   while (true) {
     yield take(chatActions.GET_CHAT_MESSAGES);
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     yield call(storeChatMessagesListener);
   }
 }
@@ -83,12 +85,14 @@ function* storeChatMessagesListener() {
     }
   } finally {
     yield put(chatActionCreators.storeMessages(msgList));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   }
 }
 
 function* getChatFrenListSaga() {
   while (true) {
     yield take(chatActions.GET_CHAT_FREN_LIST);
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     const currentUser: login.currentUserData = yield select(
       currentUserSelector,
     );
@@ -126,6 +130,7 @@ function* getChatFrenListSaga() {
       frenDataList.push(frenDatas);
     }
     yield put(chatActionCreators.loadChatFrenList(frenDataList));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   }
 }
 
@@ -134,7 +139,7 @@ function* deleteFriendSaga() {
     const {payload}: chatActionTypes.deleteFriendActionType = yield take(
       chatActions.DELETE_FRIEND,
     );
-    yield put(chatActionCreators.toggleChatLoading(true));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     const currentUser: login.currentUserData = yield select(
       currentUserSelector,
     );
@@ -143,24 +148,24 @@ function* deleteFriendSaga() {
       yield call(deleteFriend, currentUser.uid, payload);
       yield put(chatActionCreators.getChatFrenList());
       yield put(friendActionCreators.getFriendList());
-      yield put(chatActionCreators.toggleChatLoading(false));
       yield put(
         statusActionCreators.updateStatusMsg(
           'Your friend had been successfully removed',
         ),
       );
       yield put(statusActionCreators.toggleApiStatus(true));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       yield put(chatActionCreators.toggleDeleteFriendConfirmModal(false));
       yield put(statusActionCreators.toggleStatusModal(true));
       navigate(chatRouteNames.CHAT_LIST);
     } catch (error) {
-      yield put(chatActionCreators.toggleChatLoading(false));
       yield put(
         statusActionCreators.updateStatusMsg(
           'Your friend had failed to remove',
         ),
       );
       yield put(statusActionCreators.toggleApiStatus(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       yield put(statusActionCreators.toggleStatusModal(true));
     }
   }
@@ -202,6 +207,7 @@ function* uploadPictureToFirebaseSaga() {
   const {payload}: chatActionTypes.sendImageMsgActionType = yield take(
     chatActions.SEND_IMAGE_MSG,
   );
+  yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
   const uploadedPhoto: Image = yield select(uploadedPhotoSelector);
   const snapshot: FirebaseStorageTypes.TaskSnapshot = yield call(
     postUploadProfilePhoto,
@@ -228,5 +234,6 @@ function* uploadPictureToFirebaseSaga() {
   };
   database().ref(databaseRef).push(msg);
   yield put(chatActionCreators.getChatMessages());
+  yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   goBack();
 }

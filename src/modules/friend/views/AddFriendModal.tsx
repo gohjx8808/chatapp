@@ -8,18 +8,16 @@ import GlobalStyles from '../../../helpers/globalStyles';
 import {AddFriendSchema} from '../../../helpers/validationSchema';
 import ControlledSelect from '../../../sharedComponents/ControlledSelect';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
+import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
 import {friendActionCreators} from '../src/friendActions';
-import {
-  isAddFriendModalOpenSelector,
-  isFriendLoadingSelector,
-} from '../src/friendSelectors';
+import {isAddFriendModalOpenSelector} from '../src/friendSelectors';
 
 const AddFriendModal = (props: PropsFromRedux) => {
   const {
     isAddFriendModalOpen,
     toggleAddFriendModal,
     submitAddFriend,
-    isFriendLoading,
+    isLoadingOverlayOpen,
   } = props;
 
   const {
@@ -75,15 +73,15 @@ const AddFriendModal = (props: PropsFromRedux) => {
                 GlobalStyles.sameRowButtonWidth,
               ]}
               onPress={() => toggleAddFriendModal(false)}
-              disabled={isFriendLoading}>
+              disabled={isLoadingOverlayOpen}>
               Close
             </Button>
             <Button
               mode="contained"
               style={GlobalStyles.sameRowButtonWidth}
               onPress={handleSubmit(onSubmitAddFriend)}
-              disabled={isFriendLoading}
-              loading={isFriendLoading}>
+              disabled={isLoadingOverlayOpen}
+              loading={isLoadingOverlayOpen}>
               Confirm
             </Button>
           </View>
@@ -96,7 +94,7 @@ const AddFriendModal = (props: PropsFromRedux) => {
 const connector = connect(
   (state: GlobalState) => ({
     isAddFriendModalOpen: isAddFriendModalOpenSelector(state),
-    isFriendLoading: isFriendLoadingSelector(state),
+    isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {
     toggleAddFriendModal: friendActionCreators.toggleAddFriendModal,

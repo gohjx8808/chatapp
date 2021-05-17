@@ -8,6 +8,7 @@ import {
   getUploadedPhotoUrl,
   postSubmitAddFriend,
 } from '../../../helpers/firebaseUtils';
+import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {
@@ -56,7 +57,7 @@ function* submitAddFriendSaga() {
     const {payload}: friendActionTypes.submitAddFriendActionType = yield take(
       friendActions.SUBMIT_ADD_FRIEND,
     );
-    yield put(friendActionCreators.toggleFriendLoading(true));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     yield put(statusActionCreators.updateStatusTitle('Add Friend'));
     try {
       const currentUser: login.currentUserData = yield select(
@@ -77,14 +78,14 @@ function* submitAddFriendSaga() {
         yield put(statusActionCreators.updateStatusMsg('User not exists!'));
       }
       yield put(statusActionCreators.toggleStatusModal(true));
-      yield put(friendActionCreators.toggleFriendLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     } catch (error) {
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(
         statusActionCreators.updateStatusMsg('Your friend had failed to add!'),
       );
       yield put(statusActionCreators.toggleStatusModal(true));
-      yield put(friendActionCreators.toggleFriendLoading(false));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     }
   }
 }
@@ -92,6 +93,7 @@ function* submitAddFriendSaga() {
 function* getFrenListSaga() {
   while (true) {
     yield take(friendActions.GET_FRIEND_LIST);
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     const currentUser: login.currentUserData = yield select(
       currentUserSelector,
     );
@@ -129,5 +131,6 @@ function* getFrenListSaga() {
       frenDataList.push(frenDatas);
     }
     yield put(friendActionCreators.loadFriendList(frenDataList));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   }
 }

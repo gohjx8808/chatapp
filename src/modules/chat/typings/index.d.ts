@@ -4,7 +4,6 @@ declare namespace chat {
     selectedFren: frenDetails;
     chatFrenList: frenDetails[];
     isDeleteFriendConfirmModalOpen: boolean;
-    isChatLoading: boolean;
     isFriendProfilePhotoModalOpen: boolean;
   }
 

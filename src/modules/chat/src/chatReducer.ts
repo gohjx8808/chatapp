@@ -14,7 +14,6 @@ const INITIAL_STATE: chat.State = {
   },
   chatFrenList: [],
   isDeleteFriendConfirmModalOpen: false,
-  isChatLoading: false,
   isFriendProfilePhotoModalOpen: false,
 };
 
@@ -66,18 +65,6 @@ const isDeleteFriendConfirmModalOpen = (
   }
 };
 
-const isChatLoading = (
-  state = INITIAL_STATE.isChatLoading,
-  action: chatActionTypes.toggleChatLoadingActionType,
-): boolean => {
-  switch (action.type) {
-    case chatActions.TOGGLE_CHAT_LOADING:
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
 const isFriendProfilePhotoModalOpen = (
   state = INITIAL_STATE.isFriendProfilePhotoModalOpen,
   action: chatActionTypes.toggleFriendProfilePhotoActionType,
@@ -95,6 +82,5 @@ export default combineReducers<chat.State>({
   selectedFren,
   chatFrenList,
   isDeleteFriendConfirmModalOpen,
-  isChatLoading,
   isFriendProfilePhotoModalOpen,
 });

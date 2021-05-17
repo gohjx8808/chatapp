@@ -22,11 +22,6 @@ export const isDeleteFriendConfirmModalOpenSelector = createSelector(
   chat => chat.isDeleteFriendConfirmModalOpen,
 );
 
-export const isChatLoadingSelector = createSelector(
-  chatSelector,
-  chat => chat.isChatLoading,
-);
-
 export const isFriendProfilePhotoModalOpenSelector = createSelector(
   chatSelector,
   chat => chat.isFriendProfilePhotoModalOpen,

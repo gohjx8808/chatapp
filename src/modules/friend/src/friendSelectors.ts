@@ -7,11 +7,6 @@ export const isAddFriendModalOpenSelector = createSelector(
   friend => friend.isAddFriendModalOpen,
 );
 
-export const isFriendLoadingSelector = createSelector(
-  friendSelector,
-  friend => friend.isFriendLoading,
-);
-
 export const friendListSelector = createSelector(
   friendSelector,
   friend => friend.friendList,

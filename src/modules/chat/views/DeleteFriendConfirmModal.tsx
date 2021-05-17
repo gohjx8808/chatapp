@@ -3,9 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import {Button, Modal, Portal, Text, Title, useTheme} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
+import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
 import {chatActionCreators} from '../src/chatActions';
 import {
-  isChatLoadingSelector,
   isDeleteFriendConfirmModalOpenSelector,
   selectedFrenSelector,
 } from '../src/chatSelectors';
@@ -14,7 +14,7 @@ const DeleteFriendConfirmModal = (props: PropsFromRedux) => {
   const {
     isDeleteFriendConfirmModalOpen,
     toggleDeleteFriendConfirmModal,
-    isChatLoading,
+    isLoadingOverlayOpen,
     deleteFriend,
     selectedFren,
   } = props;
@@ -53,7 +53,7 @@ const DeleteFriendConfirmModal = (props: PropsFromRedux) => {
               style={GlobalStyles.sameRowButtonWidth}
               theme={{colors: {primary: colors.danger}}}
               onPress={() => toggleDeleteFriendConfirmModal(false)}
-              disabled={isChatLoading}>
+              disabled={isLoadingOverlayOpen}>
               Cancel
             </Button>
             <Button
@@ -63,8 +63,8 @@ const DeleteFriendConfirmModal = (props: PropsFromRedux) => {
                 {borderColor: colors.danger},
               ]}
               onPress={() => deleteFriend(selectedFren.uid)}
-              disabled={isChatLoading}
-              loading={isChatLoading}
+              disabled={isLoadingOverlayOpen}
+              loading={isLoadingOverlayOpen}
               theme={{colors: {primary: colors.danger}}}>
               Confirm
             </Button>
@@ -80,7 +80,7 @@ const connector = connect(
     isDeleteFriendConfirmModalOpen: isDeleteFriendConfirmModalOpenSelector(
       state,
     ),
-    isChatLoading: isChatLoadingSelector(state),
+    isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
     selectedFren: selectedFrenSelector(state),
   }),
   {
