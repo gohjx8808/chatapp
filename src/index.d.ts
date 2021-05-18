@@ -9,6 +9,7 @@ interface GlobalState {
   logout: logout.State;
   imagePicker: imagePicker.State;
   loadingOverlay: loadingOverlay.State;
+  forgotPassword: forgotPassword.State;
 }
 
 interface Action<T> {

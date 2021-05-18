@@ -1,5 +1,6 @@
 import {all, call} from 'redux-saga/effects';
 import chatRuntime from './modules/chat/src/chatSagas';
+import {forgotPasswordRuntime} from './modules/forgotPassword/src/forgotPasswordSagas';
 import friendRuntime from './modules/friend/src/friendSagas';
 import imagePickerRuntime from './modules/imagePicker/src/imagePickerSagas';
 import loginRuntime from './modules/login/src/loginSagas';
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     call(friendRuntime),
     call(logoutRuntime),
     call(imagePickerRuntime),
+    call(forgotPasswordRuntime),
   ]);
 }

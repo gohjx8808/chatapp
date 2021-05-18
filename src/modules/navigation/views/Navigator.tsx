@@ -16,6 +16,7 @@ import {navigationRef} from '../src/navigationUtils';
 import routeNames from '../src/routeNames';
 import CustomDrawer from './CustomDrawer';
 import LoadingOverlay from '../../loadingOverlay/views/LoadingOverlay';
+import ForgotPasswordScreen from '../../forgotPassword/views/ForgotPasswordScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -43,6 +44,10 @@ const Navigator = () => {
         initialRouteName={routeNames.LOGIN}
         screenOptions={{headerShown: false}}>
         <Stack.Screen name={routeNames.LOGIN} component={LoginScreen} />
+        <Stack.Screen
+          name={routeNames.FORGOT_PASSWORD}
+          component={ForgotPasswordScreen}
+        />
         <Stack.Screen
           name={routeNames.REGISTER}
           component={RegistrationScreen}
