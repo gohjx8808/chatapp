@@ -71,3 +71,9 @@ export const changePassword = (newPassword: string) => {
 export const logout = () => {
   return auth().signOut();
 };
+
+export const sendPasswordResetEmail = (
+  payload: forgotPassword.submitForgotPasswordPayload,
+) => {
+  return auth().sendPasswordResetEmail(payload.email);
+};

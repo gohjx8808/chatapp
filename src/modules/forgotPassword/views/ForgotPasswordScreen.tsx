@@ -15,26 +15,23 @@ import GlobalStyles from '../../../helpers/globalStyles';
 import {ForgotPasswordSchema} from '../../../helpers/validationSchema';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
-import {loginActionCreators} from '../../login/src/loginActions';
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
+import {forgotPasswordActionCreators} from '../src/forgotPasswordActions';
 
 const ForgotPasswordScreen = (props: propsFromRedux) => {
-  const {isLoadingOverlayOpen} = props;
+  const {isLoadingOverlayOpen, submitForgotPassword} = props;
 
   const {
     control,
     handleSubmit,
     formState: {errors},
-    reset,
   } = useForm({
     resolver: yupResolver(ForgotPasswordSchema),
   });
 
   const onSubmit = (values: forgotPassword.submitForgotPasswordPayload) => {
-    reset({
-      email: '',
-    });
+    submitForgotPassword(values);
   };
 
   return (
@@ -86,7 +83,7 @@ const connector = connect(
     isLoadingOverlayOpen: isLoadingOverlayOpenSelector(state),
   }),
   {
-    submitLogin: loginActionCreators.submitLogin,
+    submitForgotPassword: forgotPasswordActionCreators.submiForgotPassword,
   },
 );
 
