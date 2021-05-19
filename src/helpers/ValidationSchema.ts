@@ -5,6 +5,10 @@ export const LoginSchema = yup.object().shape({
   password: yup.string().required('Password is required'),
 });
 
+export const ForgotPasswordSchema = yup.object().shape({
+  email: yup.string().email('Invalid email').required('Email is required'),
+});
+
 export const RegisterSchema = yup.object().shape({
   displayName: yup.string().required('Display name is required'),
   email: yup.string().email('Invalid email').required('Email is required'),

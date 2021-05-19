@@ -1,5 +1,5 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import React, {useState} from 'react';
+import React from 'react';
 import {useForm} from 'react-hook-form';
 import {
   Image,
@@ -8,22 +8,19 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {Button, Card} from 'react-native-paper';
+import {Button, Card, HelperText, Text} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
 import GlobalStyles from '../../../helpers/globalStyles';
-import {LoginSchema} from '../../../helpers/validationSchema';
-import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
+import {ForgotPasswordSchema} from '../../../helpers/validationSchema';
 import ControlledTextInput from '../../../sharedComponents/ControlledTextInput';
 import {isLoadingOverlayOpenSelector} from '../../loadingOverlay/src/loadingOverlaySelectors';
+import {loginActionCreators} from '../../login/src/loginActions';
 import {navigate} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
-import {loginActionCreators} from '../../login/src/loginActions';
 
 const ForgotPasswordScreen = (props: propsFromRedux) => {
-  const [secure, setSecure] = useState(true);
-
-  const {submitLogin, isLoadingOverlayOpen} = props;
+  const {isLoadingOverlayOpen} = props;
 
   const {
     control,
@@ -31,14 +28,12 @@ const ForgotPasswordScreen = (props: propsFromRedux) => {
     formState: {errors},
     reset,
   } = useForm({
-    resolver: yupResolver(LoginSchema),
+    resolver: yupResolver(ForgotPasswordSchema),
   });
 
-  const onSubmit = (values: login.onLoginPayload) => {
-    submitLogin(values);
+  const onSubmit = (values: forgotPassword.submitForgotPasswordPayload) => {
     reset({
       email: '',
-      password: '',
     });
   };
 
@@ -48,6 +43,10 @@ const ForgotPasswordScreen = (props: propsFromRedux) => {
       style={styles.backgroundView}>
       <Card style={styles.loginCard}>
         <Image source={Assets.corgiSquare} style={styles.corgiImage} />
+        <Text style={[GlobalStyles.centerText, styles.declarationText]}>
+          Please enter your registered email address below. You will receive an
+          email with a link to reset your password shortly.
+        </Text>
         <Card.Content style={GlobalStyles.centerEverything}>
           <ControlledTextInput
             name={'email'}
@@ -56,31 +55,24 @@ const ForgotPasswordScreen = (props: propsFromRedux) => {
             error={errors.email}
             keyboardType="email-address"
           />
-          <ControlledPasswordInput
-            name="password"
-            control={control}
-            passwordSecure={secure}
-            toggleSecure={() => setSecure(!secure)}
-            label="Password"
-            error={errors.password}
-          />
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
               onPress={handleSubmit(onSubmit)}
-              style={GlobalStyles.blueBackgroundBtn}
+              style={[GlobalStyles.blueBackgroundBtn, styles.btnSpace]}
               color="blue"
               loading={isLoadingOverlayOpen}
               disabled={isLoadingOverlayOpen}>
-              Log In
+              Send email
             </Button>
+            <HelperText type="info">Remember your password?</HelperText>
             <Button
               mode="outlined"
-              onPress={() => navigate(routeNames.REGISTER)}
-              style={[GlobalStyles.whiteBackgroundBtn, styles.btnSpace]}
+              onPress={() => navigate(routeNames.LOGIN)}
+              style={GlobalStyles.whiteBackgroundBtn}
               color="blue"
               disabled={isLoadingOverlayOpen}>
-              Register
+              Log In
             </Button>
           </View>
         </Card.Content>
@@ -112,23 +104,25 @@ const styles = StyleSheet.create({
   loginCard: {
     width: '80%',
   },
-  loginTitle: {
-    textAlign: 'center',
-    marginTop: '5%',
-    marginBottom: '5%',
-  },
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
   },
   btnSpace: {
-    marginTop: '5%',
+    marginBottom: '5%',
   },
   corgiImage: {
-    height: '20%',
-    width: '40%',
+    height: '25%',
+    width: '45%',
     alignSelf: 'center',
     marginTop: '10%',
     borderRadius: 10,
+    marginBottom: '5%',
+  },
+  declarationText: {
+    paddingHorizontal: '7%',
+    color: '#606060',
+    fontSize: 13,
+    marginBottom: '5%',
   },
 });

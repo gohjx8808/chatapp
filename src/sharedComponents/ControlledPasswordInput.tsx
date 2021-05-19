@@ -10,10 +10,19 @@ interface ControlledPasswordInputOwnProps {
   toggleSecure: () => void;
   label: string;
   error: FieldErrors;
+  footerAttachedComponent?: React.ReactNode;
 }
 
 const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps> = props => {
-  const {name, control, passwordSecure, toggleSecure, label, error} = props;
+  const {
+    name,
+    control,
+    passwordSecure,
+    toggleSecure,
+    label,
+    error,
+    footerAttachedComponent,
+  } = props;
   const {colors} = useTheme();
 
   return (
@@ -42,6 +51,7 @@ const ControlledPasswordInput: FunctionComponent<ControlledPasswordInputOwnProps
           />
         )}
       />
+      {footerAttachedComponent}
       <HelperText type="error" visible={!!error}>
         {error?.message}
       </HelperText>

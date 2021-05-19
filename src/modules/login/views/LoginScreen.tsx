@@ -8,7 +8,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {Button, Card} from 'react-native-paper';
+import {Button, Card, HelperText} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -42,6 +42,15 @@ const LoginScreen = (props: propsFromRedux) => {
     });
   };
 
+  const renderForgotPaswordText = (
+    <HelperText
+      type="info"
+      onPress={() => navigate(routeNames.FORGOT_PASSWORD)}
+      style={styles.forgotPassword}>
+      Forgot Password?
+    </HelperText>
+  );
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -67,6 +76,7 @@ const LoginScreen = (props: propsFromRedux) => {
             toggleSecure={() => setSecure(!secure)}
             label="Password"
             error={errors.password}
+            footerAttachedComponent={renderForgotPaswordText}
           />
           <View style={styles.buttonContainer}>
             <Button
@@ -124,6 +134,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     alignItems: 'center',
+    marginTop: '5%',
   },
   btnSpace: {
     marginTop: '5%',
@@ -134,5 +145,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: '10%',
     borderRadius: 10,
+  },
+  forgotPassword: {
+    color: 'blue',
+    alignSelf: 'flex-end',
+    paddingBottom: 0,
   },
 });
