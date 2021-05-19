@@ -77,3 +77,9 @@ export const sendPasswordResetEmail = (
 ) => {
   return auth().sendPasswordResetEmail(payload.email);
 };
+
+export const deleteAcc = (currentUID: string) => {
+  const userDatabaseRef = `/chat/${currentUID}`;
+  database().ref(userDatabaseRef).remove();
+  auth().currentUser?.delete();
+};

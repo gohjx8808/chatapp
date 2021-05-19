@@ -5,6 +5,9 @@ export class myProfileActions {
     'MY_PROFILE/SUBMIT_CHANGE_PASSWORD';
   public static readonly UPDATE_PROFILE_PHOTO =
     'MY_PROFILE/UPDATE_PROFILE_PHOTO';
+  public static readonly SUBMIT_DELETE_ACC = 'MY_PROFILE/SUBMIT_DELETE_ACC';
+  public static readonly TOGGLE_DELETE_ACC_MODAL =
+    'MY_PROFILE/TOGGLE_DELETE_ACC_MODAL';
 }
 
 export declare namespace myProfileActionTypes {
@@ -18,6 +21,13 @@ export declare namespace myProfileActionTypes {
   >;
   type updateProfilePhotoActionType = Action<
     typeof myProfileActions.UPDATE_PROFILE_PHOTO
+  >;
+  type submitDeleteAccActionType = Action<
+    typeof myProfileActions.SUBMIT_DELETE_ACC
+  >;
+  type toggleDeleteAccModalActionType = ActionWithPayload<
+    typeof myProfileActions.TOGGLE_DELETE_ACC_MODAL,
+    boolean
   >;
 }
 
@@ -36,5 +46,14 @@ export class myProfileActionCreators {
   });
   public static updateProfilePhoto = (): myProfileActionTypes.updateProfilePhotoActionType => ({
     type: myProfileActions.UPDATE_PROFILE_PHOTO,
+  });
+  public static submitDeleteAcc = (): myProfileActionTypes.submitDeleteAccActionType => ({
+    type: myProfileActions.SUBMIT_DELETE_ACC,
+  });
+  public static toggleDeleteAccModal = (
+    payload: boolean,
+  ): myProfileActionTypes.toggleDeleteAccModalActionType => ({
+    type: myProfileActions.TOGGLE_DELETE_ACC_MODAL,
+    payload,
   });
 }

@@ -4,6 +4,7 @@ import {Image} from 'react-native-image-crop-picker';
 import {
   changePassword,
   defaultAvatar,
+  deleteAcc,
   postDeletePrevUploadedPhoto,
   postUpdateCurrentUserProfile,
   postUploadProfilePhoto,
@@ -17,6 +18,7 @@ import {originScreenSelector} from '../../imagePicker/src/imagePickerSelectors';
 import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate} from '../../navigation/src/navigationUtils';
+import routeNames from '../../navigation/src/routeNames';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {myProfileActions, myProfileActionTypes} from './myProfileActions';
 import myProfileRouteNames from './myProfileRouteNames';
@@ -25,6 +27,7 @@ export default function* myProfileRuntime() {
   yield fork(selectProfilePhotoSaga);
   yield fork(updateProfileSaga);
   yield fork(changePasswordSaga);
+  yield fork(submitDeleteAccSaga);
 }
 
 function* selectProfilePhotoSaga() {
@@ -153,6 +156,36 @@ function* changePasswordSaga() {
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));
       yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+    }
+  }
+}
+
+function* submitDeleteAccSaga() {
+  while (true) {
+    yield take(myProfileActions.SUBMIT_DELETE_ACC);
+    yield put(statusActionCreators.updateStatusTitle('Delete Account'));
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
+    try {
+      const currentUser: login.currentUserData = yield select(
+        currentUserSelector,
+      );
+      yield call(deleteAcc, currentUser.uid);
+      yield put(statusActionCreators.toggleApiStatus(true));
+      yield put(
+        statusActionCreators.updateStatusMsg('Your account is deleted!'),
+      );
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+      yield put(statusActionCreators.toggleStatusModal(true));
+      navigate(routeNames.LOGIN);
+    } catch (error) {
+      yield put(statusActionCreators.toggleApiStatus(false));
+      yield put(
+        statusActionCreators.updateStatusMsg(
+          'Fail to delete account! Please try again later.',
+        ),
+      );
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+      yield put(statusActionCreators.toggleStatusModal(true));
     }
   }
 }

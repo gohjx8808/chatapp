@@ -44,6 +44,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
         onPress={() => navigate(routeNames.LOGOUT)}
         active={activeRouteName === routeNames.LOGOUT}
         icon="logout"
+        style={styles.silverLogout}
       />
     </View>
   );
@@ -68,5 +69,8 @@ const styles = StyleSheet.create({
   },
   drawerContainerReadjustment: {
     paddingTop: 15,
+  },
+  silverLogout: {
+    backgroundColor: 'silver',
   },
 });

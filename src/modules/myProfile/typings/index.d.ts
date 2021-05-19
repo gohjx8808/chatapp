@@ -1,5 +1,7 @@
 declare namespace myProfile {
-  interface State {}
+  interface State {
+    isDeleteAccConfirmModalOpen: boolean;
+  }
 
   interface updateProfilePayload {
     name: string;

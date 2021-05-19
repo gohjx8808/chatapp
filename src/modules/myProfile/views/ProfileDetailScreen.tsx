@@ -4,7 +4,14 @@ import moment from 'moment';
 import React, {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Appbar, Avatar, Button, Snackbar, TextInput} from 'react-native-paper';
+import {
+  Appbar,
+  Avatar,
+  Button,
+  Snackbar,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {UpdateProfileSchema} from '../../../helpers/validationSchema';
@@ -16,9 +23,16 @@ import {currentUserSelector} from '../../login/src/loginSelectors';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import {myProfileActionCreators} from '../src/myProfileActions';
 import myProfileRouteNames from '../src/myProfileRouteNames';
+import DeleteAccConfirmModal from './DeleteAccConfirmModal';
 
 const ProfileDetailScreen = (props: PropsFromRedux) => {
-  const {currentUser, isLoadingOverlayOpen, submitUpdateProfile} = props;
+  const {
+    currentUser,
+    isLoadingOverlayOpen,
+    submitUpdateProfile,
+    toggleDeleteAccModal,
+  } = props;
+  const {colors} = useTheme();
 
   const genders = ['Male', 'Female'];
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
@@ -122,8 +136,21 @@ const ProfileDetailScreen = (props: PropsFromRedux) => {
             disabled={isLoadingOverlayOpen}>
             Update
           </Button>
+          <Button
+            mode="outlined"
+            theme={{colors: {primary: colors.danger}}}
+            style={[
+              GlobalStyles.blueBackgroundBtn,
+              styles.smallerBtnSpace,
+              {borderColor: colors.danger},
+            ]}
+            onPress={() => toggleDeleteAccModal(true)}
+            disabled={isLoadingOverlayOpen}>
+            Delete Account
+          </Button>
         </View>
       </ScrollView>
+      <DeleteAccConfirmModal />
       <Snackbar
         visible={isSnackbarOpen}
         duration={1500}
@@ -141,6 +168,7 @@ const connector = connect(
   }),
   {
     submitUpdateProfile: myProfileActionCreators.submitUpdateProfile,
+    toggleDeleteAccModal: myProfileActionCreators.toggleDeleteAccModal,
   },
 );
 
@@ -159,5 +187,8 @@ const styles = StyleSheet.create({
   },
   btnSpace: {
     marginTop: '8%',
+  },
+  smallerBtnSpace: {
+    marginTop: '5%',
   },
 });
