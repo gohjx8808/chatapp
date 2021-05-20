@@ -1,5 +1,6 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {Button, Card, Title} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
@@ -14,7 +15,7 @@ const LogoutScreen = (props: propsFromRedux) => {
   return (
     <View style={styles.backgroundView}>
       <Card style={styles.logoutCard}>
-        <Image source={Assets.corgiSquare} style={styles.corgiImage} />
+        <FastImage source={Assets.corgiSquare} style={styles.corgiImage} />
         <Card.Content style={GlobalStyles.centerEverything}>
           <Title style={[GlobalStyles.centerText, styles.titleTopSpace]}>
             Are your sure you wish to log out of ChatApp?

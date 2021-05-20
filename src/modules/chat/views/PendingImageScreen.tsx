@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {
-  Image,
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {Appbar, Avatar, TextInput, useTheme} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import GlobalStyles from '../../../helpers/globalStyles';
@@ -61,10 +61,10 @@ const PendingImageScreen = (props: PropsFromRedux) => {
         <View style={GlobalStyles.centerEverything}>
           {uploadedPhoto.path && (
             <View style={styles.uploadedImageContainer}>
-              <Image
+              <FastImage
                 source={{uri: uploadedPhoto.path}}
                 style={GlobalStyles.image}
-                resizeMode="contain"
+                resizeMode={FastImage.resizeMode.contain}
               />
             </View>
           )}

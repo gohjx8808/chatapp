@@ -49,6 +49,13 @@ const GlobalStyles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  notFoundContainer: {
+    width: '65%',
+    height: '50%',
+  },
+  notFoundImage: {
+    borderRadius: 5,
+  },
 });
 
 export default GlobalStyles;

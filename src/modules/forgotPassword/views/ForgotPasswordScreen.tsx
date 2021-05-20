@@ -1,13 +1,8 @@
 import {yupResolver} from '@hookform/resolvers/yup';
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import {
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {Button, Card, HelperText, Text} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
@@ -39,7 +34,7 @@ const ForgotPasswordScreen = (props: propsFromRedux) => {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.backgroundView}>
       <Card style={styles.loginCard}>
-        <Image source={Assets.corgiSquare} style={styles.corgiImage} />
+        <FastImage source={Assets.corgiSquare} style={styles.corgiImage} />
         <Text style={[GlobalStyles.centerText, styles.declarationText]}>
           Please enter your registered email address below. You will receive an
           email with a link to reset your password shortly.

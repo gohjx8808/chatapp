@@ -3,7 +3,8 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import React from 'react';
-import {Image, Platform, StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {Drawer, Title} from 'react-native-paper';
 import assets from '../../../helpers/assets';
 import {navigate} from '../src/navigationUtils';
@@ -15,7 +16,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
 
   return (
     <View style={styles.wholeFlex}>
-      <Image source={assets.corgiSquare} style={styles.corgiImage} />
+      <FastImage source={assets.corgiSquare} style={styles.corgiImage} />
       <Title style={styles.logoTitle}>ChatApp</Title>
       <DrawerContentScrollView
         {...props}

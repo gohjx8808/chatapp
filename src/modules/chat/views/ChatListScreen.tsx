@@ -1,9 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {Appbar, Avatar, List, Searchbar} from 'react-native-paper';
+import FastImage from 'react-native-fast-image';
+import {
+  Appbar,
+  Avatar,
+  Button,
+  List,
+  Searchbar,
+  Text,
+  useTheme,
+} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
+import assets from '../../../helpers/assets';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
+import routeNames from '../../navigation/src/routeNames';
 import {chatActionCreators} from '../src/chatActions';
 import chatRouteNames from '../src/chatRouteNames';
 import {chatFrenListSelector} from '../src/chatSelectors';
@@ -16,6 +27,8 @@ const ChatListScreen = (props: PropsFromRedux) => {
     chatFrenList,
   } = props;
   const [searchQuery, setSearchQuery] = useState('');
+
+  const {colors} = useTheme();
 
   useEffect(() => {
     getChatFrenList();
@@ -60,11 +73,32 @@ const ChatListScreen = (props: PropsFromRedux) => {
         value={searchQuery}
         style={GlobalStyles.fullWidthSearchBar}
       />
-      <FlatList
-        data={chatFrenList}
-        renderItem={renderChatFriend}
-        keyExtractor={item => item.uid}
-      />
+      {chatFrenList.length > 0 ? (
+        <FlatList
+          data={chatFrenList}
+          renderItem={renderChatFriend}
+          keyExtractor={item => item.uid}
+        />
+      ) : (
+        <View style={GlobalStyles.centerEverything}>
+          <View style={GlobalStyles.notFoundContainer}>
+            <FastImage
+              source={assets.notFound}
+              style={[GlobalStyles.image, GlobalStyles.notFoundImage]}
+            />
+          </View>
+          <Text style={styles.verticalSpace}>
+            Oops. We couldn't find any ongoing chat.
+          </Text>
+          <Button
+            mode="contained"
+            onPress={() => navigate(routeNames.FRIEND)}
+            style={styles.newChat}
+            color={colors.primary}>
+            New Chat
+          </Button>
+        </View>
+      )}
     </>
   );
 };
@@ -89,5 +123,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#808080',
     borderBottomWidth: 0.2,
+  },
+  verticalSpace: {
+    marginVertical: '5%',
+  },
+  newChat: {
+    width: '40%',
   },
 });
