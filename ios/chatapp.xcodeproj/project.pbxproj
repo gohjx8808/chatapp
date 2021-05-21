@@ -51,7 +51,7 @@
 		00E356F21AD99517003FC87E /* chatappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = chatappTests.m; sourceTree = "<group>"; };
 		0D3031CB74B9E1A67D68B67B /* Pods-chatapp-chatapp.staging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatapp-chatapp.staging.release.xcconfig"; path = "Target Support Files/Pods-chatapp-chatapp.staging/Pods-chatapp-chatapp.staging.release.xcconfig"; sourceTree = "<group>"; };
 		1398C89D9DD044EC95BAEC22 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* chatapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* debugChatapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = debugChatapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = chatapp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = chatapp/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = chatapp/Images.xcassets; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* chatapp.app */,
+				13B07F961A680F5B00A75B9A /* debugChatapp.app */,
 				00E356EE1AD99517003FC87E /* chatappTests.xctest */,
 			);
 			name = Products;
@@ -282,7 +282,7 @@
 			);
 			name = chatapp;
 			productName = chatapp;
-			productReference = 13B07F961A680F5B00A75B9A /* chatapp.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* debugChatapp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -569,7 +569,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jxapps.chatapp;
-				PRODUCT_NAME = chatapp;
+				PRODUCT_NAME = debugChatapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -812,8 +812,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jxapps.chatapp;
-				PRODUCT_NAME = chatapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jxapps.chatapp.staging;
+				PRODUCT_NAME = stagingChatapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
