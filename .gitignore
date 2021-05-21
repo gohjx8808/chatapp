@@ -60,3 +60,6 @@ buck-out/
 
 .env
 .env.production
+
+/ios/GoogleService-Info.plist
+/android/app/google-services.json

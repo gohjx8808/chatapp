@@ -1,5 +1,6 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import React, {useState} from 'react';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -28,6 +29,13 @@ const LoginScreen = (props: propsFromRedux) => {
   } = useForm({
     resolver: yupResolver(LoginSchema),
   });
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId:
+        '339335518405-gn1jbepvbujbal7593jb42e0a1jtgt00.apps.googleusercontent.com',
+    });
+  }, []);
 
   const onSubmit = (values: login.onLoginPayload) => {
     submitLogin(values);
