@@ -16,7 +16,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3010DF375A584A6FAB0F099D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D27539AF2BE4436BD67F310 /* FontAwesome5_Solid.ttf */; };
 		3FA08FDDA70B43CC9E97C349 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58814275429849D9A13AE040 /* EvilIcons.ttf */; };
-		66EB5CC2F4BC41DBAA4FA79B /* libPods-chatapp-chatapp.staging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A845D95C66C29A2A45E5D4F1 /* libPods-chatapp-chatapp.staging.a */; };
 		6C01A495D6C173F1B68C9C4B /* libPods-chatapp-chatappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CBF9C14FE1E44976B00FE7 /* libPods-chatapp-chatappTests.a */; };
 		6D46952BECA6B6B16A04B7CE /* libPods-chatapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D305B593B7E4572D896D84EF /* libPods-chatapp.a */; };
 		6E2E8970D4B44E97B62FE606 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7566EC87DBFD4C859AD4666C /* MaterialCommunityIcons.ttf */; };
@@ -27,28 +26,6 @@
 		ADD50528B917416DA29E7065 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CD65BE1748B4108B71718D2 /* FontAwesome.ttf */; };
 		B0F014FC8C374B4E98F1B7E2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1EA070EF099441F9D1D9AC6 /* MaterialIcons.ttf */; };
 		D05A3125D627361DD8824BB3 /* libPods-chatapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D572F15C262E65BE0062FE37 /* libPods-chatapp.a */; };
-		D54F64612646E2DC00ACE599 /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54F64602646E2DC00ACE599 /* QBImagePicker.storyboard */; };
-		D571BE60263665CB009D2ED2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		D571BE61263665CB009D2ED2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		D571BE66263665CB009D2ED2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		D571BE67263665CB009D2ED2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		D571BE68263665CB009D2ED2 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6778ED908F240F8887DCCA2 /* AntDesign.ttf */; };
-		D571BE69263665CB009D2ED2 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BF3BC28B703B45B2942983E0 /* Entypo.ttf */; };
-		D571BE6A263665CB009D2ED2 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58814275429849D9A13AE040 /* EvilIcons.ttf */; };
-		D571BE6B263665CB009D2ED2 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1398C89D9DD044EC95BAEC22 /* Feather.ttf */; };
-		D571BE6C263665CB009D2ED2 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6CD65BE1748B4108B71718D2 /* FontAwesome.ttf */; };
-		D571BE6D263665CB009D2ED2 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BE5739941384C12A8E919A8 /* FontAwesome5_Brands.ttf */; };
-		D571BE6E263665CB009D2ED2 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DF033E196FDC4A1C84AFE622 /* FontAwesome5_Regular.ttf */; };
-		D571BE6F263665CB009D2ED2 /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D27539AF2BE4436BD67F310 /* FontAwesome5_Solid.ttf */; };
-		D571BE70263665CB009D2ED2 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6EE3286515CD4F79A29B0161 /* Fontisto.ttf */; };
-		D571BE71263665CB009D2ED2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5FFCEDC2622F7F700AAA8E8 /* GoogleService-Info.plist */; };
-		D571BE72263665CB009D2ED2 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B1A7772BF2A54769AB08C3A5 /* Foundation.ttf */; };
-		D571BE73263665CB009D2ED2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECD8492E17ED4097BD0079BA /* Ionicons.ttf */; };
-		D571BE74263665CB009D2ED2 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7566EC87DBFD4C859AD4666C /* MaterialCommunityIcons.ttf */; };
-		D571BE75263665CB009D2ED2 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1EA070EF099441F9D1D9AC6 /* MaterialIcons.ttf */; };
-		D571BE76263665CB009D2ED2 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 73578E769B174DB2BE2A05D3 /* Octicons.ttf */; };
-		D571BE77263665CB009D2ED2 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2602926DD65B4441859D0ABF /* SimpleLineIcons.ttf */; };
-		D571BE78263665CB009D2ED2 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 470318663B254B3DA4C7F081 /* Zocial.ttf */; };
 		D5FFCEDD2622F7F800AAA8E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5FFCEDC2622F7F700AAA8E8 /* GoogleService-Info.plist */; };
 		E1FEFC0CACD748FB9CEB6CA5 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6EE3286515CD4F79A29B0161 /* Fontisto.ttf */; };
 		E24DD8DB1059486B845C771C /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1398C89D9DD044EC95BAEC22 /* Feather.ttf */; };
@@ -97,16 +74,17 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = chatapp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BE5739941384C12A8E919A8 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		93CBF9C14FE1E44976B00FE7 /* libPods-chatapp-chatappTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-chatapp-chatappTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0DB6E49F540C323A7620468 /* Pods-chatapp.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatapp.staging.xcconfig"; path = "Target Support Files/Pods-chatapp/Pods-chatapp.staging.xcconfig"; sourceTree = "<group>"; };
 		A845D95C66C29A2A45E5D4F1 /* libPods-chatapp-chatapp.staging.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-chatapp-chatapp.staging.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF1C7A22451D28294EDA5163 /* Pods-App-chatappTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-chatappTests.debug.xcconfig"; path = "Target Support Files/Pods-App-chatappTests/Pods-App-chatappTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B1A7772BF2A54769AB08C3A5 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		B6778ED908F240F8887DCCA2 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		BAD14C4350008AC8FF1277C8 /* Pods-chatapp-chatappTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-chatapp-chatappTests.staging.xcconfig"; path = "Target Support Files/Pods-chatapp-chatappTests/Pods-chatapp-chatappTests.staging.xcconfig"; sourceTree = "<group>"; };
 		BF3BC28B703B45B2942983E0 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		C1EA070EF099441F9D1D9AC6 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		CAC76D99446BD76A870642C0 /* Pods-App-chatapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-chatapp.debug.xcconfig"; path = "Target Support Files/Pods-App-chatapp/Pods-App-chatapp.debug.xcconfig"; sourceTree = "<group>"; };
 		D305B593B7E4572D896D84EF /* libPods-chatapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-chatapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D54F64602646E2DC00ACE599 /* QBImagePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = QBImagePicker.storyboard; path = "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.storyboard"; sourceTree = "<group>"; };
-		D571BE7F263665CB009D2ED2 /* chatapp.staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatapp.staging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D571BE80263665CC009D2ED2 /* chatapp-staging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "chatapp-staging-Info.plist"; path = "/Users/jingxuangoh/Documents/chatapp/ios/chatapp-staging-Info.plist"; sourceTree = "<absolute>"; };
 		D572F15C262E65BE0062FE37 /* libPods-chatapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libPods-chatapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D592B6EE262AFFEB008DB8AF /* libreact-native-config.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libreact-native-config.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,14 +113,6 @@
 				6D46952BECA6B6B16A04B7CE /* libPods-chatapp.a in Frameworks */,
 				83CB19B8316BB24A17AB04DF /* libPods-chatapp.a in Frameworks */,
 				D05A3125D627361DD8824BB3 /* libPods-chatapp.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D571BE62263665CB009D2ED2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				66EB5CC2F4BC41DBAA4FA79B /* libPods-chatapp-chatapp.staging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,7 +193,6 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* chatapp.app */,
 				00E356EE1AD99517003FC87E /* chatappTests.xctest */,
-				D571BE7F263665CB009D2ED2 /* chatapp.staging.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -243,6 +212,8 @@
 				4E6FE41FF34071F6600FBEDA /* Pods-chatapp.release.xcconfig */,
 				FE16EFCC61BE273A92A94747 /* Pods-chatapp-chatapp.staging.debug.xcconfig */,
 				0D3031CB74B9E1A67D68B67B /* Pods-chatapp-chatapp.staging.release.xcconfig */,
+				A0DB6E49F540C323A7620468 /* Pods-chatapp.staging.xcconfig */,
+				BAD14C4350008AC8FF1277C8 /* Pods-chatapp-chatappTests.staging.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -304,7 +275,6 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				2A195FC30A81832AE3E27870 /* [CP-User] [RNFB] Core Configuration */,
-				8C40797B58E8F79B8EC26DCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -313,26 +283,6 @@
 			name = chatapp;
 			productName = chatapp;
 			productReference = 13B07F961A680F5B00A75B9A /* chatapp.app */;
-			productType = "com.apple.product-type.application";
-		};
-		D571BE5C263665CB009D2ED2 /* chatapp.staging */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = D571BE7C263665CB009D2ED2 /* Build configuration list for PBXNativeTarget "chatapp.staging" */;
-			buildPhases = (
-				7F2750E5488CF965536C4464 /* [CP] Check Pods Manifest.lock */,
-				D571BE5E263665CB009D2ED2 /* Start Packager */,
-				D571BE5F263665CB009D2ED2 /* Sources */,
-				D571BE62263665CB009D2ED2 /* Frameworks */,
-				D571BE65263665CB009D2ED2 /* Resources */,
-				D571BE79263665CB009D2ED2 /* Bundle React Native code and images */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = chatapp.staging;
-			productName = chatapp;
-			productReference = D571BE7F263665CB009D2ED2 /* chatapp.staging.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -367,7 +317,6 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* chatapp */,
 				00E356ED1AD99517003FC87E /* chatappTests */,
-				D571BE5C263665CB009D2ED2 /* chatapp.staging */,
 			);
 		};
 /* End PBXProject section */
@@ -403,33 +352,6 @@
 				FEFD72BE403C48EB9BC7A427 /* Octicons.ttf in Resources */,
 				F1AC39398EC7495495DA72B1 /* SimpleLineIcons.ttf in Resources */,
 				7CC1100131E94493948627B4 /* Zocial.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D571BE65263665CB009D2ED2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D54F64612646E2DC00ACE599 /* QBImagePicker.storyboard in Resources */,
-				D571BE66263665CB009D2ED2 /* LaunchScreen.storyboard in Resources */,
-				D571BE67263665CB009D2ED2 /* Images.xcassets in Resources */,
-				D571BE68263665CB009D2ED2 /* AntDesign.ttf in Resources */,
-				D571BE69263665CB009D2ED2 /* Entypo.ttf in Resources */,
-				D571BE6A263665CB009D2ED2 /* EvilIcons.ttf in Resources */,
-				D571BE6B263665CB009D2ED2 /* Feather.ttf in Resources */,
-				D571BE6C263665CB009D2ED2 /* FontAwesome.ttf in Resources */,
-				D571BE6D263665CB009D2ED2 /* FontAwesome5_Brands.ttf in Resources */,
-				D571BE6E263665CB009D2ED2 /* FontAwesome5_Regular.ttf in Resources */,
-				D571BE6F263665CB009D2ED2 /* FontAwesome5_Solid.ttf in Resources */,
-				D571BE70263665CB009D2ED2 /* Fontisto.ttf in Resources */,
-				D571BE71263665CB009D2ED2 /* GoogleService-Info.plist in Resources */,
-				D571BE72263665CB009D2ED2 /* Foundation.ttf in Resources */,
-				D571BE73263665CB009D2ED2 /* Ionicons.ttf in Resources */,
-				D571BE74263665CB009D2ED2 /* MaterialCommunityIcons.ttf in Resources */,
-				D571BE75263665CB009D2ED2 /* MaterialIcons.ttf in Resources */,
-				D571BE76263665CB009D2ED2 /* Octicons.ttf in Resources */,
-				D571BE77263665CB009D2ED2 /* SimpleLineIcons.ttf in Resources */,
-				D571BE78263665CB009D2ED2 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,45 +424,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7F2750E5488CF965536C4464 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-chatapp-chatapp.staging-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8C40797B58E8F79B8EC26DCC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-chatapp/Pods-chatapp-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-chatapp/Pods-chatapp-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-chatapp/Pods-chatapp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9BBC365CABAC4C8EFE1F2289 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -562,39 +445,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		D571BE5E263665CB009D2ED2 /* Start Packager */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Start Packager";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		D571BE79263665CB009D2ED2 /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -632,15 +482,6 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		D571BE5F263665CB009D2ED2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D571BE60263665CB009D2ED2 /* AppDelegate.m in Sources */,
-				D571BE61263665CB009D2ED2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,6 +554,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DWWXM698D9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = chatapp/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "";
@@ -726,7 +568,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jxapp.chatapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jxapps.chatapp;
 				PRODUCT_NAME = chatapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -741,6 +583,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DWWXM698D9;
 				INFOPLIST_FILE = chatapp/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "";
 				INFOPLIST_PREPROCESS = NO;
@@ -753,7 +596,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jxapp.chatapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jxapps.chatapp;
 				PRODUCT_NAME = chatapp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -883,16 +726,81 @@
 			};
 			name = Release;
 		};
-		D571BE7D263665CB009D2ED2 /* Debug */ = {
+		D5919B332657CE9800E924B2 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FE16EFCC61BE273A92A94747 /* Pods-chatapp-chatapp.staging.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
+					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
+					"\"$(inherited)\"",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Staging;
+		};
+		D5919B342657CE9800E924B2 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0DB6E49F540C323A7620468 /* Pods-chatapp.staging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C2Y2P36M8;
+				DEVELOPMENT_TEAM = DWWXM698D9;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "chatapp-staging-Info.plist";
+				INFOPLIST_FILE = chatapp/Info.plist;
 				INFOPLIST_PREFIX_HEADER = "";
 				INFOPLIST_PREPROCESS = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -904,40 +812,40 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jxapp.chatapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jxapps.chatapp;
+				PRODUCT_NAME = chatapp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
-			name = Debug;
+			name = Staging;
 		};
-		D571BE7E263665CB009D2ED2 /* Release */ = {
+		D5919B352657CE9800E924B2 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0D3031CB74B9E1A67D68B67B /* Pods-chatapp-chatapp.staging.release.xcconfig */;
+			baseConfigurationReference = BAD14C4350008AC8FF1277C8 /* Pods-chatapp-chatappTests.staging.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7C2Y2P36M8;
-				INFOPLIST_FILE = "chatapp-staging-Info.plist";
-				INFOPLIST_PREFIX_HEADER = "";
-				INFOPLIST_PREPROCESS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = chatappTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
 				);
 				OTHER_LDFLAGS = (
-					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.jxapp.chatapp;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/chatapp.app/chatapp";
 			};
-			name = Release;
+			name = Staging;
 		};
 /* End XCBuildConfiguration section */
 
@@ -946,6 +854,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
+				D5919B352657CE9800E924B2 /* Staging */,
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -955,6 +864,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
+				D5919B342657CE9800E924B2 /* Staging */,
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -964,16 +874,8 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
+				D5919B332657CE9800E924B2 /* Staging */,
 				83CBBA211A601CBA00E9B192 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		D571BE7C263665CB009D2ED2 /* Build configuration list for PBXNativeTarget "chatapp.staging" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				D571BE7D263665CB009D2ED2 /* Debug */,
-				D571BE7E263665CB009D2ED2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
