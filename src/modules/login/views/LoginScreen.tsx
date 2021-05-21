@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image';
 import {Button, Card, HelperText} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
+import {googleSignInWebClientID} from '../../../helpers/constants';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {LoginSchema} from '../../../helpers/validationSchema';
 import ControlledPasswordInput from '../../../sharedComponents/ControlledPasswordInput';
@@ -32,8 +33,7 @@ const LoginScreen = (props: propsFromRedux) => {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId:
-        '339335518405-gn1jbepvbujbal7593jb42e0a1jtgt00.apps.googleusercontent.com',
+      webClientId: googleSignInWebClientID,
     });
   }, []);
 

@@ -5,6 +5,8 @@ import {call, fork, put, take} from '@redux-saga/core/effects';
 import assets from '../../../helpers/assets';
 import {
   getUploadedPhotoUrl,
+  googleAuthenticate,
+  loginWithGoogle,
   postSubmitLogin,
 } from '../../../helpers/firebaseUtils';
 import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
@@ -19,6 +21,7 @@ import {
 
 export default function* loginRuntime() {
   yield fork(submitLoginSaga);
+  yield fork(loginWithGoogleSaga);
 }
 
 function getCurrentUserDataChannel(currentUserID: string) {
@@ -74,6 +77,27 @@ function* submitLoginSaga() {
     yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
     try {
       yield call(postSubmitLogin, payload);
+      yield fork(getCurrentUserDataSaga);
+      yield take(loginActions.DONE_STORING_CURRENT_USER_DATA);
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+      navigate(routeNames.DASHBOARD_NAV);
+    } catch (error) {
+      yield put(statusActionCreators.updateStatusMsg('Invalid credentials!'));
+      yield put(statusActionCreators.toggleApiStatus(false));
+      yield put(statusActionCreators.toggleStatusModal(true));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+    }
+  }
+}
+
+function* loginWithGoogleSaga() {
+  while (true) {
+    yield take(loginActions.LOGIN_WITH_GOOGLE);
+    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
+    try {
+      const {idToken} = yield call(googleAuthenticate);
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      yield call(loginWithGoogle, googleCredential);
       yield fork(getCurrentUserDataSaga);
       yield take(loginActions.DONE_STORING_CURRENT_USER_DATA);
       yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));

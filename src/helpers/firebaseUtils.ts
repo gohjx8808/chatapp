@@ -1,6 +1,7 @@
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import storage from '@react-native-firebase/storage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {Image} from 'react-native-image-crop-picker';
 
 export const postSubmitRegister = (
@@ -15,6 +16,16 @@ export const postUpdateProfile = (displayName: string) => {
 
 export const postSubmitLogin = (data: login.onLoginPayload) => {
   return auth().signInWithEmailAndPassword(data.email, data.password);
+};
+
+export const googleAuthenticate = () => {
+  return GoogleSignin.signIn();
+};
+
+export const loginWithGoogle = (
+  googleCredential: FirebaseAuthTypes.AuthCredential,
+) => {
+  return auth().signInWithCredential(googleCredential);
 };
 
 export const postUploadProfilePhoto = (data: Image) => {
