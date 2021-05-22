@@ -1,10 +1,13 @@
 import {yupResolver} from '@hookform/resolvers/yup';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from '@react-native-google-signin/google-signin';
 import React, {useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
-import {Button, Card, HelperText} from 'react-native-paper';
+import {Button, Card, Divider, HelperText} from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import Assets from '../../../helpers/assets';
 import {googleSignInWebClientID} from '../../../helpers/constants';
@@ -20,7 +23,7 @@ import {loginActionCreators} from '../src/loginActions';
 const LoginScreen = (props: propsFromRedux) => {
   const [secure, setSecure] = useState(true);
 
-  const {submitLogin, isLoadingOverlayOpen} = props;
+  const {submitLogin, isLoadingOverlayOpen, loginWithGoogle} = props;
 
   const {
     control,
@@ -100,6 +103,17 @@ const LoginScreen = (props: propsFromRedux) => {
               Register
             </Button>
           </View>
+          {Platform.OS === 'android' && (
+            <>
+              <Divider style={styles.signInOptionsDivider} />
+              <GoogleSigninButton
+                style={styles.googleSignInBtn}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark}
+                onPress={() => loginWithGoogle()}
+              />
+            </>
+          )}
         </Card.Content>
       </Card>
     </KeyboardAvoidingView>
@@ -112,6 +126,7 @@ const connector = connect(
   }),
   {
     submitLogin: loginActionCreators.submitLogin,
+    loginWithGoogle: loginActionCreators.loginWithGoogle,
   },
 );
 
@@ -153,5 +168,15 @@ const styles = StyleSheet.create({
     color: 'blue',
     alignSelf: 'flex-end',
     paddingBottom: 0,
+  },
+  signInOptionsDivider: {
+    width: '100%',
+    marginVertical: '5%',
+    borderWidth: 0.5,
+    borderColor: 'silver',
+  },
+  googleSignInBtn: {
+    width: 192,
+    height: 48,
   },
 });

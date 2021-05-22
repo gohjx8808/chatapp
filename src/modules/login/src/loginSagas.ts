@@ -1,4 +1,4 @@
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import {EventChannel, eventChannel} from '@redux-saga/core';
 import {call, fork, put, take} from '@redux-saga/core/effects';
@@ -8,6 +8,7 @@ import {
   googleAuthenticate,
   loginWithGoogle,
   postSubmitLogin,
+  postUpdateProfile,
 } from '../../../helpers/firebaseUtils';
 import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {navigate} from '../../navigation/src/navigationUtils';
@@ -97,12 +98,24 @@ function* loginWithGoogleSaga() {
     try {
       const {idToken} = yield call(googleAuthenticate);
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      yield call(loginWithGoogle, googleCredential);
+      const googleLoginCredential: FirebaseAuthTypes.UserCredential = yield call(
+        loginWithGoogle,
+        googleCredential,
+      );
+      const userDetail = googleLoginCredential.user;
+      const userData = {
+        name: userDetail.displayName,
+        email: userDetail.email,
+        photoName: '',
+      };
+      database().ref(`users/${userDetail.uid}`).set(userData);
+      yield call(postUpdateProfile, userDetail.displayName!);
       yield fork(getCurrentUserDataSaga);
       yield take(loginActions.DONE_STORING_CURRENT_USER_DATA);
       yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       navigate(routeNames.DASHBOARD_NAV);
     } catch (error) {
+      console.log(error);
       yield put(statusActionCreators.updateStatusMsg('Invalid credentials!'));
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));
