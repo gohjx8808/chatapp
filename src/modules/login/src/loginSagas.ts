@@ -47,26 +47,30 @@ function* getCurrentUserDataSaga() {
     const currentUserData: login.getUserDataPayload = yield take(
       getCurrentUserDataAction,
     );
-    let currentUserPhotoURL = '';
-    if (currentUserData?.photoName === '') {
-      currentUserPhotoURL = assets.defaultUser;
-    } else {
-      currentUserPhotoURL = yield call(
-        getUploadedPhotoUrl,
-        currentUserData!.photoName,
-      );
+    try {
+      let currentUserPhotoURL = '';
+      if (currentUserData?.photoName === '') {
+        currentUserPhotoURL = assets.defaultUser;
+      } else {
+        currentUserPhotoURL = yield call(
+          getUploadedPhotoUrl,
+          currentUserData!.photoName,
+        );
+      }
+      const currentUserDetail = {
+        uid: currentUserAuthData!.uid,
+        name: currentUserData.name,
+        email: currentUserData.email,
+        photoURL: currentUserPhotoURL,
+        photoName: currentUserData.photoName,
+        dob: currentUserData.dob,
+        gender: currentUserData.gender,
+      };
+      yield put(loginActionCreators.storeUserDetails(currentUserDetail));
+      yield put(loginActionCreators.doneStoringCurrentUserData());
+    } catch (error) {
+      navigate(routeNames.LOGIN);
     }
-    const currentUserDetail = {
-      uid: currentUserAuthData!.uid,
-      name: currentUserData.name,
-      email: currentUserData.email,
-      photoURL: currentUserPhotoURL,
-      photoName: currentUserData.photoName,
-      dob: currentUserData.dob,
-      gender: currentUserData.gender,
-    };
-    yield put(loginActionCreators.storeUserDetails(currentUserDetail));
-    yield put(loginActionCreators.doneStoringCurrentUserData());
   }
 }
 
@@ -115,7 +119,6 @@ function* loginWithGoogleSaga() {
       yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
       navigate(routeNames.DASHBOARD_NAV);
     } catch (error) {
-      console.log(error);
       yield put(statusActionCreators.updateStatusMsg('Invalid credentials!'));
       yield put(statusActionCreators.toggleApiStatus(false));
       yield put(statusActionCreators.toggleStatusModal(true));

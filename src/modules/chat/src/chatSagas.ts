@@ -34,6 +34,7 @@ import {
 import {loadingOverlayActionCreators} from '../../loadingOverlay/src/loadingOverlayActions';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {goBack, navigate} from '../../navigation/src/navigationUtils';
+import routeNames from '../../navigation/src/routeNames';
 import {statusActionCreators} from '../../status/src/statusActions';
 import {chatActionCreators, chatActions, chatActionTypes} from './chatActions';
 import chatRouteNames from './chatRouteNames';
@@ -73,6 +74,7 @@ function* storeChatMessagesSaga() {
       yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     } catch (error) {
       yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+      navigate(routeNames.LOGIN);
     }
   }
 }
@@ -85,40 +87,45 @@ function* getChatFrenListSaga() {
       currentUserSelector,
     );
     const targetDatabaseRef = `/chat/${currentUser.uid}`;
-    const frenSnapshots: FirebaseDatabaseTypes.DataSnapshot = yield call(
-      getChatFrenList,
-      targetDatabaseRef,
-    );
-    let frenIDList = [] as string[];
-    frenSnapshots.forEach(frenSnapshot => {
-      frenIDList.push(frenSnapshot.key!);
-      return undefined;
-    });
-    let frenDataList = [] as frenDetails[];
-    for (let i = 0; i < frenIDList.length; i++) {
-      const frenDataSnapshot: FirebaseDatabaseTypes.DataSnapshot = yield call(
-        getFrenDetail,
-        frenIDList[i],
+    try {
+      const frenSnapshots: FirebaseDatabaseTypes.DataSnapshot = yield call(
+        getChatFrenList,
+        targetDatabaseRef,
       );
-      let frenDatas = frenDataSnapshot.val();
-      if (frenDatas.photoName !== '') {
-        const derivedURL: string = yield call(
-          getUploadedPhotoUrl,
-          frenDatas.photoName,
+      let frenIDList = [] as string[];
+      frenSnapshots.forEach(frenSnapshot => {
+        frenIDList.push(frenSnapshot.key!);
+        return undefined;
+      });
+      let frenDataList = [] as frenDetails[];
+      for (let i = 0; i < frenIDList.length; i++) {
+        const frenDataSnapshot: FirebaseDatabaseTypes.DataSnapshot = yield call(
+          getFrenDetail,
+          frenIDList[i],
         );
-        frenDatas.photoURL = derivedURL;
-      } else {
-        frenDatas.photoURL = assets.defaultUser;
+        let frenDatas = frenDataSnapshot.val();
+        if (frenDatas.photoName !== '') {
+          const derivedURL: string = yield call(
+            getUploadedPhotoUrl,
+            frenDatas.photoName,
+          );
+          frenDatas.photoURL = derivedURL;
+        } else {
+          frenDatas.photoURL = assets.defaultUser;
+        }
+        frenDatas = {
+          ...frenDatas,
+          name: frenDatas.name,
+          uid: frenIDList[i],
+        };
+        frenDataList.push(frenDatas);
       }
-      frenDatas = {
-        ...frenDatas,
-        name: frenDatas.name,
-        uid: frenIDList[i],
-      };
-      frenDataList.push(frenDatas);
+      yield put(chatActionCreators.loadChatFrenList(frenDataList));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+    } catch (error) {
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+      navigate(routeNames.LOGIN);
     }
-    yield put(chatActionCreators.loadChatFrenList(frenDataList));
-    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   }
 }
 
