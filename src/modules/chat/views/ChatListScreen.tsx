@@ -12,6 +12,7 @@ import {
 } from 'react-native-paper';
 import {connect, ConnectedProps} from 'react-redux';
 import assets from '../../../helpers/assets';
+import {defaultChatMsgLength} from '../../../helpers/firebaseUtils';
 import GlobalStyles from '../../../helpers/globalStyles';
 import {navigate, toggleDrawer} from '../../navigation/src/navigationUtils';
 import routeNames from '../../navigation/src/routeNames';
@@ -43,7 +44,7 @@ const ChatListScreen = (props: PropsFromRedux) => {
           key={item.uid}
           onPress={() => {
             loadSelectedFren(item);
-            getChatMessages();
+            getChatMessages(defaultChatMsgLength);
             navigate(chatRouteNames.CHAT);
           }}
           left={iconProps => (

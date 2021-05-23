@@ -1,6 +1,6 @@
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 import {FirebaseStorageTypes} from '@react-native-firebase/storage';
-import {END, EventChannel, eventChannel, Task} from '@redux-saga/core';
+import {Task} from '@redux-saga/core';
 import {
   call,
   cancel,
@@ -14,8 +14,10 @@ import {IMessage} from 'react-native-gifted-chat';
 import {Image} from 'react-native-image-crop-picker';
 import assets from '../../../helpers/assets';
 import {
+  defaultChatMsgLength,
   deleteFriend,
   getChatFrenList,
+  getChatMessages,
   getFrenDetail,
   getUploadedPhotoUrl,
   postUploadProfilePhoto,
@@ -44,48 +46,34 @@ export default function* chatRuntime() {
   yield fork(sendImageSaga);
 }
 
-function getChatMessages(databaseRef: string) {
-  return eventChannel(emitter => {
-    database()
-      .ref(databaseRef)
-      .limitToLast(20)
-      .on('value', snapshots => {
-        snapshots.forEach(snapshot => {
-          const snapshotValue = snapshot.val();
-          emitter(snapshotValue);
-          return undefined;
-        });
-        emitter(END);
-      });
-    return () => {};
-  });
-}
-
 function* storeChatMessagesSaga() {
   while (true) {
-    yield take(chatActions.GET_CHAT_MESSAGES);
+    const {payload}: chatActionTypes.getChatMessagesActionType = yield take(
+      chatActions.GET_CHAT_MESSAGES,
+    );
     yield put(loadingOverlayActionCreators.toggleLoadingOverlay(true));
-    yield call(storeChatMessagesListener);
-  }
-}
-
-function* storeChatMessagesListener() {
-  const selectedFren: frenDetails = yield select(selectedFrenSelector);
-  const currentUser: login.currentUserData = yield select(currentUserSelector);
-  const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
-  const getChatMessagesAction: EventChannel<chat.IMessage> = yield call(
-    getChatMessages,
-    databaseRef,
-  );
-  const msgList = [] as chat.IMessage[];
-  try {
-    while (true) {
-      const response: chat.IMessage = yield take(getChatMessagesAction);
-      msgList.unshift(response);
+    const selectedFren: frenDetails = yield select(selectedFrenSelector);
+    const currentUser: login.currentUserData = yield select(
+      currentUserSelector,
+    );
+    const databaseRef = `/chat/${currentUser.uid}/${selectedFren.uid}`;
+    try {
+      const chatResponse: FirebaseDatabaseTypes.DataSnapshot = yield call(
+        getChatMessages,
+        databaseRef,
+        payload,
+      );
+      const msgList = [] as chat.IMessage[];
+      chatResponse.forEach(snapshot => {
+        const snapshotValue = snapshot.val();
+        msgList.unshift(snapshotValue);
+        return undefined;
+      });
+      yield put(chatActionCreators.storeMessages(msgList));
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
+    } catch (error) {
+      yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
     }
-  } finally {
-    yield put(chatActionCreators.storeMessages(msgList));
-    yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   }
 }
 
@@ -233,7 +221,7 @@ function* uploadPictureToFirebaseSaga() {
     user: processedCurrentUser,
   };
   database().ref(databaseRef).push(msg);
-  yield put(chatActionCreators.getChatMessages());
+  yield put(chatActionCreators.getChatMessages(defaultChatMsgLength));
   yield put(loadingOverlayActionCreators.toggleLoadingOverlay(false));
   goBack();
 }

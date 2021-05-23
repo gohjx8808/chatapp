@@ -24,7 +24,10 @@ export declare namespace chatActionTypes {
     typeof chatActions.LOAD_SELECTED_FREN,
     frenDetails
   >;
-  type getChatMessagesActionType = Action<typeof chatActions.GET_CHAT_MESSAGES>;
+  type getChatMessagesActionType = ActionWithPayload<
+    typeof chatActions.GET_CHAT_MESSAGES,
+    number
+  >;
   type getChatFrenListActionType = Action<
     typeof chatActions.GET_CHAT_FREN_LIST
   >;
@@ -67,8 +70,11 @@ export class chatActionCreators {
     type: chatActions.LOAD_SELECTED_FREN,
     payload,
   });
-  public static getChatMessages = (): chatActionTypes.getChatMessagesActionType => ({
+  public static getChatMessages = (
+    payload: number,
+  ): chatActionTypes.getChatMessagesActionType => ({
     type: chatActions.GET_CHAT_MESSAGES,
+    payload,
   });
   public static getChatFrenList = (): chatActionTypes.getChatFrenListActionType => ({
     type: chatActions.GET_CHAT_FREN_LIST,

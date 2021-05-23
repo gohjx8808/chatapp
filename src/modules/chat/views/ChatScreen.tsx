@@ -34,6 +34,7 @@ import {
   dialogFlowPrivateKey,
   dialogFlowProjectID,
 } from '../../../helpers/constants';
+import {defaultChatMsgLength} from '../../../helpers/firebaseUtils';
 import {currentUserSelector} from '../../login/src/loginSelectors';
 import {goBack, navigate} from '../../navigation/src/navigationUtils';
 import {chatActionCreators} from '../src/chatActions';
@@ -53,6 +54,7 @@ const ChatScreen = (props: PropsFromRedux) => {
 
   const [isShowEnlargedImage, setIsShowEnlargedImage] = useState(false);
   const [enlargedImageURL, setEnlargedImageURL] = useState('');
+  const [chatMsgLength, setChatMsgLength] = useState(defaultChatMsgLength);
 
   const {colors} = useTheme();
 
@@ -70,7 +72,7 @@ const ChatScreen = (props: PropsFromRedux) => {
   const onSend = (newMessages: IMessage[]) => {
     const parsedMsg = newMessages[0];
     database().ref(databaseRef).push(parsedMsg);
-    getChatMessages();
+    getChatMessages(chatMsgLength);
     if (selectedFren.uid === 'FAQ Bot') {
       const message = parsedMsg.text;
       Dialogflow_V2.requestQuery(
@@ -92,7 +94,7 @@ const ChatScreen = (props: PropsFromRedux) => {
       user: selectedFren,
     };
     database().ref(databaseRef).push(msg);
-    getChatMessages();
+    getChatMessages(chatMsgLength);
   };
 
   const renderCustomDay = (dayProps: DayProps<IMessage>) => {
@@ -226,6 +228,12 @@ const ChatScreen = (props: PropsFromRedux) => {
         renderComposer={renderCustomComposer}
         scrollToBottom
         renderMessageImage={renderCustomMessageImage}
+        infiniteScroll
+        onLoadEarlier={() => {
+          getChatMessages(chatMsgLength + 20);
+          setChatMsgLength(chatMsgLength + 20);
+        }}
+        loadEarlier
       />
       <EnlargedMessageImageModal
         isShowEnlargedImage={isShowEnlargedImage}

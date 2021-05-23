@@ -94,3 +94,9 @@ export const deleteAcc = (currentUID: string) => {
   database().ref(userDatabaseRef).remove();
   auth().currentUser?.delete();
 };
+
+export const getChatMessages = (databaseRef: string, msgSize: number) => {
+  return database().ref(databaseRef).limitToLast(msgSize).once('value');
+};
+
+export const defaultChatMsgLength = 20;
